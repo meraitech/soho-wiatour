@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
+import { TourService } from '@/features/tours/services'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -14,6 +15,9 @@ export default async function HomePage() {
   const { user } = await payload.auth({ headers })
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+
+  const tours = await TourService.getAll()
+  console.log(tours)
 
   return (
     <div className="home">

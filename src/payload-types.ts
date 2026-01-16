@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    tours: Tour;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    tours: ToursSelect<false> | ToursSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -158,6 +160,118 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tours".
+ */
+export interface Tour {
+  id: string;
+  title: string;
+  /**
+   * Auto-generated dari title, bisa diedit manual
+   */
+  slug: string;
+  /**
+   * Gambar untuk tampil di list tours
+   */
+  thumbnail: string | Media;
+  /**
+   * Deskripsi untuk tours (max 300 karakter)
+   */
+  description: string;
+  /**
+   * Gambar besar di bagian atas detail page
+   */
+  heroImage: string | Media;
+  /**
+   * Tambahkan beberapa baris gambar + deskripsi (ditampilkan 2 kolom bergantian)
+   */
+  travelDetails?:
+    | {
+        image: string | Media;
+        description: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * List kegiatan per hari dengan icon dan thumbnail
+   */
+  itineraries?:
+    | {
+        /**
+         * Contoh: 1, 2, 3
+         */
+        day: number;
+        /**
+         * Contoh: Ngumpul di bandara
+         */
+        activityName: string;
+        /**
+         * Icon kecil untuk kegiatan (emoji atau logo)
+         */
+        icon: string | Media;
+        thumbnail: string | Media;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Kumpulan foto tour (bisa banyak)
+   */
+  gallery?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Pilih tour lain yang relevan untuk ditampilkan
+   */
+  relatedTours?: (string | Tour)[] | null;
+  status: 'draft' | 'published';
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -190,6 +304,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'tours';
+        value: string | Tour;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -272,6 +390,78 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tours_select".
+ */
+export interface ToursSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  thumbnail?: T;
+  description?: T;
+  heroImage?: T;
+  travelDetails?:
+    | T
+    | {
+        image?: T;
+        description?: T;
+        id?: T;
+      };
+  itineraries?:
+    | T
+    | {
+        day?: T;
+        activityName?: T;
+        icon?: T;
+        thumbnail?: T;
+        description?: T;
+        id?: T;
+      };
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  relatedTours?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
