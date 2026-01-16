@@ -24,6 +24,10 @@ export default buildConfig({
           path: './shared/components/admin/Logo',
           exportName: 'Logo'
         },
+        Icon: {
+          path: './shared/components/admin/Icon',
+          exportName: 'Icon'
+        }
       }
     }
   },
