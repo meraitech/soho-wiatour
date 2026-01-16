@@ -52,4 +52,3 @@ node_modules/
 # PayloadCMS
 **/importMap.js
 payload-types.ts
-.next/
