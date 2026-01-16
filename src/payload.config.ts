@@ -18,6 +18,14 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Logo: {
+          path: './shared/components/admin/Logo',
+          exportName: 'Logo'
+        },
+      }
+    }
   },
   collections: [Users, Media, Tours],
   editor: lexicalEditor(),
