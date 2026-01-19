@@ -10,7 +10,7 @@ type Props = {
 export const TitleSmallWithIcon = ({ text, icon }: Props) => {
   return (
     <div className="flex items-center gap-3">
-      <div className="h-8 p-2 rounded flex items-center justify-center aspect-square bg-accent">
+      <div className="h-7 p-1.5 rounded flex items-center justify-center aspect-square bg-accent">
         <FontAwesomeIcon icon={icon} />
       </div>
       <span>{text}</span>

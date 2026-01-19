@@ -4,7 +4,7 @@ type TypographyPProps = React.HTMLAttributes<HTMLHeadingElement>
 
 export const TypographyP = ({ children, className, ...props }: TypographyPProps) => {
   return (
-    <p {...props} className={'text-base ' + className}>
+    <p {...props} className={'text-base text-paragraph ' + className}>
       {children}
     </p>
   )

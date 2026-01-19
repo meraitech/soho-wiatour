@@ -30,6 +30,8 @@
   --color-muted: #f1f5f9;
   --color-muted-foreground: #64748b;
 
+  --color-paragraph: #686868;
+
   /* =========================
      STATES
   ========================= */
@@ -75,6 +77,8 @@
 
   --color-muted: var(--color-muted);
   --color-muted-foreground: var(--color-muted-foreground);
+
+  --color-paragraph: var(--color-paragraph);
 
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
