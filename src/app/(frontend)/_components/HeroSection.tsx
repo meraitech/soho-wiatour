@@ -9,9 +9,11 @@ export const HeroSection = () => {
         <TypographyH1 className="text-center">
           Jelajahi Dunia dengan Pengalaman yang Lebih Berarti
         </TypographyH1>
-        <div className="flex gap-8">
-          <Button>Lihat Paket Tour</Button>
-          <Button variant="monocrome">Hubungi Kami</Button>
+        <div className="flex gap-6">
+          <Button size="lg">Lihat Paket Tour</Button>
+          <Button variant="monocrome_white" size="lg">
+            Hubungi Kami
+          </Button>
         </div>
       </div>
 

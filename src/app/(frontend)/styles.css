@@ -1,17 +1,22 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: Now-Medium;
+  src: url('/assets/fonts/Now-Medium.otf');
+}
+
 :root {
   /* =========================
      BRAND
   ========================= */
-  --color-primary: #0f172a;
-  --color-primary-foreground: #ffffff;
+  --color-primary: #009fe3;
+  --color-primary-foreground: #06176d;
 
-  --color-secondary: #e5e7eb;
-  --color-secondary-foreground: #0f172a;
+  --color-secondary: #06176d;
+  --color-secondary-foreground: #009fe3;
 
-  --color-accent: #22c55e;
-  --color-accent-foreground: #052e16;
+  --color-accent: #f9b233;
+  --color-accent-foreground: #06176d;
 
   /* =========================
      NEUTRAL
@@ -44,38 +49,12 @@
 
   --color-disabled: #e5e7eb;
   --color-disabled-foreground: #9ca3af;
-
-  /* =========================
-     SPACING (BASE SCALE)
-  ========================= */
-  --space-0: 0rem;
-  --space-1: 0.25rem; /* 4px */
-  --space-2: 0.5rem; /* 8px */
-  --space-3: 0.75rem; /* 12px */
-  --space-4: 1rem; /* 16px */
-  --space-5: 1.25rem; /* 20px */
-  --space-6: 1.5rem; /* 24px */
-  --space-8: 2rem; /* 32px */
-  --space-10: 2.5rem; /* 40px */
-  --space-12: 3rem; /* 48px */
-
-  /* =========================
-     SEMANTIC PADDING
-  ========================= */
-  --padding-button-x: var(--space-5);
-  --padding-button-y: var(--space-2);
-
-  --padding-input-x: var(--space-3);
-  --padding-input-y: var(--space-2);
-
-  --padding-card: var(--space-6);
-  --padding-card-lg: var(--space-8);
-
-  --padding-section: var(--space-10);
-  --padding-section-lg: var(--space-12);
 }
 
 @theme {
+  /* Typography  */
+  --font-now: Now-Medium;
+
   /* =========================
      COLORS
   ========================= */
@@ -109,30 +88,4 @@
 
   --color-disabled: var(--color-disabled);
   --color-disabled-foreground: var(--color-disabled-foreground);
-
-  /* =========================
-     SPACING
-  ========================= */
-  --space-0: var(--space-0);
-  --space-1: var(--space-1);
-  --space-2: var(--space-2);
-  --space-3: var(--space-3);
-  --space-4: var(--space-4);
-  --space-5: var(--space-5);
-  --space-6: var(--space-6);
-  --space-8: var(--space-8);
-  --space-10: var(--space-10);
-  --space-12: var(--space-12);
-
-  --padding-button-x: var(--padding-button-x);
-  --padding-button-y: var(--padding-button-y);
-
-  --padding-input-x: var(--padding-input-x);
-  --padding-input-y: var(--padding-input-y);
-
-  --padding-card: var(--padding-card);
-  --padding-card-lg: var(--padding-card-lg);
-
-  --padding-section: var(--padding-section);
-  --padding-section-lg: var(--padding-section-lg);
 }

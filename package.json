@@ -19,11 +19,17 @@
     "postinstall": "payload generate:types && payload generate:importmap"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-regular-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
     "@payloadcms/db-mongodb": "3.71.1",
     "@payloadcms/next": "3.71.1",
     "@payloadcms/richtext-lexical": "3.71.1",
     "@payloadcms/ui": "3.71.1",
     "@tailwindcss/postcss": "^4.1.18",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
