@@ -93,3 +93,14 @@
   --color-disabled: var(--color-disabled);
   --color-disabled-foreground: var(--color-disabled-foreground);
 }
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.gallery-final {
+  grid-template-columns: repeat(3, 100vw);
+  grid-template-rows: repeat(4, 49.5vh);
+  gap: 1vh;
+}

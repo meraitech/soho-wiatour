@@ -1,11 +1,15 @@
-import { BUTTON_BASE, BUTTON_SIZE, BUTTON_VARIANT } from '@/shared/constants/style/button'
+import {
+  STYLE_BUTTON_BASE,
+  STYLE_BUTTON_SIZE,
+  STYLE_BUTTON_VARIANT,
+} from '@/shared/constants/style/button'
 import clsx from 'clsx'
 import React from 'react'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode
-  variant?: keyof typeof BUTTON_VARIANT
-  size?: keyof typeof BUTTON_SIZE
+  variant?: keyof typeof STYLE_BUTTON_VARIANT
+  size?: keyof typeof STYLE_BUTTON_SIZE
 }
 
 export const Button = ({
@@ -18,7 +22,12 @@ export const Button = ({
   return (
     <button
       {...props}
-      className={clsx(className, BUTTON_BASE, BUTTON_VARIANT[variant], BUTTON_SIZE[size])}
+      className={clsx(
+        className,
+        STYLE_BUTTON_BASE,
+        STYLE_BUTTON_VARIANT[variant],
+        STYLE_BUTTON_SIZE[size],
+      )}
     >
       {children}
     </button>

@@ -1,0 +1,36 @@
+{
+    "hero": {
+        "title": "Jelajahi Dunia dengan Pengalaman yang Lebih Berarti",
+        "ctaPrimary": "Lihat Paket Tour",
+        "ctaSecondary": "Hubungi Kami"
+    },
+    "about": {
+        "titleSmall": "Tentang Kami",
+        "title": "Partner Perjalanan yang Anda Percaya",
+        "description": "Wiatour adalah agen tour & travel yang berkomitmen menghadirkan perjalanan yang aman, terencana, dan berkesan. Kami melayani berbagai kebutuhan perjalanan—mulai dari paket wisata, tiket transportasi, hingga layanan perjalanan khusus—dengan standar pelayanan profesional.",
+        "cta": "Tentang Kami"
+    },
+    "services": {
+        "header": {
+            "titleSmall": "Layanan Kami",
+            "title": "Solusi Perjalanan untuk Setiap Kebutuhan"
+        },
+        "items": [
+            {
+                "titleSmall": "Ready Made Tour",
+                "title": "Perjalanan Praktis, Tanpa Repot",
+                "paragraph": "Paket tour siap jalan dengan itinerary yang telah dirancang secara matang. Cocok untuk Anda yang menginginkan perjalanan nyaman tanpa perlu menyusun rencana dari awal."
+            },
+            {
+                "titleSmall": "Tailor Made Tour",
+                "title": "Dirancang Sesuai Keinginan Anda",
+                "paragraph": "Perjalanan yang disesuaikan dengan kebutuhan, preferensi, dan tujuan Anda. Setiap detail dirancang bersama tim kami untuk menciptakan pengalaman yang lebih personal."
+            },
+            {
+                "titleSmall": "Private & Open Trip",
+                "title": "Fleksibel untuk Setiap Perjalanan",
+                "paragraph": "Pilih perjalanan privat bersama grup Anda atau bergabung dalam open trip. Keduanya dirancang dengan standar kenyamanan dan pelayanan yang sama."
+            }
+        ]
+    }
+}
