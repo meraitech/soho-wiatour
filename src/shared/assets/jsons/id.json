@@ -32,5 +32,28 @@
                 "paragraph": "Pilih perjalanan privat bersama grup Anda atau bergabung dalam open trip. Keduanya dirancang dengan standar kenyamanan dan pelayanan yang sama."
             }
         ]
+    },
+    "testimonial": {
+        "header": {
+            "titleSmall": "Testimoni Pelanggan",
+            "title": "Cerita Mereka yang Telah Bepergian Bersama Kami"
+        },
+        "items": [
+            {
+                "quotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.",
+                "name": "John Doe",
+                "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/9/96/Logo_Trans7.png"
+            },
+            {
+                "quotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.",
+                "name": "John Doe",
+                "imgUrl": "./icon.png"
+            },
+            {
+                "quotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.",
+                "name": "John Doe",
+                "imgUrl": "./logo.png"
+            }
+        ]
     }
 }

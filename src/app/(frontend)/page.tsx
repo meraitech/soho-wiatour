@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useRef } from 'react'
 
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
@@ -15,7 +17,9 @@ import { TitleSmallWithIcon } from '@/shared/components/ui/TitleSmallWithIcon'
 import { ServiceComponent } from '@/features/company/components/ServiceComponent'
 
 import id from '@/shared/assets/jsons/id.json'
-import BentoGallery from '@/shared/components/BentoGallery'
+import { useBentoFlipScroll } from '@/features/company/hooks/useBentoFlipScroll'
+import { VelocityScroller } from '@/shared/components/ScrollVelocity'
+import { TestimonialCard } from '@/features/company/components/TestimonialCard'
 
 /* ======================================================
    PAGE — Landing Page (Main Page)
@@ -27,8 +31,7 @@ export default function page() {
       {/* ======================================================
          SECTION HERO
       ====================================================== */}
-      {/* <HeroSection /> */}
-      <BentoGallery />
+      <HeroSection />
 
       {/* ======================================================
          SECTION ABOUT
@@ -41,13 +44,14 @@ export default function page() {
       <OurServiceSection />
 
       {/* ======================================================
-         SECTION TOUR HIGHLIGHT ❌
+         SECTION TOUR HIGHLIGHT
       ====================================================== */}
       <TourHighlight />
 
       {/* ======================================================
          SECTION TESTIMONIALS ❌
       ====================================================== */}
+      <TestimonialSection />
 
       {/* ======================================================
          SECTION CTA ❌
@@ -64,6 +68,11 @@ export default function page() {
    SECTION HERO
   ====================================================== */
   function HeroSection() {
+    const wrapRef = useRef<HTMLDivElement | null>(null)
+    const galleryRef = useRef<HTMLDivElement | null>(null)
+
+    useBentoFlipScroll({ wrapRef, galleryRef })
+
     const gridAreas = [
       '[grid-area:1/1/3/2]',
       '[grid-area:1/2/2/3]',
@@ -74,9 +83,43 @@ export default function page() {
       '[grid-area:4/1/5/2]',
       '[grid-area:4/2/5/3]',
     ]
+
+    const images = [
+      'https://assets.codepen.io/16327/portrait-pattern-1.jpg',
+      'https://assets.codepen.io/16327/portrait-image-12.jpg',
+      'https://assets.codepen.io/16327/portrait-image-8.jpg',
+      'https://assets.codepen.io/16327/portrait-pattern-2.jpg',
+      'https://assets.codepen.io/16327/portrait-image-4.jpg',
+      'https://assets.codepen.io/16327/portrait-image-3.jpg',
+      'https://assets.codepen.io/16327/portrait-pattern-3.jpg',
+      'https://assets.codepen.io/16327/portrait-image-1.jpg',
+    ]
     return (
-      <section className="w-full h-screen relative flex items-center justify-center">
-        <div className="z-5 text-background flex flex-col items-center gap-12 max-w-4xl">
+      <section
+        ref={wrapRef}
+        className="relative w-full h-screen bg-foreground flex items-center justify-center overflow-hidden"
+      >
+        <div
+          ref={galleryRef}
+          className="
+          grid gap-[1vh]
+          grid-cols-[repeat(3,32.5vw)]
+          grid-rows-[repeat(4,23vh)]
+          justify-center content-center
+          opacity-40
+        "
+        >
+          {images.map((src, i) => (
+            <div
+              key={i}
+              className={`gallery-item relative overflow-hidden rounded-2xl ${gridAreas[i]}`}
+            >
+              <img src={src} alt="" className="w-full h-full object-cover" />
+            </div>
+          ))}
+        </div>
+
+        <div className="z-5 text-background flex flex-col items-center gap-12 max-w-4xl absolute">
           <TypographyH1 className="text-center">{id.hero.title}</TypographyH1>
           <div className="flex gap-6">
             <Button size="lg">{id.hero.ctaPrimary}</Button>
@@ -85,9 +128,6 @@ export default function page() {
             </Button>
           </div>
         </div>
-
-        {/* background  */}
-        <div className="bg-foreground w-full h-full absolute top-0 left-0" />
       </section>
     )
   }
@@ -143,6 +183,46 @@ export default function page() {
               paragraph={item.paragraph}
             />
           ))}
+        </Container>
+      </section>
+    )
+  }
+
+  /* ======================================================
+   SECTION TESTIMONIAL
+  ====================================================== */
+  function TestimonialSection() {
+    const items = id.testimonial.items
+
+    return (
+      <section className={STYLE_MARGIN_CONTAINER}>
+        <Container className="flex flex-col items-center gap-12 relative overflow-hidden ">
+          <HeaderSection
+            titleSmall={id.testimonial.header.titleSmall}
+            title={id.testimonial.header.title}
+          />
+
+          <div className="flex flex-col gap-6 relative w-full">
+            <div className="bg-linear-to-r from-background w-30 h-full absolute left-0 top-0 z-5" />
+            {/* ROW 1 */}
+            <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
+              <div className="flex gap-6">
+                {items.map((item, index) => (
+                  <TestimonialCard key={`row1-${index}`} item={item} />
+                ))}
+              </div>
+            </VelocityScroller>
+
+            {/* ROW 2 */}
+            <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
+              <div className="flex gap-6">
+                {items.map((item, index) => (
+                  <TestimonialCard key={`row2-${index}`} item={item} />
+                ))}
+              </div>
+            </VelocityScroller>
+            <div className="bg-linear-to-l from-background w-30 h-full absolute right-0 top-0 z-5" />
+          </div>
         </Container>
       </section>
     )
