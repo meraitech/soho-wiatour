@@ -11,9 +11,9 @@ type Props = {
   width?: 'w-full' | 'w-[330px]'
 }
 
-export const TourCard = ({ width = 'w-full', href = '/asd' }: Props) => {
+export const TourCard = ({ width = 'w-full', href = 'indonesia' }: Props) => {
   return (
-    <Link href={href} draggable={false}>
+    <Link href={'/tours/' + href} draggable={false}>
       <section
         className={clsx(
           'flex flex-col aspect-3/4 relative group overflow-hidden shrink-0',

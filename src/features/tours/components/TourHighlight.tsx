@@ -1,16 +1,16 @@
 'use client'
 
 import React, { useLayoutEffect, useRef, useState } from 'react'
-import clsx from 'clsx'
+import { useRouter } from 'next/navigation'
 
 import { TourCard } from './ui/TourCard'
-import { STYLE_MARGIN_CONTAINER } from '@/shared/constants/style/margin'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { Button } from '@/shared/components/ui/Button'
 import { Container } from '@/shared/components/provider/Container'
 import { PreventClickOnDrag } from '@/shared/components/provider/PreventClickOnDrag'
 
 export const TourHighlight = () => {
+  const router = useRouter()
   const redRef = useRef<HTMLDivElement | null>(null)
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
@@ -85,7 +85,9 @@ export const TourHighlight = () => {
             <span>Tour Pilihan</span>
             <TypographyH2>Destinasi yang Paling Diminati</TypographyH2>
           </div>
-          <Button variant="monocrome_black">Semua Tour</Button>
+          <Button onClick={() => router.push('/tours')} variant="monocrome_black">
+            Semua Tour
+          </Button>
         </div>
 
         {/* RIGHT */}
