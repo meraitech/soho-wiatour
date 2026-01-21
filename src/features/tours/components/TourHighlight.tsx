@@ -8,6 +8,7 @@ import { STYLE_MARGIN_CONTAINER } from '@/shared/constants/style/margin'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { Button } from '@/shared/components/ui/Button'
 import { Container } from '@/shared/components/provider/Container'
+import { PreventClickOnDrag } from '@/shared/components/provider/PreventClickOnDrag'
 
 export const TourHighlight = () => {
   const redRef = useRef<HTMLDivElement | null>(null)
@@ -102,7 +103,13 @@ export const TourHighlight = () => {
           >
             <div className="flex w-max gap-4">
               {Array.from({ length: 7 }).map((_, i) => (
-                <TourCard key={i} scrollRef={scrollRef} startScrollLeftRef={startScrollLeftRef} />
+                <PreventClickOnDrag
+                  key={i}
+                  scrollRef={scrollRef}
+                  startScrollLeftRef={startScrollLeftRef}
+                >
+                  <TourCard width="w-[330px]" />
+                </PreventClickOnDrag>
               ))}
             </div>
           </div>

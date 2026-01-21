@@ -59,7 +59,7 @@ export default function page() {
       <TestimonialSection />
 
       {/* ======================================================
-         SECTION CTA ❌
+         SECTION CTA 
       ====================================================== */}
       <CTASection
         item={{
@@ -68,8 +68,6 @@ export default function page() {
           button2: text.cta.button2,
         }}
       />
-
-      <div className="mb-100"></div>
     </div>
   )
 
