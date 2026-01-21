@@ -5,9 +5,12 @@ import React, { useRef } from 'react'
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
-import { Container } from '@/shared/components/ui/Container'
+import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
-import { STYLE_MARGIN_CONTAINER } from '@/shared/constants/style/margin'
+import {
+  STYLE_MARGIN_CONTAINER,
+  STYLE_MARGIN_CONTAINER_BOTTOM,
+} from '@/shared/constants/style/margin'
 
 import { faBuilding } from '@fortawesome/free-solid-svg-icons'
 
@@ -20,12 +23,14 @@ import id from '@/shared/assets/jsons/id.json'
 import { useBentoFlipScroll } from '@/features/company/hooks/useBentoFlipScroll'
 import { VelocityScroller } from '@/shared/components/ScrollVelocity'
 import { TestimonialCard } from '@/features/company/components/TestimonialCard'
+import CTASection from '@/shared/components/CTASection'
 
 /* ======================================================
    PAGE — Landing Page (Main Page)
 ====================================================== */
 
 export default function page() {
+  const text = id.landing
   return (
     <div>
       {/* ======================================================
@@ -49,13 +54,20 @@ export default function page() {
       <TourHighlight />
 
       {/* ======================================================
-         SECTION TESTIMONIALS ❌
+         SECTION TESTIMONIALS 
       ====================================================== */}
       <TestimonialSection />
 
       {/* ======================================================
          SECTION CTA ❌
       ====================================================== */}
+      <CTASection
+        item={{
+          quote: text.cta.quote,
+          button1: text.cta.button1,
+          button2: text.cta.button2,
+        }}
+      />
 
       <div className="mb-100"></div>
     </div>
@@ -85,14 +97,14 @@ export default function page() {
     ]
 
     const images = [
-      'https://assets.codepen.io/16327/portrait-pattern-1.jpg',
-      'https://assets.codepen.io/16327/portrait-image-12.jpg',
-      'https://assets.codepen.io/16327/portrait-image-8.jpg',
-      'https://assets.codepen.io/16327/portrait-pattern-2.jpg',
-      'https://assets.codepen.io/16327/portrait-image-4.jpg',
-      'https://assets.codepen.io/16327/portrait-image-3.jpg',
-      'https://assets.codepen.io/16327/portrait-pattern-3.jpg',
-      'https://assets.codepen.io/16327/portrait-image-1.jpg',
+      'https://images.unsplash.com/photo-1718876688960-4ae86c2f33d1?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1578167635658-84df281b1b27?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1616895727759-dd84a2690433?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1595628218785-bf323bcc3ecc?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1741320159899-df923b71de08?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1712141481069-793132cc5769?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1566908463863-abb4672c53a2?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1694860843772-9fd8747f189f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     ]
     return (
       <section
@@ -120,11 +132,11 @@ export default function page() {
         </div>
 
         <div className="z-5 text-background flex flex-col items-center gap-12 max-w-4xl absolute">
-          <TypographyH1 className="text-center">{id.hero.title}</TypographyH1>
+          <TypographyH1 className="text-center">{text.hero.title}</TypographyH1>
           <div className="flex gap-6">
-            <Button size="lg">{id.hero.ctaPrimary}</Button>
+            <Button size="lg">{text.hero.ctaPrimary}</Button>
             <Button variant="monocrome_white" size="lg">
-              {id.hero.ctaSecondary}
+              {text.hero.ctaSecondary}
             </Button>
           </div>
         </div>
@@ -142,11 +154,11 @@ export default function page() {
           {/* left  */}
           <div className="flex flex-col justify-between items-start gap-10 md:max-w-100">
             <div className="flex flex-col gap-6 items-start">
-              <TitleSmallWithIcon text={id.about.titleSmall} icon={faBuilding} />
-              <TypographyH2 className="mt-2">{id.about.title}</TypographyH2>
-              <TypographyP>{id.about.description}</TypographyP>
+              <TitleSmallWithIcon text={text.about.titleSmall} icon={faBuilding} />
+              <TypographyH2 className="mt-2">{text.about.title}</TypographyH2>
+              <TypographyP>{text.about.description}</TypographyP>
             </div>
-            <Button variant="monocrome_black"> {id.about.cta}</Button>
+            <Button variant="monocrome_black"> {text.about.cta}</Button>
           </div>
 
           {/* right  */}
@@ -166,14 +178,14 @@ export default function page() {
    SECTION SERVICES
   ====================================================== */
   function OurServiceSection() {
-    const ourServices = id.services.items
+    const ourServices = text.services.items
 
     return (
-      <section className={STYLE_MARGIN_CONTAINER}>
+      <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <Container className="flex flex-col items-center gap-12">
           <HeaderSection
-            titleSmall={id.services.header.titleSmall}
-            title={id.services.header.title}
+            titleSmall={text.services.header.titleSmall}
+            title={text.services.header.title}
           />
           {ourServices.map((item, index) => (
             <ServiceComponent
@@ -192,14 +204,14 @@ export default function page() {
    SECTION TESTIMONIAL
   ====================================================== */
   function TestimonialSection() {
-    const items = id.testimonial.items
+    const testimonial = text.testimonial
 
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
         <Container className="flex flex-col items-center gap-12 relative overflow-hidden ">
           <HeaderSection
-            titleSmall={id.testimonial.header.titleSmall}
-            title={id.testimonial.header.title}
+            titleSmall={testimonial.header.titleSmall}
+            title={testimonial.header.title}
           />
 
           <div className="flex flex-col gap-6 relative w-full">
@@ -207,7 +219,7 @@ export default function page() {
             {/* ROW 1 */}
             <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
               <div className="flex gap-6">
-                {items.map((item, index) => (
+                {testimonial.items.map((item, index) => (
                   <TestimonialCard key={`row1-${index}`} item={item} />
                 ))}
               </div>
@@ -216,7 +228,7 @@ export default function page() {
             {/* ROW 2 */}
             <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
               <div className="flex gap-6">
-                {items.map((item, index) => (
+                {testimonial.items.map((item, index) => (
                   <TestimonialCard key={`row2-${index}`} item={item} />
                 ))}
               </div>

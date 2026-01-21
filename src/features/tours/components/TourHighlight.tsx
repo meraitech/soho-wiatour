@@ -7,7 +7,7 @@ import { TourCard } from './ui/TourCard'
 import { STYLE_MARGIN_CONTAINER } from '@/shared/constants/style/margin'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { Button } from '@/shared/components/ui/Button'
-import { Container } from '@/shared/components/ui/Container'
+import { Container } from '@/shared/components/provider/Container'
 
 export const TourHighlight = () => {
   const redRef = useRef<HTMLDivElement | null>(null)
@@ -76,7 +76,7 @@ export const TourHighlight = () => {
   }, [])
 
   return (
-    <section className={STYLE_MARGIN_CONTAINER + ' overflow-hidden'}>
+    <section className={'overflow-hidden'}>
       <Container className="flex max-md:flex-col items-center gap-12">
         {/* LEFT */}
         <div className="flex flex-col w-full md:max-w-70 shrink-0 gap-8 items-start">

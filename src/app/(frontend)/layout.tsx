@@ -1,9 +1,10 @@
 import React from 'react'
 import './styles.css'
+import { SmoothScrollProvider } from '@/shared/components/provider/SmoothScrollProvider'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  title: 'Wiatour',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
@@ -12,7 +13,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <main>{children}</main>
+        <SmoothScrollProvider>
+          <main>{children}</main>
+        </SmoothScrollProvider>
       </body>
     </html>
   )
