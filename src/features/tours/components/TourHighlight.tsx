@@ -8,6 +8,7 @@ import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { Button } from '@/shared/components/ui/Button'
 import { Container } from '@/shared/components/provider/Container'
 import { PreventClickOnDrag } from '@/shared/components/provider/PreventClickOnDrag'
+import { STYLE_MARGIN_CONTAINER } from '@/shared/constants/style/margin'
 
 export const TourHighlight = () => {
   const router = useRouter()
@@ -77,7 +78,7 @@ export const TourHighlight = () => {
   }, [])
 
   return (
-    <section className={'overflow-hidden'}>
+    <section className={'overflow-hidden' + STYLE_MARGIN_CONTAINER}>
       <Container className="flex max-md:flex-col items-center gap-12">
         {/* LEFT */}
         <div className="flex flex-col w-full md:max-w-70 shrink-0 gap-8 items-start">
