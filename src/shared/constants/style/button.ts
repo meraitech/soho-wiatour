@@ -18,5 +18,5 @@ export const STYLE_BUTTON_VARIANT = {
 export const STYLE_BUTTON_SIZE = {
     sm: "px-[var(--space-3)] py-[var(--space-1)] text-sm",
     md: "px-6 py-2",
-    lg: "px-8 py-3",
+    lg: "px-8 py-3 max-md:px-6 max-sm:px-4 max-md:py-2 max-md:text-sm max-sm:text-xs",
 } as const;

@@ -44,7 +44,7 @@ export function useBentoFlipScroll({
                     scrollTrigger: {
                         trigger: gallery,
                         start: 'center center',
-                        end: '+=100%',
+                        end: '+=200%',
                         scrub: true,
                         pin: wrap,
                     },
