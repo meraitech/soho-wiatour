@@ -1,6 +1,6 @@
 import React from 'react'
-import './styles.css'
 import { SmoothScrollProvider } from '@/shared/components/provider/SmoothScrollProvider'
+import '@/shared/styles/global.css'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
