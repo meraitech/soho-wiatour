@@ -10,7 +10,7 @@ import { faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons'
 import { TypographyH3 } from '@/shared/components/ui/TypographyH3'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { gsap, ScrollTrigger } from '@/shared/lib/gsap'
-import { ServiceCard } from '@/features/company/components/ServiceComponent'
+import { ServiceCard } from '@/features/company/components/ServiceCard'
 
 export default function page() {
   const text = id.landing
