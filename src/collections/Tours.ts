@@ -1,17 +1,22 @@
 import { formatSlug } from "@/shared/lib/utils";
 import { CollectionConfig } from "payload";
+import { checkRole, hasAnyRole } from "@/shared/lib/access";
 
 export const Tours: CollectionConfig = {
   slug: 'tours',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'status', 'createdAt'],
+    defaultColumns: ['thumbnail', 'title', 'status', 'createdAt'],
   },
   access: {
+    // Public read access - anyone can view tours
     read: () => true,
-    create: ({ req }) => !!req.user,
-    update: ({ req }) => !!req.user,
-    delete: ({ req }) => !!req.user
+    // Only admins and editors can create tours
+    create: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
+    // Only admins and editors can update tours
+    update: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
+    // Only admins can delete tours
+    delete: ({ req }) => checkRole(req.user, 'admin'),
   },
   fields: [
     //-- List Toure Page Data

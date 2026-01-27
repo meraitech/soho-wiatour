@@ -1,0 +1,41 @@
+// Custom Admin Styles for Wiatour
+// Using plain CSS instead of Tailwind @apply for Payload admin panel
+
+// Custom scrollbar for better aesthetics
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f3f4f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #9ca3af;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6b7280;
+}
+
+// Status badge colors (optional styling)
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-badge-published {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge-draft {
+  background-color: #fef3c7;
+  color: #92400e;
+}

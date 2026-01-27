@@ -1,8 +1,21 @@
 import type { CollectionConfig } from 'payload'
+import { checkRole, hasAnyRole } from '@/shared/lib/access'
 
 export const Media: CollectionConfig = {
   slug: 'media',
-
+  admin: {
+    defaultColumns: ['alt', 'updatedAt'],
+  },
+  access: {
+    // Public read access - images are used in frontend
+    read: () => true,
+    // Only admins and editors can upload media
+    create: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
+    // Only admins and editors can update media
+    update: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
+    // Only admins can delete media
+    delete: ({ req }) => checkRole(req.user, 'admin'),
+  },
   upload: {
     staticDir: 'media',
     mimeTypes: ['image/*'],

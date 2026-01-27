@@ -28,6 +28,11 @@ export default buildConfig({
           path: './shared/components/admin/Icon',
           exportName: 'Icon'
         }
+      },
+      views: {
+        Dashboard: {
+          Component: './shared/components/admin/Dashboard',
+        }
       }
     }
   },
