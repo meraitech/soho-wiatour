@@ -7,6 +7,13 @@ export class TestimonialService {
     return getPayloadHMR({ config: configPromise })
   }
 
+  /**
+   * Get all published testimonials with summary data (sorted by latest)
+   * @returns Array of testimonial summaries (id, name, quotes, image, status, createdAt)
+   * @example
+   * const testimonials = await TestimonialService.getAll()
+   * // Returns: [{ id: '1', name: 'John Doe', quotes: 'Great tour!', ... }]
+   */
   static async getAll(): Promise<TestimonialSummary[]> {
     const payload = await this.getPayload()
 
@@ -29,6 +36,14 @@ export class TestimonialService {
     return result.docs as TestimonialSummary[]
   }
 
+  /**
+   * Get published testimonials with full data
+   * @param limit - Maximum number of testimonials to return (default: 10)
+   * @returns Array of testimonial objects with full details
+   * @example
+   * const testimonials = await TestimonialService.getPublished(5)
+   * // Returns: [{ id: '1', name: 'John Doe', quotes: 'Great tour!', image: Media, ... }, ...]
+   */
   static async getPublished(limit?: number): Promise<Testimonial[]> {
     const payload = await this.getPayload()
 
@@ -45,6 +60,14 @@ export class TestimonialService {
     return result.docs as Testimonial[]
   }
 
+  /**
+   * Get a testimonial by its ID (including drafts)
+   * @param id - The testimonial ID
+   * @returns Testimonial object with full details or null if not found
+   * @example
+   * const testimonial = await TestimonialService.getById('abc123')
+   * // Returns: { id: 'abc123', name: 'John Doe', quotes: 'Great tour!', ... }
+   */
   static async getById(id: string): Promise<Testimonial | null> {
     const payload = await this.getPayload()
 
@@ -61,6 +84,13 @@ export class TestimonialService {
     }
   }
 
+  /**
+   * Get total count of published testimonials
+   * @returns Total number of published testimonials
+   * @example
+   * const count = await TestimonialService.getCount()
+   * // Returns: 25
+   */
   static async getCount(): Promise<number> {
     const payload = await this.getPayload()
 
