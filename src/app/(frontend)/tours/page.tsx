@@ -29,17 +29,6 @@ export default function page() {
          SECTION ALL TOURS 
       ====================================================== */}
       <AllToursSection />
-
-      {/* ======================================================
-         SECTION CTA 
-      ====================================================== */}
-      {/* <CTASection
-        item={{
-          quote: text.cta.quote,
-          button1: text.cta.button1,
-          button2: text.cta.button2,
-        }}
-      /> */}
     </div>
   )
 

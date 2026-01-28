@@ -12,7 +12,6 @@ import { STYLE_ROUNDED_CONTAINER } from '@/shared/constants/style/rounded'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
-import CTASection from '@/shared/components/CTASection'
 import id from '@/shared/assets/jsons/id.json'
 import { TypographyH3 } from '@/shared/components/ui/TypographyH3'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -53,17 +52,6 @@ export default function page() {
       <div className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <TourHighlight />
       </div>
-
-      {/* ======================================================
-          SECTION CTA 
-      ====================================================== */}
-      <CTASection
-        item={{
-          quote: text.cta.quote,
-          button1: text.cta.button1,
-          button2: text.cta.button2,
-        }}
-      />
     </div>
   )
 
