@@ -27,7 +27,7 @@
   --color-surface: #f8fafc;
   --color-surface-foreground: #020617;
 
-  --color-muted: #f1f5f9;
+  --color-muted: #d3d3d3;
   --color-muted-foreground: #64748b;
 
   --color-paragraph: #686868;
@@ -43,7 +43,7 @@
   /* =========================
      UI
   ========================= */
-  --color-border: #e5e7eb;
+  --color-border: #ffffff48;
   --color-border-muted: #f1f5f9;
 
   --color-ring: #0f172a;
@@ -92,6 +92,41 @@
 
   --color-disabled: var(--color-disabled);
   --color-disabled-foreground: var(--color-disabled-foreground);
+
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards)
+    linear infinite;
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
+  }
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right linear infinite;
 }
 
 .no-scrollbar {
@@ -103,4 +138,19 @@
   grid-template-columns: repeat(3, 100vw);
   grid-template-rows: repeat(4, 49.5vh);
   gap: 1vh;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade {
+  animation: fade 0.4s ease-out;
 }

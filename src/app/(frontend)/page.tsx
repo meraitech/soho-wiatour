@@ -1,29 +1,28 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
-import {
-  STYLE_MARGIN_CONTAINER,
-  STYLE_MARGIN_CONTAINER_BOTTOM,
-} from '@/shared/constants/style/margin'
+import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
 
-import { faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faComputerMouse } from '@fortawesome/free-solid-svg-icons'
 
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
 import { TitleSmallWithIcon } from '@/shared/components/ui/TitleSmallWithIcon'
-import { ServiceComponent } from '@/features/company/components/ServiceComponent'
 
 import id from '@/shared/assets/jsons/id.json'
 import { useBentoFlipScroll } from '@/features/company/hooks/useBentoFlipScroll'
 import { VelocityScroller } from '@/shared/components/ScrollVelocity'
 import { TestimonialCard } from '@/features/company/components/TestimonialCard'
 import CTASection from '@/shared/components/CTASection'
+import { gsap, ScrollTrigger } from '@/shared/lib/gsap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { OurServiceSection } from '@/features/company/components/OurServiceSection'
 
 /* ======================================================
    PAGE — Landing Page (Main Page)
@@ -32,7 +31,7 @@ import CTASection from '@/shared/components/CTASection'
 export default function page() {
   const text = id.landing
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* ======================================================
          SECTION HERO
       ====================================================== */}
@@ -57,17 +56,6 @@ export default function page() {
          SECTION TESTIMONIALS 
       ====================================================== */}
       <TestimonialSection />
-
-      {/* ======================================================
-         SECTION CTA 
-      ====================================================== */}
-      <CTASection
-        item={{
-          quote: text.cta.quote,
-          button1: text.cta.button1,
-          button2: text.cta.button2,
-        }}
-      />
     </div>
   )
 
@@ -80,6 +68,36 @@ export default function page() {
   function HeroSection() {
     const wrapRef = useRef<HTMLDivElement | null>(null)
     const galleryRef = useRef<HTMLDivElement | null>(null)
+
+    useLayoutEffect(() => {
+      const ctx = gsap.context(() => {
+        const heroTitle = gsap.utils.toArray<HTMLDivElement>('.hero-title')
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: wrapRef.current,
+            start: 'top top',
+            end: 'center top',
+            scrub: true,
+          },
+        })
+
+        tl.to(heroTitle, {
+          autoAlpha: 0,
+        })
+
+        tl.from(
+          galleryRef.current,
+          {
+            opacity: 0.7,
+            ease: 'none',
+          },
+          '<',
+        )
+      }, wrapRef)
+
+      return () => ctx.revert()
+    }, [])
 
     useBentoFlipScroll({ wrapRef, galleryRef })
 
@@ -96,8 +114,8 @@ export default function page() {
 
     const images = [
       'https://images.unsplash.com/photo-1718876688960-4ae86c2f33d1?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1578167635658-84df281b1b27?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1616895727759-dd84a2690433?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1500981458086-b8a11cd163af?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1626603503426-deaafeccedc9?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'https://images.unsplash.com/photo-1595628218785-bf323bcc3ecc?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'https://images.unsplash.com/photo-1741320159899-df923b71de08?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'https://images.unsplash.com/photo-1712141481069-793132cc5769?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -107,16 +125,15 @@ export default function page() {
     return (
       <section
         ref={wrapRef}
-        className="relative w-full h-screen bg-foreground flex items-center justify-center overflow-hidden"
+        className="relative w-full bg-foreground h-screen flex items-center justify-center overflow-hidden"
       >
         <div
           ref={galleryRef}
           className="
-          grid gap-[1vh]
+          grid gap-[1.5vh]
           grid-cols-[repeat(3,32.5vw)]
           grid-rows-[repeat(4,23vh)]
           justify-center content-center
-          opacity-40
         "
         >
           {images.map((src, i) => (
@@ -129,13 +146,20 @@ export default function page() {
           ))}
         </div>
 
-        <div className="z-5 text-background flex flex-col items-center gap-12 max-w-4xl absolute">
-          <TypographyH1 className="text-center">{text.hero.title}</TypographyH1>
-          <div className="flex gap-6">
-            <Button size="lg">{text.hero.ctaPrimary}</Button>
-            <Button variant="monocrome_white" size="lg">
-              {text.hero.ctaSecondary}
-            </Button>
+        <div className="hero-title z-5 text-background flex flex-col items-center absolute w-full h-full top-0 left-0 justify-between py-10">
+          <div />
+          <div className="flex flex-col items-center lg:gap-12 md:gap-8 gap-6 xl:max-w-5xl lg:max-w-4xl md:max-w-3xl sm:max-w-2xl max-xl duration-300">
+            <TypographyH1 className="text-center">{text.hero.title}</TypographyH1>
+            <div className="flex md:gap-6 gap-4">
+              <Button size="lg">{text.hero.ctaPrimary}</Button>
+              <Button variant="monocrome_white" size="lg">
+                {text.hero.ctaSecondary}
+              </Button>
+            </div>
+          </div>
+          <div className="flex items-center border py-2 px-4 rounded-full md:gap-4 gap-2 text-background/30 text-sm animate-bounce backdrop-blur-sm">
+            <span>Scroll Down</span>
+            <FontAwesomeIcon icon={faComputerMouse} />
           </div>
         </div>
       </section>
@@ -148,11 +172,13 @@ export default function page() {
   function AboutSection() {
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
-        <Container className="grid md:grid-cols-2 gap-8">
+        <div className={STYLE_MARGIN_CONTAINER_TOP}></div>
+        <Container className={'grid md:grid-cols-2 gap-8'}>
           {/* left  */}
-          <div className="flex flex-col justify-between items-start gap-10 md:max-w-100">
+          <div className="flex flex-col justify-center items-start gap-14 md:max-w-100">
             <div className="flex flex-col gap-6 items-start">
-              <TitleSmallWithIcon text={text.about.titleSmall} icon={faBuilding} />
+              {/* <TitleSmallWithIcon text={text.about.titleSmall} icon={faBuilding} /> */}
+              <span>{text.about.titleSmall}</span>
               <TypographyH2 className="mt-2">{text.about.title}</TypographyH2>
               <TypographyP>{text.about.description}</TypographyP>
             </div>
@@ -160,9 +186,9 @@ export default function page() {
           </div>
 
           {/* right  */}
-          <div className="bg-muted border">
+          <div className="bg-muted rounded-2xl overflow-hidden">
             <img
-              src="/brand/logo-mark.svg"
+              src="https://plus.unsplash.com/premium_photo-1718146017949-c54d1fd3854d?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt=""
               className="object-cover md:aspect-6/7 aspect-4/3 duration-300"
             />
@@ -173,30 +199,121 @@ export default function page() {
   }
 
   /* ======================================================
-   SECTION SERVICES
-  ====================================================== */
-  function OurServiceSection() {
-    const ourServices = text.services.items
+     SECTION SERVICES
+    ====================================================== */
+  // function OurServiceSection() {
+  //   const ourServices = text.services.items
+  //   const serviceWrapRef = useRef<HTMLDivElement | null>(null)
+  //   const serviceLeftRef = useRef<HTMLDivElement | null>(null)
+  //   const serviceImageRef = useRef<HTMLImageElement | null>(null)
+  //   const serviceActiveIndexRef = useRef<number>(0)
 
-    return (
-      <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
-        <Container className="flex flex-col items-center gap-12">
-          <HeaderSection
-            titleSmall={text.services.header.titleSmall}
-            title={text.services.header.title}
-          />
-          {ourServices.map((item, index) => (
-            <ServiceComponent
-              key={index}
-              title_small={item.titleSmall}
-              title={item.title}
-              paragraph={item.paragraph}
-            />
-          ))}
-        </Container>
-      </section>
-    )
-  }
+  //   useLayoutEffect(() => {
+  //     const ctx = gsap.context(() => {
+  //       const steps = gsap.utils.toArray<HTMLElement>('.service-step')
+  //       if (!steps.length) return
+
+  //       const firstStep = steps[0]
+  //       const lastStep = steps[steps.length - 1]
+
+  //       // 1. PIN LEFT — berbasis step pertama & terakhir
+  //       ScrollTrigger.create({
+  //         trigger: firstStep,
+  //         start: 'top 30%',
+  //         endTrigger: lastStep,
+  //         end: 'bottom center',
+  //         pin: serviceLeftRef.current,
+  //         pinSpacing: true,
+  //         anticipatePin: 1,
+  //       })
+
+  //       // 2. IMAGE SWAP — dikontrol oleh tiap step
+  //       steps.forEach((step, index) => {
+  //         ScrollTrigger.create({
+  //           trigger: step,
+  //           start: 'top center',
+  //           end: 'bottom center',
+  //           onEnter: () => swapImage(index),
+  //           onEnterBack: () => swapImage(index),
+  //         })
+  //       })
+
+  //       function swapImage(index: number) {
+  //         if (serviceActiveIndexRef.current === index) return
+
+  //         serviceActiveIndexRef.current = index
+
+  //         const src = ourServices[index].imgUrl
+  //         if (!serviceImageRef.current) return
+
+  //         gsap.to(serviceImageRef.current, {
+  //           autoAlpha: 0,
+  //           duration: 0.25,
+  //           onComplete: () => {
+  //             serviceImageRef.current!.src = src
+  //             gsap.to(serviceImageRef.current, {
+  //               autoAlpha: 1,
+  //               duration: 0.25,
+  //             })
+  //           },
+  //         })
+  //       }
+  //     }, serviceWrapRef)
+
+  //     const onResize = () => {
+  //       ScrollTrigger.refresh()
+  //     }
+
+  //     window.addEventListener('resize', onResize)
+
+  //     return () => {
+  //       window.removeEventListener('resize', onResize)
+  //       ctx.revert()
+  //     }
+  //   }, [])
+
+  //   return (
+  //     <section className={STYLE_MARGIN_CONTAINER}>
+  //       <Container className="flex flex-col items-center">
+  //         <HeaderSection
+  //           titleSmall={text.services.header.titleSmall}
+  //           title={text.services.header.title}
+  //         />
+  //         <div className={STYLE_MARGIN_CONTAINER_TOP} />
+
+  //         <div ref={serviceWrapRef} className="w-full grid md:grid-cols-2 gap-8">
+  //           {/* left  */}
+  //           <div
+  //             ref={serviceLeftRef}
+  //             className="w-full bg-muted md:aspect-square aspect-4/3 max-md:order-2 rounded-2xl overflow-hidden"
+  //           >
+  //             <img
+  //               ref={serviceImageRef}
+  //               src={ourServices[0].imgUrl}
+  //               alt=""
+  //               className="object-cover w-full h-full"
+  //             />
+  //           </div>
+
+  //           {/* right  */}
+  //           <section className="flex flex-col items-center">
+  //             {ourServices.map((item, index) => {
+  //               return (
+  //                 <ServiceCard
+  //                   key={index}
+  //                   title_small={item.titleSmall}
+  //                   title={item.title}
+  //                   paragraph={item.paragraph}
+  //                   isLast={ourServices.length === index + 1}
+  //                 />
+  //               )
+  //             })}
+  //           </section>
+  //         </div>
+  //       </Container>
+  //     </section>
+  //   )
+  // }
 
   /* ======================================================
    SECTION TESTIMONIAL
@@ -206,11 +323,12 @@ export default function page() {
 
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
-        <Container className="flex flex-col items-center gap-12 relative overflow-hidden ">
+        <Container className="flex flex-col items-center relative overflow-hidden ">
           <HeaderSection
             titleSmall={testimonial.header.titleSmall}
             title={testimonial.header.title}
           />
+          <div className={STYLE_MARGIN_CONTAINER_TOP} />
 
           <div className="flex flex-col gap-6 relative w-full">
             <div className="bg-linear-to-r from-background w-30 h-full absolute left-0 top-0 z-5" />
