@@ -138,7 +138,7 @@ export function OurServiceSection() {
           {/* LEFT — IMAGE */}
           <div
             ref={leftRef}
-            className="w-full bg-muted md:aspect-square aspect-4/3 rounded-2xl overflow-hidden max-md:order-2"
+            className="w-full max-md:hidden bg-muted md:aspect-square aspect-4/3 rounded-2xl overflow-hidden max-md:order-2"
           >
             <img
               ref={imageRef}

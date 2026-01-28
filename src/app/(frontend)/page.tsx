@@ -56,19 +56,6 @@ export default function page() {
          SECTION TESTIMONIALS 
       ====================================================== */}
       <TestimonialSection />
-
-      {/* ======================================================
-         SECTION CTA 
-      ====================================================== */}
-      {/* <div className={STYLE_MARGIN_CONTAINER_TOP}>
-        <CTASection
-          item={{
-            quote: text.cta.quote,
-            button1: text.cta.button1,
-            button2: text.cta.button2,
-          }}
-        />
-      </div> */}
     </div>
   )
 
