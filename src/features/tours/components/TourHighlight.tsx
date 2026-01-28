@@ -111,7 +111,7 @@ export const TourHighlight = () => {
                   scrollRef={scrollRef}
                   startScrollLeftRef={startScrollLeftRef}
                 >
-                  <TourCard width="w-[330px]" />
+                  <TourCard width="md:w-[330px] w-[270px]" />
                 </PreventClickOnDrag>
               ))}
             </div>

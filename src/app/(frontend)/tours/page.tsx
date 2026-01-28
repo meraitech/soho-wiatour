@@ -33,13 +33,13 @@ export default function page() {
       {/* ======================================================
          SECTION CTA 
       ====================================================== */}
-      <CTASection
+      {/* <CTASection
         item={{
           quote: text.cta.quote,
           button1: text.cta.button1,
           button2: text.cta.button2,
         }}
-      />
+      /> */}
     </div>
   )
 
@@ -53,7 +53,7 @@ export default function page() {
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
         <Container>
-          <div className="max-w-2xl mx-auto text-center flex flex-col gap-8 items-center">
+          <div className="md:max-w-3xl max-w-2xl mx-auto text-center flex flex-col gap-8 items-center">
             <span>Paket Perjalanan</span>
             <TypographyH1>Temukan Perjalanan yang Tepat untuk Anda</TypographyH1>
 
@@ -75,7 +75,7 @@ export default function page() {
     return (
       <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <h2 className="sr-only">All Tours</h2>
-        <Container className="grid grid-cols-3 gap-6">
+        <Container className="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
           {Array.from({ length: 10 }).map((item, index) => (
             <TourCard key={'tour:' + index} />
           ))}

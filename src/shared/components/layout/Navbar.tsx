@@ -5,28 +5,36 @@ import Link from 'next/link'
 export const Navbar = () => {
   const listNav = [
     {
-      url: '/tours',
-      label: 'Tours',
-    },
-    {
       url: '/about',
       label: 'About',
+    },
+    {
+      url: '/tours',
+      label: 'Tours',
     },
     {
       url: '/service',
       label: 'Services',
     },
+    {
+      url: '/testimonial',
+      label: 'Testimonials',
+    },
   ]
   return (
-    <header className="fixed top-0 left-0 w-full z-50 flex justify-center p-4">
-      <div className="relative border border-foreground/20 bg-background backdrop-blur-xs rounded-full p-3 flex items-center gap-28">
-        <nav className="w-60">
-          <ul className="flex gap-4 px-3">
+    <header className="fixed top-0 left-0 w-full z-50">
+      <div className="relative bg-background py-3 lg:px-10 md:px-8 px-6 flex items-center justify-between lg:gap-28">
+        <Link href={'/'} className="sm:w-40 shrink-0">
+          <img src="/brand/logo/hb-1.webp" alt="" className="h-7 object-contain" />
+        </Link>
+
+        <nav className="max-lg:hidden">
+          <ul className="flex gap-4">
             {listNav.map((item, index) => (
               <li key={index}>
                 <Link
                   href={item.url}
-                  className="text-paragraph hover:text-foreground hover:font-medium duration-300"
+                  className="text-foreground/70 hover:text-foreground duration-300"
                 >
                   {item.label}
                 </Link>
@@ -35,10 +43,8 @@ export const Navbar = () => {
           </ul>
         </nav>
 
-        <img src="/brand/logo/hb-1.webp" alt="" className="h-7" />
-
-        <div className="w-60 flex justify-end">
-          <Button>Hubungi Kami</Button>
+        <div className="sm:w-40 flex justify-end shrink-0">
+          <Button size="sm">Hubungi Kami</Button>
         </div>
       </div>
     </header>

@@ -14,7 +14,6 @@ import { faBuilding, faComputerMouse } from '@fortawesome/free-solid-svg-icons'
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
 import { TitleSmallWithIcon } from '@/shared/components/ui/TitleSmallWithIcon'
-import { ServiceCard } from '@/features/company/components/ServiceCard'
 
 import id from '@/shared/assets/jsons/id.json'
 import { useBentoFlipScroll } from '@/features/company/hooks/useBentoFlipScroll'
@@ -61,7 +60,7 @@ export default function page() {
       {/* ======================================================
          SECTION CTA 
       ====================================================== */}
-      <div className={STYLE_MARGIN_CONTAINER_TOP}>
+      {/* <div className={STYLE_MARGIN_CONTAINER_TOP}>
         <CTASection
           item={{
             quote: text.cta.quote,
@@ -69,7 +68,7 @@ export default function page() {
             button2: text.cta.button2,
           }}
         />
-      </div>
+      </div> */}
     </div>
   )
 
@@ -103,7 +102,7 @@ export default function page() {
         tl.from(
           galleryRef.current,
           {
-            opacity: 0.15,
+            opacity: 0.7,
             ease: 'none',
           },
           '<',
@@ -191,7 +190,8 @@ export default function page() {
           {/* left  */}
           <div className="flex flex-col justify-center items-start gap-14 md:max-w-100">
             <div className="flex flex-col gap-6 items-start">
-              <TitleSmallWithIcon text={text.about.titleSmall} icon={faBuilding} />
+              {/* <TitleSmallWithIcon text={text.about.titleSmall} icon={faBuilding} /> */}
+              <span>{text.about.titleSmall}</span>
               <TypographyH2 className="mt-2">{text.about.title}</TypographyH2>
               <TypographyP>{text.about.description}</TypographyP>
             </div>

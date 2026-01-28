@@ -149,13 +149,14 @@ export function OurServiceSection() {
           </div>
 
           {/* RIGHT — STEPS */}
-          <section className="flex flex-col items-center">
+          <section className="flex flex-col items-center gap-12">
             {ourServices.map((item, i) => (
               <ServiceCard
                 key={i}
                 title_small={item.titleSmall}
                 title={item.title}
                 paragraph={item.paragraph}
+                image={item.imgUrl} // ⬅️ PENTING
                 isLast={ourServices.length === i + 1}
               />
             ))}

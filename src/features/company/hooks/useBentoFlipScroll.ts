@@ -25,21 +25,33 @@ export function useBentoFlipScroll({
         const items = gallery.querySelectorAll<HTMLElement>('.gallery-item')
 
         const createTween = () => {
-            // === 1:1 dengan kode mentah ===
-            flipCtxRef.current && flipCtxRef.current.revert()
+            // 🧨 KILL SEBELUM REBUILD
+            flipCtxRef.current?.revert()
             gallery.classList.remove(finalClass)
 
             flipCtxRef.current = gsap.context(() => {
-                // capture FINAL state
-                gallery.classList.add(finalClass)
+                /**
+                 * 1️⃣ CAPTURE STATE AWAL (SATU BESAR)
+                 * layout awal = TANPA finalClass
+                 */
                 const state = Flip.getState(items)
-                gallery.classList.remove(finalClass)
 
+                /**
+                 * 2️⃣ APPLY GRID (BANYAK)
+                 */
+                gallery.classList.add(finalClass)
+
+                /**
+                 * 3️⃣ FLIP MENUJU GRID
+                 */
                 const flip = Flip.to(state, {
                     simple: true,
                     ease: 'expoScale(1, 5)',
                 })
 
+                /**
+                 * 4️⃣ SCROLL CONTROL
+                 */
                 const tl = gsap.timeline({
                     scrollTrigger: {
                         trigger: gallery,
@@ -52,8 +64,9 @@ export function useBentoFlipScroll({
 
                 tl.add(flip)
 
-                // 🔑 SAMA PERSIS DENGAN KODE MENTAH
-                return () => gsap.set(items, { clearProps: 'all' })
+                return () => {
+                    gsap.set(items, { clearProps: 'all' })
+                }
             })
         }
 
