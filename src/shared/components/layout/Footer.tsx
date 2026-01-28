@@ -16,18 +16,20 @@ export const Footer = () => {
         <img
           src="/images/footer.webp"
           alt=""
-          className="object-bottom w-full h-full object-cover"
+          className="object-[50%_80%] w-full h-full object-cover"
         />
       </div>
       <Container className="z-3 w-full">
         <section className="h-full flex flex-col justify-between gap-12">
-          <CTASection
-            item={{
-              quote: text.cta.quote,
-              button1: text.cta.button1,
-              button2: text.cta.button2,
-            }}
-          />
+          <div className="h-full flex items-center justify-center">
+            <CTASection
+              item={{
+                quote: text.cta.quote,
+                button1: text.cta.button1,
+                button2: text.cta.button2,
+              }}
+            />
+          </div>
           <div className="flex justify-between text-background">
             <div className="flex flex-col justify-between gap-20">
               <div>
@@ -46,10 +48,6 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-          {/* <p>adsasd</p>
-        <span>adsads</span>
-        <span>adsads</span>
-        <span>adsads</span> */}
         </section>
       </Container>
     </footer>

@@ -10,6 +10,7 @@ export const Navbar = () => {
       bgColor: '#0D0716',
       textColor: '#fff',
       links: [
+        { label: 'Landing Page', href: '/', ariaLabel: 'Landing Page' },
         { label: 'Services', href: '/service', ariaLabel: 'Our Services' },
         { label: 'Testimonials', href: '/testimonial', ariaLabel: 'Testimony Clients' },
       ],
