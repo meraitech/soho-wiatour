@@ -1,3 +1,4 @@
+import { TourHighlight } from '@/features/tours/components/TourHighlight'
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
@@ -37,6 +38,12 @@ export default function page() {
          SECTION CEO QUOTES
       ====================================================== */}
       <VisionMissionSection />
+
+      {/* ======================================================
+         SECTION TOUR HIGHLIGHT
+      ====================================================== */}
+      <TourHighlight />
+      <div className={STYLE_MARGIN_CONTAINER_BOTTOM} />
     </div>
   )
 
