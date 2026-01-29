@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { TourCard } from './ui/TourCard'
@@ -9,17 +9,48 @@ import { Button } from '@/shared/components/ui/Button'
 import { Container } from '@/shared/components/provider/Container'
 import { PreventClickOnDrag } from '@/shared/components/provider/PreventClickOnDrag'
 import { STYLE_MARGIN_CONTAINER } from '@/shared/constants/style/margin'
+import { TourSummary } from '../types'
 
-export const TourHighlight = () => {
+type RelatedToursResponse = { tours: TourSummary[] }
+
+export const TourHighlight = ({ currentTourId }: { currentTourId: string }) => {
   const router = useRouter()
   const redRef = useRef<HTMLDivElement | null>(null)
   const scrollRef = useRef<HTMLDivElement | null>(null)
+  const [tours, setTours] = useState<TourSummary[]>([])
 
   // 🔑 satu-satunya state kebenaran
   const startScrollLeftRef = useRef(0)
   const isMouseDownRef = useRef(false)
 
   const [breakoutWidth, setBreakoutWidth] = useState<number | null>(null)
+
+  useEffect(() => {
+    const controller = new AbortController()
+    let isMounted = true
+
+    const loadTours = async () => {
+      const params = new URLSearchParams()
+      if (currentTourId) params.set('currentTourId', currentTourId)
+      params.set('limit', '6')
+
+      const response = await fetch(`/api/tours/related?${params.toString()}`, {
+        signal: controller.signal,
+      })
+
+      if (!response.ok) return
+
+      const data = (await response.json()) as RelatedToursResponse
+      if (isMounted) setTours(data.tours ?? [])
+    }
+
+    loadTours().catch(() => {})
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }, [currentTourId])
 
   /* =========================
      BREAKOUT WIDTH
@@ -105,13 +136,19 @@ export const TourHighlight = () => {
             style={{ width: breakoutWidth ?? 'auto' }}
           >
             <div className="flex w-max gap-4">
-              {Array.from({ length: 7 }).map((_, i) => (
+              {tours.map((item, i) => (
                 <PreventClickOnDrag
                   key={i}
                   scrollRef={scrollRef}
                   startScrollLeftRef={startScrollLeftRef}
                 >
-                  <TourCard width="md:w-[330px] w-[270px]" />
+                  <TourCard
+                    width="md:w-[330px] w-[270px]"
+                    slug={item.slug}
+                    imgUrl={item.thumbnail.url!}
+                    title={item.title}
+                    imgAlt={item.thumbnail.alt}
+                  />
                 </PreventClickOnDrag>
               ))}
             </div>

@@ -9,18 +9,16 @@ import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
 import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
 
-import { faBuilding, faComputerMouse } from '@fortawesome/free-solid-svg-icons'
+import { faComputerMouse } from '@fortawesome/free-solid-svg-icons'
 
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
-import { TitleSmallWithIcon } from '@/shared/components/ui/TitleSmallWithIcon'
 
 import id from '@/shared/assets/jsons/id.json'
 import { useBentoFlipScroll } from '@/features/company/hooks/useBentoFlipScroll'
 import { VelocityScroller } from '@/shared/components/ScrollVelocity'
 import { TestimonialCard } from '@/features/company/components/TestimonialCard'
-import CTASection from '@/shared/components/CTASection'
-import { gsap, ScrollTrigger } from '@/shared/lib/gsap'
+import { gsap } from '@/shared/lib/gsap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OurServiceSection } from '@/features/company/components/OurServiceSection'
 
@@ -50,7 +48,7 @@ export default function page() {
       {/* ======================================================
          SECTION TOUR HIGHLIGHT
       ====================================================== */}
-      <TourHighlight />
+      <TourHighlight currentTourId="" />
 
       {/* ======================================================
          SECTION TESTIMONIALS 
@@ -197,123 +195,6 @@ export default function page() {
       </section>
     )
   }
-
-  /* ======================================================
-     SECTION SERVICES
-    ====================================================== */
-  // function OurServiceSection() {
-  //   const ourServices = text.services.items
-  //   const serviceWrapRef = useRef<HTMLDivElement | null>(null)
-  //   const serviceLeftRef = useRef<HTMLDivElement | null>(null)
-  //   const serviceImageRef = useRef<HTMLImageElement | null>(null)
-  //   const serviceActiveIndexRef = useRef<number>(0)
-
-  //   useLayoutEffect(() => {
-  //     const ctx = gsap.context(() => {
-  //       const steps = gsap.utils.toArray<HTMLElement>('.service-step')
-  //       if (!steps.length) return
-
-  //       const firstStep = steps[0]
-  //       const lastStep = steps[steps.length - 1]
-
-  //       // 1. PIN LEFT — berbasis step pertama & terakhir
-  //       ScrollTrigger.create({
-  //         trigger: firstStep,
-  //         start: 'top 30%',
-  //         endTrigger: lastStep,
-  //         end: 'bottom center',
-  //         pin: serviceLeftRef.current,
-  //         pinSpacing: true,
-  //         anticipatePin: 1,
-  //       })
-
-  //       // 2. IMAGE SWAP — dikontrol oleh tiap step
-  //       steps.forEach((step, index) => {
-  //         ScrollTrigger.create({
-  //           trigger: step,
-  //           start: 'top center',
-  //           end: 'bottom center',
-  //           onEnter: () => swapImage(index),
-  //           onEnterBack: () => swapImage(index),
-  //         })
-  //       })
-
-  //       function swapImage(index: number) {
-  //         if (serviceActiveIndexRef.current === index) return
-
-  //         serviceActiveIndexRef.current = index
-
-  //         const src = ourServices[index].imgUrl
-  //         if (!serviceImageRef.current) return
-
-  //         gsap.to(serviceImageRef.current, {
-  //           autoAlpha: 0,
-  //           duration: 0.25,
-  //           onComplete: () => {
-  //             serviceImageRef.current!.src = src
-  //             gsap.to(serviceImageRef.current, {
-  //               autoAlpha: 1,
-  //               duration: 0.25,
-  //             })
-  //           },
-  //         })
-  //       }
-  //     }, serviceWrapRef)
-
-  //     const onResize = () => {
-  //       ScrollTrigger.refresh()
-  //     }
-
-  //     window.addEventListener('resize', onResize)
-
-  //     return () => {
-  //       window.removeEventListener('resize', onResize)
-  //       ctx.revert()
-  //     }
-  //   }, [])
-
-  //   return (
-  //     <section className={STYLE_MARGIN_CONTAINER}>
-  //       <Container className="flex flex-col items-center">
-  //         <HeaderSection
-  //           titleSmall={text.services.header.titleSmall}
-  //           title={text.services.header.title}
-  //         />
-  //         <div className={STYLE_MARGIN_CONTAINER_TOP} />
-
-  //         <div ref={serviceWrapRef} className="w-full grid md:grid-cols-2 gap-8">
-  //           {/* left  */}
-  //           <div
-  //             ref={serviceLeftRef}
-  //             className="w-full bg-muted md:aspect-square aspect-4/3 max-md:order-2 rounded-2xl overflow-hidden"
-  //           >
-  //             <img
-  //               ref={serviceImageRef}
-  //               src={ourServices[0].imgUrl}
-  //               alt=""
-  //               className="object-cover w-full h-full"
-  //             />
-  //           </div>
-
-  //           {/* right  */}
-  //           <section className="flex flex-col items-center">
-  //             {ourServices.map((item, index) => {
-  //               return (
-  //                 <ServiceCard
-  //                   key={index}
-  //                   title_small={item.titleSmall}
-  //                   title={item.title}
-  //                   paragraph={item.paragraph}
-  //                   isLast={ourServices.length === index + 1}
-  //                 />
-  //               )
-  //             })}
-  //           </section>
-  //         </div>
-  //       </Container>
-  //     </section>
-  //   )
-  // }
 
   /* ======================================================
    SECTION TESTIMONIAL

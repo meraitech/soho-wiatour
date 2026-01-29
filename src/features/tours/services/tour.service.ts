@@ -1,6 +1,69 @@
 import { getPayloadHMR } from "@payloadcms/next/utilities";
 import configPromise from '@payload-config';
 import { Tour, TourSummary } from "../types";
+import { getPayload } from 'payload';
+import config from '@payload-config'
+
+export async function getAll(): Promise<TourSummary[]> {
+  const payload = await getPayload({ config })
+
+  const result = await payload.find({
+    collection: 'tours',
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      thumbnail: true,
+      description: true,
+      status: true,
+      createdAt: true,
+    },
+    where: {
+      status: { equals: 'published' }
+    },
+  })
+
+  return result.docs as TourSummary[]
+}
+
+export async function getById(id: string): Promise<Tour | null> {
+  const payload = await getPayload({ config })
+
+  try {
+    const tour = await payload.findByID({
+      collection: 'tours',
+      id,
+      depth: 2
+    })
+
+    return tour as Tour
+  } catch {
+    return null
+  }
+}
+
+export async function getRelated(currentTourId: string, limit = 6): Promise<Tour[]> {
+  const payload = await getPayload({ config })
+
+  const currentTour = await getById(currentTourId)
+
+  if (currentTour?.relatedTours && currentTour.relatedTours.length > 0) {
+    return currentTour.relatedTours.slice(0, limit) as Tour[]
+  }
+
+  const result = await payload.find({
+    collection: 'tours',
+    where: {
+      status: { equals: 'published' },
+      id: { not_equals: currentTourId },
+    },
+    sort: '-createdAt',
+    limit,
+    depth: 1,
+  })
+
+  return result.docs as Tour[]
+}
 
 export class TourService {
   private static async getPayload() {
@@ -64,7 +127,7 @@ export class TourService {
     }
   }
 
-  static async getRelated(currentTourId: string, limit: 6): Promise<Tour[]> {
+  static async getRelated(currentTourId: string, limit = 6): Promise<Tour[]> {
     const payload = await this.getPayload()
 
     const currentTour = await this.getById(currentTourId)

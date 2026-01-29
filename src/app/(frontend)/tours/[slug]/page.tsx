@@ -1,5 +1,4 @@
-'use client'
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
@@ -11,19 +10,28 @@ import {
 import { STYLE_ROUNDED_CONTAINER } from '@/shared/constants/style/rounded'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
-import { TourHighlight } from '@/features/tours/components/TourHighlight'
 import id from '@/shared/assets/jsons/id.json'
-import { TypographyH3 } from '@/shared/components/ui/TypographyH3'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { InfiniteMovingCards } from '@/shared/components/ui/InfiniteMovingCard'
+import { TourService } from '@/features/tours/services'
+import ItinerarySection from '@/features/tours/components/ItinerarySection'
+import { notFound } from 'next/navigation'
 
 /* ======================================================
    PAGE — Tour Detail
 ====================================================== */
+type PageProps = {
+  params: {
+    slug: string
+  }
+}
 
-export default function page() {
+export default async function page({ params }: PageProps) {
   const text = id.landing
+  const { slug } = params
+  const tour = await TourService.getBySlug(slug)
+
+  if (!tour) notFound()
+
   return (
     <div>
       {/* ======================================================
@@ -39,18 +47,18 @@ export default function page() {
       {/* ======================================================
          SECTION ITINERARY
       ====================================================== */}
-      <ItinerarySection />
+      {tour?.itenararies && <ItinerarySection itenararies={tour?.itenararies} />}
 
       {/* ======================================================
-         SECTION IMAGE TRAIL❌
+         SECTION IMAGE TRAIL
       ====================================================== */}
-      <FootageSection />
+      {/* <FootageSection /> */}
 
       {/* ======================================================
           SECTION TOUR HIGHLIGHT
       ====================================================== */}
       <div className={STYLE_MARGIN_CONTAINER_BOTTOM}>
-        <TourHighlight />
+        {/* {tour?.id && <TourHighlight currentTourId={tour.id} />} */}
       </div>
     </div>
   )
@@ -67,13 +75,17 @@ export default function page() {
         <Container className="flex flex-col gap-20">
           <div className="max-w-4xl mx-auto text-center flex flex-col gap-8 items-center">
             <span>Paket Wisata Internasional</span>
-            <TypographyH1>Tour 3 Negara Singapura, Malaysia dan Thailand</TypographyH1>
+            <TypographyH1>{tour?.title}</TypographyH1>
             <Button className="mt-4">Pesan Sekarang</Button>
           </div>
 
           {/* img  */}
           <div className={'w-full aspect-video overflow-hidden relative' + STYLE_ROUNDED_CONTAINER}>
-            <img src="/images/footer.webp" alt="" className="w-full h-full object-cover" />
+            <img
+              src={tour?.heroImage.url!}
+              alt={tour?.heroImage.alt}
+              className="w-full h-full object-cover"
+            />
           </div>
         </Container>
       </section>
@@ -90,15 +102,7 @@ export default function page() {
           <div className="grid md:grid-cols-2 gap-12">
             <div className="flex flex-col gap-4 justify-center">
               <TypographyH2 className="mb-4">Detail Perjalanan</TypographyH2>
-              <TypographyP>
-                Perjalanan ini dirancang untuk Anda yang ingin menjelajahi tiga negara Asia Tenggara
-                dalam satu rangkaian perjalanan yang efisien dan nyaman. Setiap destinasi dipilih
-                untuk memberikan keseimbangan antara wisata kota, budaya, dan pengalaman lokal.
-              </TypographyP>
-              <TypographyP>
-                Selama perjalanan, Anda akan mengunjungi landmark ikonik, pusat perbelanjaan, serta
-                area wisata populer yang menjadi daya tarik utama di masing-masing negara.
-              </TypographyP>
+              <TypographyP>{tour?.description}</TypographyP>
             </div>
             <div className="ml-auto bg-accent w-full md:max-w-120 max-md:aspect-5/3 aspect-square"></div>
           </div>
@@ -123,120 +127,8 @@ export default function page() {
   }
 
   /* ======================================================
-     SECTION TOUR HIGHLIGHT
+     SECTION FOOTAGE
     ====================================================== */
-  function ItinerarySection() {
-    const itinerary = [
-      {
-        imgUrl: '',
-        title: 'Day 1: Ngumpul di Bandara',
-        description:
-          'Hari ini peserta akan mengunjungi berbagai ikon wisata Singapura, termasuk kawasan kota modern dan destinasi populer.',
-      },
-      {
-        imgUrl: '',
-        title: 'Day 2: City Tour Singapura',
-        description:
-          'Hari ini peserta akan mengunjungi berbagai ikon wisata Singapura, termasuk kawasan kota modern dan destinasi populer.',
-      },
-      {
-        imgUrl: '',
-        title: 'Day 3: Singapura - Johor Bahru',
-        description:
-          'Hari ini peserta akan mengunjungi berbagai ikon wisata Singapura, termasuk kawasan kota modern dan destinasi populer.',
-      },
-      {
-        imgUrl: '',
-        title: 'Day 4: Singapura - Johor Bahru',
-        description:
-          'Hari ini peserta akan mengunjungi berbagai ikon wisata Singapura, termasuk kawasan kota modern dan destinasi populer.',
-      },
-      {
-        imgUrl: '',
-        title: 'Day 5: Singapura - Johor Bahru',
-        description:
-          'Hari ini peserta akan mengunjungi berbagai ikon wisata Singapura, termasuk kawasan kota modern dan destinasi populer.',
-      },
-      {
-        imgUrl: '',
-        title: 'Day 6: Singapura - Johor Bahru',
-        description:
-          'Hari ini peserta akan mengunjungi berbagai ikon wisata Singapura, termasuk kawasan kota modern dan destinasi populer.',
-      },
-      {
-        imgUrl: '',
-        title: 'Day 7: Singapura - Johor Bahru asdas d',
-        description:
-          'Hari ini peserta akan mengunjungi berbagai ikon wisata Singapura, termasuk kawasan kota modern dan destinasi populer.',
-      },
-    ]
-
-    // 🔑 state utama
-    const [activeIndex, setActiveIndex] = useState(0)
-    const activeItem = itinerary[activeIndex]
-
-    return (
-      <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
-        <Container className="flex flex-col gap-14">
-          {/* Title */}
-          <div className="flex flex-col gap-4">
-            <span>Rangkaian Perjalanan</span>
-            <TypographyH2>Detail Itinerary</TypographyH2>
-          </div>
-
-          {/* Content */}
-          <div className="grid md:grid-cols-2 gap-10">
-            {/* LEFT */}
-            <div className="flex flex-col max-md:order-2">
-              {itinerary.map((item, index) => {
-                const isActive = index === activeIndex
-
-                return (
-                  <button
-                    key={index}
-                    onClick={() => setActiveIndex(index)}
-                    className={`
-                    py-4 border-b w-full flex justify-between items-center
-                    transition-colors duration-300 cursor-pointer 
-                    ${isActive ? 'bg-foreground/10' : 'hover:bg-foreground/5'}
-                  `}
-                  >
-                    <span className="text-xl line-clamp-1">{item.title}</span>
-
-                    <div
-                      className={`
-                      w-12 h-12 p-4 border flex items-center justify-center rounded-full
-                      transition-transform duration-300
-                      ${isActive ? 'rotate-0' : '-rotate-45'}
-                    `}
-                    >
-                      <FontAwesomeIcon icon={faArrowRight} />
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
-
-            {/* RIGHT */}
-            <div
-              key={activeIndex}
-              className="
-              flex flex-col gap-4
-              animate-fade max-md:order-1
-            "
-            >
-              <div className="w-full aspect-video bg-amber-800 rounded-xl" />
-
-              <TypographyH3>{activeItem.title}</TypographyH3>
-
-              <TypographyP>{activeItem.description}</TypographyP>
-            </div>
-          </div>
-        </Container>
-      </section>
-    )
-  }
-
   function FootageSection() {
     const footages = [
       {

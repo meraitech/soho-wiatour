@@ -10,14 +10,17 @@ import {
 } from '@/shared/constants/style/margin'
 import { Button } from '@/shared/components/ui/Button'
 import { TourCard } from '@/features/tours/components/ui/TourCard'
-import { TourHighlight } from '@/features/tours/components/TourHighlight'
+import { TourService } from '@/features/tours/services'
+import { TourSummary } from '@/features/tours/types'
 
 /* ======================================================
    PAGE — Tours Page
 ====================================================== */
 
-export default function page() {
+export default async function page() {
   const text = id.landing
+  const tours = await TourService.getAll()
+
   return (
     <div>
       {/* ======================================================
@@ -28,7 +31,7 @@ export default function page() {
       {/* ======================================================
          SECTION ALL TOURS 
       ====================================================== */}
-      <AllToursSection />
+      <AllToursSection tours={tours} />
     </div>
   )
 
@@ -60,13 +63,19 @@ export default function page() {
   /* ======================================================
    SECTION ALL TOURS
   ====================================================== */
-  function AllToursSection() {
+  function AllToursSection({ tours }: { tours: TourSummary[] }) {
     return (
       <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <h2 className="sr-only">All Tours</h2>
         <Container className="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
-          {Array.from({ length: 10 }).map((item, index) => (
-            <TourCard key={'tour:' + index} />
+          {tours.map((item, index) => (
+            <TourCard
+              key={'tour:' + index}
+              slug={item.slug}
+              imgUrl={item.thumbnail.url!}
+              title={item.title}
+              imgAlt={item.thumbnail.alt}
+            />
           ))}
         </Container>
       </section>
