@@ -61,7 +61,7 @@ export const Navbar = () => {
         </div>
       </div> */}
       <CardNav
-        logo={'/brand/logo/hb-1.webp'}
+        logo={'/brand/logo/h-1.webp'}
         logoAlt="Company Logo"
         items={items}
         baseColor="#fff"
@@ -69,7 +69,6 @@ export const Navbar = () => {
         buttonBgColor="#111"
         buttonTextColor="#fff"
         ease="power3.out"
-        // theme="color"
       />
     </header>
   )

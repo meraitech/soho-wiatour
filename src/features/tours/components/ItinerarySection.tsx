@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 
 type Props = {
-  itenararies: Array<{
+  itineraries: Array<{
     day: number
     activityName: string
     icon: Media
@@ -21,10 +21,11 @@ type Props = {
   }>
 }
 
-export default function ItinerarySection({ itenararies }: Props) {
+export default function ItinerarySection({ itineraries }: Props) {
   // 🔑 state utama
+  console.log(itineraries)
   const [activeIndex, setActiveIndex] = useState(0)
-  const activeItem = itenararies[activeIndex]
+  const activeItem = itineraries[activeIndex]
 
   return (
     <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
@@ -39,7 +40,7 @@ export default function ItinerarySection({ itenararies }: Props) {
         <div className="grid md:grid-cols-2 gap-10">
           {/* LEFT */}
           <div className="flex flex-col max-md:order-2">
-            {itenararies.map((item, index) => {
+            {itineraries.map((item, index) => {
               const isActive = index === activeIndex
 
               return (

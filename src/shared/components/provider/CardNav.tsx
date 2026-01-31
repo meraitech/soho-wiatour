@@ -39,8 +39,6 @@ const CardNav: React.FC<CardNavProps> = ({
   ease = 'power3.out',
   baseColor = '#fff',
   menuColor,
-  buttonBgColor,
-  buttonTextColor,
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -191,15 +189,9 @@ const CardNav: React.FC<CardNavProps> = ({
           <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-0">
             <img src={logo} alt={logoAlt} className="logo h-7" />
           </div>
-
-          {/* <button
-            type="button"
-            className="card-nav-cta-button hidden md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-4 items-center h-full font-medium cursor-pointer transition-colors duration-300"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
-          >
-            Get Started
-          </button> */}
-          <Button className="max-md:hidden">Hubungi Kami</Button>
+          <Button className="max-md:hidden" variant="color">
+            Hubungi Kami
+          </Button>
         </div>
 
         <div

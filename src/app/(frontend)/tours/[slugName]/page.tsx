@@ -15,20 +15,21 @@ import { InfiniteMovingCards } from '@/shared/components/ui/InfiniteMovingCard'
 import { TourService } from '@/features/tours/services'
 import ItinerarySection from '@/features/tours/components/ItinerarySection'
 import { notFound } from 'next/navigation'
+import FootageSection from '@/shared/components/FootageSection'
 
 /* ======================================================
    PAGE — Tour Detail
 ====================================================== */
 type PageProps = {
   params: {
-    slug: string
+    slugName: string
   }
 }
 
 export default async function page({ params }: PageProps) {
   const text = id.landing
-  const { slug } = params
-  const tour = await TourService.getBySlug(slug)
+  const { slugName } = params
+  const tour = await TourService.getBySlug(slugName)
 
   if (!tour) notFound()
 
@@ -47,12 +48,12 @@ export default async function page({ params }: PageProps) {
       {/* ======================================================
          SECTION ITINERARY
       ====================================================== */}
-      {tour?.itenararies && <ItinerarySection itenararies={tour?.itenararies} />}
+      {tour.itineraries && <ItinerarySection itineraries={tour.itineraries} />}
 
       {/* ======================================================
          SECTION IMAGE TRAIL
       ====================================================== */}
-      {/* <FootageSection /> */}
+      {tour.gallery && <FootageSection gallery={tour.gallery} />}
 
       {/* ======================================================
           SECTION TOUR HIGHLIGHT
@@ -123,71 +124,6 @@ export default async function page({ params }: PageProps) {
           </div>
         </Container>
       </section>
-    )
-  }
-
-  /* ======================================================
-     SECTION FOOTAGE
-    ====================================================== */
-  function FootageSection() {
-    const footages = [
-      {
-        imgUrl:
-          'https://images.unsplash.com/photo-1519922639192-e73293ca430e?q=80&w=2372&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        title: 'Trans 7',
-      },
-      {
-        imgUrl:
-          'https://plus.unsplash.com/premium_photo-1663040271283-bd044a62da1a?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        title: 'Trans 7',
-      },
-      {
-        imgUrl:
-          'https://images.unsplash.com/photo-1519922639192-e73293ca430e?q=80&w=2372&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        title: 'Trans 7',
-      },
-      {
-        imgUrl:
-          'https://images.unsplash.com/photo-1489516408517-0c0a15662682?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        title: 'Trans 7',
-      },
-    ]
-
-    return (
-      <div
-        className={
-          'rounded-md flex flex-col gap-8 antialiased items-center justify-center relative overflow-hidden ' +
-          STYLE_MARGIN_CONTAINER_BOTTOM
-        }
-      >
-        <InfiniteMovingCards
-          items={footages}
-          speed="slow"
-          renderItem={(item, index) => (
-            <div key={index} className="rounded-xl overflow-hidden bg-muted">
-              <img
-                src={item.imgUrl}
-                alt={`${item.title} Photo`}
-                className="h-100 w-auto object-contain"
-              />
-            </div>
-          )}
-        />
-        <InfiniteMovingCards
-          items={footages}
-          speed="slow"
-          direction="right"
-          renderItem={(item, index) => (
-            <div key={index} className="rounded-xl overflow-hidden bg-muted">
-              <img
-                src={item.imgUrl}
-                alt={`${item.title} Photo`}
-                className="h-100 w-auto object-contain"
-              />
-            </div>
-          )}
-        />
-      </div>
     )
   }
 }

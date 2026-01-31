@@ -5,13 +5,13 @@ import type React from 'react'
 import { gsap, Flip, ScrollTrigger } from '@/shared/lib/gsap'
 
 type Params = {
-    wrapRef: React.RefObject<HTMLDivElement | null>
+    heroWrapRef: React.RefObject<HTMLDivElement | null>
     galleryRef: React.RefObject<HTMLDivElement | null>
     finalClass?: string
 }
 
 export function useBentoFlipScroll({
-    wrapRef,
+    heroWrapRef,
     galleryRef,
     finalClass = 'gallery-final',
 }: Params) {
@@ -19,7 +19,7 @@ export function useBentoFlipScroll({
 
     useLayoutEffect(() => {
         const gallery = galleryRef.current
-        const wrap = wrapRef.current
+        const wrap = heroWrapRef.current
         if (!gallery || !wrap) return
 
         const items = gallery.querySelectorAll<HTMLElement>('.gallery-item')
@@ -78,5 +78,5 @@ export function useBentoFlipScroll({
             flipCtxRef.current?.revert()
             flipCtxRef.current = null
         }
-    }, [wrapRef, galleryRef, finalClass])
+    }, [heroWrapRef, galleryRef, finalClass])
 }

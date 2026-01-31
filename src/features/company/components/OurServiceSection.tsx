@@ -13,7 +13,7 @@ export function OurServiceSection() {
   const text = id.landing
   const ourServices = text.services.items
 
-  const wrapRef = useRef<HTMLDivElement | null>(null)
+  const serviceWrapRef = useRef<HTMLDivElement | null>(null)
   const leftRef = useRef<HTMLDivElement | null>(null)
   const imageRef = useRef<HTMLImageElement | null>(null)
 
@@ -101,7 +101,7 @@ export function OurServiceSection() {
       waitForImage(imageRef.current, () => {
         initScroll()
       })
-    }, wrapRef)
+    }, serviceWrapRef)
 
     const onResize = () => {
       killTriggers()
@@ -134,7 +134,7 @@ export function OurServiceSection() {
 
         <div className={STYLE_MARGIN_CONTAINER_TOP} />
 
-        <div ref={wrapRef} className="w-full grid md:grid-cols-2 gap-8">
+        <div ref={serviceWrapRef} className="w-full grid md:grid-cols-2 gap-8">
           {/* LEFT — IMAGE */}
           <div
             ref={leftRef}

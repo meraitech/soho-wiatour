@@ -9,7 +9,7 @@ export const STYLE_BUTTON_BASE = clsx(
 );
 
 export const STYLE_BUTTON_VARIANT = {
-    color: "bg-foreground text-background hover:bg-black/80",
+    color: "bg-primary text-background hover:bg-black/80",
     monocrome_white: "text-background border border-background/20 hover:bg-background/20 backdrop-blur-sm",
     monocrome_black: "border border-foreground/20 hover:bg-background/20 backdrop-blur-sm",
     muted: "hover:bg-muted",

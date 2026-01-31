@@ -14,7 +14,7 @@ export interface Tour extends Omit<
     description: any // Rich Text
     id?: string
   }>
-  itenararies?: Array<{
+  itineraries?: Array<{
     day: number
     activityName: string
     icon: Media
