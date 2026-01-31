@@ -22,7 +22,7 @@ export default async function page() {
   const tours = await TourService.getAll()
 
   return (
-    <div>
+    <div className="overflow-hidden">
       {/* ======================================================
          SECTION HERO 
       ====================================================== */}

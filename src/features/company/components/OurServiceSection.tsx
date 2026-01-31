@@ -14,19 +14,19 @@ export function OurServiceSection() {
   const ourServices = text.services.items
 
   const serviceWrapRef = useRef<HTMLDivElement | null>(null)
-  const leftRef = useRef<HTMLDivElement | null>(null)
-  const imageRef = useRef<HTMLImageElement | null>(null)
+  const serviceLeftRef = useRef<HTMLDivElement | null>(null)
+  const serviceImageRef = useRef<HTMLImageElement | null>(null)
 
   const activeIndexRef = useRef(0)
-  const triggersRef = useRef<ScrollTrigger[]>([])
+  const serviceTriggersRef = useRef<ScrollTrigger[]>([])
 
   /* =========================
      UTILS
   ========================= */
 
   function killTriggers() {
-    triggersRef.current.forEach((st) => st.kill())
-    triggersRef.current = []
+    serviceTriggersRef.current.forEach((st) => st.kill())
+    serviceTriggersRef.current = []
   }
 
   function waitForImage(img: HTMLImageElement, cb: () => void) {
@@ -38,7 +38,7 @@ export function OurServiceSection() {
     if (activeIndexRef.current === index) return
     activeIndexRef.current = index
 
-    const img = imageRef.current
+    const img = serviceImageRef.current
     if (!img) return
 
     gsap.to(img, {
@@ -55,19 +55,19 @@ export function OurServiceSection() {
     killTriggers()
 
     const steps = gsap.utils.toArray<HTMLElement>('.service-step')
-    if (!steps.length || !leftRef.current) return
+    if (!steps.length || !serviceLeftRef.current) return
 
     const first = steps[0]
     const last = steps[steps.length - 1]
 
     // PIN IMAGE (LEFT)
-    triggersRef.current.push(
+    serviceTriggersRef.current.push(
       ScrollTrigger.create({
         trigger: first,
         start: 'top 30%',
         endTrigger: last,
         end: 'bottom center',
-        pin: leftRef.current,
+        pin: serviceLeftRef.current,
         pinSpacing: true,
         invalidateOnRefresh: true,
       }),
@@ -75,7 +75,7 @@ export function OurServiceSection() {
 
     // IMAGE SWAP PER STEP
     steps.forEach((step, i) => {
-      triggersRef.current.push(
+      serviceTriggersRef.current.push(
         ScrollTrigger.create({
           trigger: step,
           start: 'top center',
@@ -96,9 +96,9 @@ export function OurServiceSection() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      if (!imageRef.current) return
+      if (!serviceImageRef.current) return
 
-      waitForImage(imageRef.current, () => {
+      waitForImage(serviceImageRef.current, () => {
         initScroll()
       })
     }, serviceWrapRef)
@@ -137,11 +137,11 @@ export function OurServiceSection() {
         <div ref={serviceWrapRef} className="w-full grid md:grid-cols-2 gap-8">
           {/* LEFT — IMAGE */}
           <div
-            ref={leftRef}
+            ref={serviceLeftRef}
             className="w-full max-md:hidden bg-muted md:aspect-square aspect-4/3 rounded-2xl overflow-hidden max-md:order-2"
           >
             <img
-              ref={imageRef}
+              ref={serviceImageRef}
               src={ourServices[0].imgUrl}
               alt=""
               className="w-full h-full object-cover"

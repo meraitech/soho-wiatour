@@ -6,23 +6,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '../ui/Button'
 
-type CardNavLink = {
+export type CardNavLink = {
   label: string
   href: string
   ariaLabel: string
 }
 
-export type CardNavItem = {
-  label: string
-  bgColor: string
-  textColor: string
-  links: CardNavLink[]
-}
+// export type CardNavItem = {
+//   label: string
+//   bgColor: string
+//   textColor: string
+//   links: CardNavLink[]
+// }
 
 export interface CardNavProps {
   logo: string
   logoAlt?: string
-  items: CardNavItem[]
+  items: CardNavLink[]
   className?: string
   ease?: string
   baseColor?: string
@@ -200,35 +200,41 @@ const CardNav: React.FC<CardNavProps> = ({
           } md:flex-row md:items-end md:gap-3`}
           aria-hidden={!isExpanded}
         >
-          {(items || []).slice(0, 3).map((item, idx) => (
-            <div
-              key={`${item.label}-${idx}`}
-              className="nav-card select-none relative flex flex-col gap-2 p-[12px_16px] rounded-4xl min-w-0 flex-[1_1_auto] h-auto min-h-15 md:h-full md:min-h-0 md:flex-[1_1_0%]"
-              ref={setCardRef(idx)}
-              style={{ backgroundColor: item.bgColor, color: item.textColor }}
-            >
-              <div className="nav-card-label font-normal tracking-[-0.5px] text-[18px] md:text-[22px]">
-                {item.label}
-              </div>
-              <div className="nav-card-links mt-auto flex flex-col gap-0.5">
-                {item.links?.map((lnk, i) => (
-                  <a
-                    key={`${lnk.label}-${i}`}
-                    className="nav-card-link inline-flex items-center gap-1.5 no-underline cursor-pointer transition-opacity duration-300 hover:opacity-75 text-[15px] md:text-[16px]"
-                    href={lnk.href}
-                    aria-label={lnk.ariaLabel}
-                  >
-                    <FontAwesomeIcon
-                      icon={faArrowUp}
-                      className="nav-card-link-icon shrink-0"
-                      aria-hidden="true"
-                    />
-                    {lnk.label}
-                  </a>
-                ))}
-              </div>
+          <div
+            className="nav-card select-none relative flex flex-col gap-2 p-[12px_16px] rounded-4xl min-w-0 flex-[1_1_auto] h-auto md:h-full md:min-h-0 md:flex-[1_1_0%]"
+            ref={setCardRef(0)}
+          >
+            <div className="nav-card-links flex flex-col gap-0.5">
+              {items.map((lnk, i) => (
+                <a
+                  key={`${lnk.label}-${i}`}
+                  className="nav-card-link inline-flex items-center gap-1.5 no-underline cursor-pointer transition-opacity duration-300 hover:opacity-75 text-[15px] md:text-[16px] group"
+                  href={lnk.href}
+                  aria-label={lnk.ariaLabel}
+                >
+                  <FontAwesomeIcon
+                    icon={faArrowUp}
+                    className="nav-card-link-icon shrink-0 group-hover:rotate-45 duration-300"
+                    aria-hidden="true"
+                  />
+                  {lnk.label}
+                </a>
+              ))}
             </div>
-          ))}
+          </div>
+          <div
+            className="nav-card select-none relative flex flex-col gap-2 p-[12px_16px] rounded-4xl min-w-0 flex-[1_1_auto] h-auto md:h-full md:min-h-0 max-md:hidden md:flex-[1_1_0%]"
+            ref={setCardRef(1)}
+          >
+            <div className="nav-card-links mt-auto flex flex-col gap-0.5 relative overflow-hidden rounded-2xl">
+              <img
+                src="/assets/web/layout/navbar.webp"
+                alt=""
+                draggable={false}
+                className="nav-card-link w-full h-full object-cover scale-125"
+              />
+            </div>
+          </div>
         </div>
       </nav>
     </div>

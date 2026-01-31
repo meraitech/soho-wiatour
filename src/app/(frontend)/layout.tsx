@@ -16,7 +16,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body>
         <SmoothScrollProvider>
-          <main className="flex flex-col">
+          <main className="flex flex-col ">
             <Navbar />
             {children}
             <Footer />

@@ -159,7 +159,7 @@ export default function page() {
       imgUrl: string
     }) => {
       return (
-        <div className="w-full grid md:grid-cols-2 gap-8">
+        <div className="w-full grid md:grid-cols-2 gap-8 overflow-hidden">
           <div
             className={`service-step flex flex-col w-full my-auto max-md:order-1 md:max-w-100 gap-4`}
           >

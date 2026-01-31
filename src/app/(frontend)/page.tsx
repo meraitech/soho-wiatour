@@ -65,7 +65,7 @@ export default function page() {
   ====================================================== */
   function HeroSection() {
     const heroWrapRef = useRef<HTMLDivElement | null>(null)
-    const galleryRef = useRef<HTMLDivElement | null>(null)
+    const heroGalleryRef = useRef<HTMLDivElement | null>(null)
 
     /* ======================================================
      GSAP SCROLL LOGIC
@@ -99,7 +99,7 @@ export default function page() {
 
         // Gallery subtle fade
         tl.from(
-          galleryRef.current,
+          heroGalleryRef.current,
           {
             opacity: 0.7,
             ease: 'none',
@@ -114,7 +114,7 @@ export default function page() {
     /* ======================================================
      OPTIONAL EXTRA SCROLL EFFECT
   ====================================================== */
-    useBentoFlipScroll({ heroWrapRef, galleryRef })
+    useBentoFlipScroll({ heroWrapRef, heroGalleryRef })
 
     /* ======================================================
      STATIC DATA
@@ -156,7 +156,7 @@ export default function page() {
       >
         {/* GALLERY */}
         <div
-          ref={galleryRef}
+          ref={heroGalleryRef}
           className="
           grid gap-[1.5vh]
           grid-cols-[repeat(3,32.5vw)]

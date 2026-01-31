@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { TypographyH3 } from '@/shared/components/ui/TypographyH3'
 import { STYLE_ROUNDED_CARD } from '@/shared/constants/style/rounded'
 import clsx from 'clsx'
-import { TourSummary } from '../../types'
 
 type Props = {
   title: string
@@ -24,8 +23,8 @@ export const TourCard = ({ width = 'w-full', slug, title, imgUrl, imgAlt }: Prop
           STYLE_ROUNDED_CARD,
         )}
       >
-        <div className="z-5 flex flex-col justify-end h-full w-full p-6">
-          <TypographyH3 className="text-background">{title}</TypographyH3>
+        <div className="z-5 flex flex-col justify-end h-full w-full p-6 bg-linear-to-t from-foreground/80 via-transparent">
+          <TypographyH3 className="text-background line-clamp-2">{title}</TypographyH3>
         </div>
 
         <div className="absolute inset-0 bg-muted">

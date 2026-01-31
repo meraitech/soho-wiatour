@@ -21,19 +21,19 @@
                     "titleSmall": "Ready Made Tour",
                     "title": "Perjalanan Praktis, Tanpa Repot",
                     "paragraph": "Paket tour siap jalan dengan itinerary yang telah dirancang secara matang. Cocok untuk Anda yang menginginkan perjalanan nyaman tanpa perlu menyusun rencana dari awal.",
-                    "imgUrl": "/brand/logo/m-1.webp"
+                    "imgUrl": "/assets/web/home/layanan-1.webp"
                 },
                 {
                     "titleSmall": "Tailor Made Tour",
                     "title": "Dirancang Sesuai Keinginan Anda",
                     "paragraph": "Perjalanan yang disesuaikan dengan kebutuhan, preferensi, dan tujuan Anda. Setiap detail dirancang bersama tim kami untuk menciptakan pengalaman yang lebih personal.",
-                    "imgUrl": "/brand/logo/m-2.webp"
+                    "imgUrl": "/assets/web/home/layanan-2.webp"
                 },
                 {
                     "titleSmall": "Private & Open Trip",
                     "title": "Fleksibel untuk Setiap Perjalanan",
                     "paragraph": "Pilih perjalanan privat bersama grup Anda atau bergabung dalam open trip. Keduanya dirancang dengan standar kenyamanan dan pelayanan yang sama.",
-                    "imgUrl": "/brand/logo/v-2.webp"
+                    "imgUrl": "/assets/web/home/layanan-3.webp"
                 }
             ]
         },
@@ -51,12 +51,12 @@
                 {
                     "quotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.",
                     "name": "John Doe",
-                    "imgUrl": "./icon.png"
+                    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/9/96/Logo_Trans7.png"
                 },
                 {
                     "quotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.",
                     "name": "John Doe",
-                    "imgUrl": "./logo.png"
+                    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/9/96/Logo_Trans7.png"
                 }
             ]
         },
