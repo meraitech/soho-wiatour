@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef, useEffect, useState } from 'react'
 
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
@@ -261,6 +261,29 @@ export default function page() {
   ====================================================== */
   function TestimonialSection() {
     const testimonial = text.testimonial
+    const [testimonials, setTestimonials] = useState<any[]>([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+      async function fetchTestimonials() {
+        try {
+          const response = await fetch('/api/testimonials?limit=10')
+          const data = await response.json()
+          setTestimonials(data.testimonials || [])
+        } catch (error) {
+          console.error('Error fetching testimonials:', error)
+          // Fallback to static data if API fails
+          setTestimonials(testimonial.items)
+        } finally {
+          setLoading(false)
+        }
+      }
+
+      fetchTestimonials()
+    }, [])
+
+    // Use testimonials from CMS or fallback to static data
+    const displayTestimonials = testimonials.length > 0 ? testimonials : testimonial.items
 
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
@@ -271,27 +294,29 @@ export default function page() {
           />
           <div className={STYLE_MARGIN_CONTAINER_TOP} />
 
-          <div className="flex flex-col gap-6 relative w-full">
-            <div className="bg-linear-to-r from-background w-30 h-full absolute left-0 top-0 z-5" />
-            {/* ROW 1 */}
-            <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
-              <div className="flex gap-6">
-                {testimonial.items.map((item, index) => (
-                  <TestimonialCard key={`row1-${index}`} item={item} />
-                ))}
-              </div>
-            </VelocityScroller>
+          {!loading && (
+            <div className="flex flex-col gap-6 relative w-full">
+              <div className="bg-linear-to-r from-background w-30 h-full absolute left-0 top-0 z-5" />
+              {/* ROW 1 */}
+              <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
+                <div className="flex gap-6">
+                  {displayTestimonials.map((item, index) => (
+                    <TestimonialCard key={`row1-${index}`} item={item} />
+                  ))}
+                </div>
+              </VelocityScroller>
 
-            {/* ROW 2 */}
-            <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
-              <div className="flex gap-6">
-                {testimonial.items.map((item, index) => (
-                  <TestimonialCard key={`row2-${index}`} item={item} />
-                ))}
-              </div>
-            </VelocityScroller>
-            <div className="bg-linear-to-l from-background w-30 h-full absolute right-0 top-0 z-5" />
-          </div>
+              {/* ROW 2 */}
+              <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
+                <div className="flex gap-6">
+                  {displayTestimonials.map((item, index) => (
+                    <TestimonialCard key={`row2-${index}`} item={item} />
+                  ))}
+                </div>
+              </VelocityScroller>
+              <div className="bg-linear-to-l from-background w-30 h-full absolute right-0 top-0 z-5" />
+            </div>
+          )}
         </Container>
       </section>
     )
