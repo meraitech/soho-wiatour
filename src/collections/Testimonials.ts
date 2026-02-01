@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload";
-import { hasAnyRole, checkRole } from "@/shared/lib/access";
+import { checkRole } from "@/shared/lib/access";
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -10,10 +10,10 @@ export const Testimonials: CollectionConfig = {
   access: {
     // Public read access - anyone can view testimonials
     read: () => true,
-    // Only admins and editors can create testimonials
-    create: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
-    // Only admins and editors can update testimonials
-    update: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
+    // Only admins can create testimonials
+    create: ({ req }) => checkRole(req.user, 'admin'),
+    // Only admins can update testimonials
+    update: ({ req }) => checkRole(req.user, 'admin'),
     // Only admins can delete testimonials
     delete: ({ req }) => checkRole(req.user, 'admin'),
   },

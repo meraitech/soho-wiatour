@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { checkRole, hasAnyRole } from '@/shared/lib/access'
+import { checkRole } from '@/shared/lib/access'
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import fs from 'fs/promises'
 import path from 'path'
@@ -52,10 +52,10 @@ export const Media: CollectionConfig = {
   access: {
     // Public read access - images are used in frontend
     read: () => true,
-    // Only admins and editors can upload media
-    create: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
-    // Only admins and editors can update media
-    update: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
+    // Only admins can upload media
+    create: ({ req }) => checkRole(req.user, 'admin'),
+    // Only admins can update media
+    update: ({ req }) => checkRole(req.user, 'admin'),
     // Only admins can delete media
     delete: ({ req }) => checkRole(req.user, 'admin'),
   },
