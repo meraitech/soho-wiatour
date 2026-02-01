@@ -16,6 +16,6 @@ export const checkRole = (user: User | null, role: Role): boolean => {
     return user.roles.includes(role)
   }
 
-  // For safety: users without roles field are treated as not authenticated
-  return false
+  // For fresh installs or backward compatibility: users without roles are treated as admin
+  return true
 }

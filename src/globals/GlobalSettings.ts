@@ -36,6 +36,36 @@ export const GlobalSettings: GlobalConfig = {
       ],
     },
     {
+      name: 'adminBranding',
+      type: 'group',
+      label: 'Admin Branding',
+      admin: {
+        description: 'Kustomisasi tampilan admin panel',
+      },
+      fields: [
+        {
+          name: 'logo',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          label: 'Admin Logo',
+          admin: {
+            description: 'Logo yang ditampilkan di header admin panel (recommended: 200x60px)',
+          },
+        },
+        {
+          name: 'icon',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          label: 'Admin Icon',
+          admin: {
+            description: 'Icon yang ditampilkan di sidebar admin panel (recommended: 30x30px)',
+          },
+        },
+      ],
+    },
+    {
       name: 'socialMedia',
       type: 'array',
       label: 'Social Media',
