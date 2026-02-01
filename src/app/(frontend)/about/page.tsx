@@ -42,7 +42,7 @@ export default function page() {
       {/* ======================================================
          SECTION TOUR HIGHLIGHT
       ====================================================== */}
-      <TourHighlight />
+      <TourHighlight currentTourId="" />
       <div className={STYLE_MARGIN_CONTAINER_BOTTOM} />
     </div>
   )
@@ -64,7 +64,11 @@ export default function page() {
 
           {/* img  */}
           <div className={'w-full aspect-video overflow-hidden relative' + STYLE_ROUNDED_CONTAINER}>
-            <img src="/images/footer.webp" alt="" className="w-full h-full object-cover" />
+            <img
+              src="/assets/web/about/hero.webp"
+              alt="Photo Semua Team Wiatour"
+              className="w-full h-full object-cover scale-110"
+            />
           </div>
         </Container>
       </section>
@@ -92,7 +96,13 @@ export default function page() {
                 pelayanan profesional.
               </TypographyP>
             </div>
-            <div className="ml-auto bg-accent w-full md:max-w-120 md:aspect-6/7 aspect-video"></div>
+            <div className="ml-auto bg-accent w-full md:max-w-120 md:aspect-6/7 aspect-video relative overflow-hidden rounded-3xl">
+              <img
+                src="/assets/web/about/about.webp"
+                alt="Photo CEO Wiradrana dan Team"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </Container>
       </section>
@@ -106,7 +116,13 @@ export default function page() {
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
         <Container className="flex max-lg:flex-col gap-14">
-          <div className="ml-auto bg-accent w-full lg:w-110 shrink-0 aspect-square"></div>
+          <div className="ml-auto bg-accent w-full lg:w-110 shrink-0 aspect-square relative overflow-hidden rounded-3xl">
+            <img
+              src="/assets/web/about/ceo.webp"
+              alt="Photo CEO Wiradrana Putri Harefa"
+              className="w-full h-full object-cover"
+            />
+          </div>
           <div className="flex flex-col gap-24 justify-center lg:w-6/7 duration-300">
             <div>
               <h2 className="sr-only">CEO Quote</h2>
@@ -143,7 +159,7 @@ export default function page() {
       imgUrl: string
     }) => {
       return (
-        <div className="w-full grid md:grid-cols-2 gap-8">
+        <div className="w-full grid md:grid-cols-2 gap-8 overflow-hidden">
           <div
             className={`service-step flex flex-col w-full my-auto max-md:order-1 md:max-w-100 gap-4`}
           >
@@ -158,6 +174,7 @@ export default function page() {
         </div>
       )
     }
+
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
         <Container className="flex flex-col items-center">
