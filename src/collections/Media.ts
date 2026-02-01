@@ -62,41 +62,13 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: useR2 ? '/tmp/payload-media' : 'media',
     mimeTypes: ['image/*'],
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 400,
-        height: 300,
-        formatOptions: {
-          format: 'webp',
-          options: {
-            quality: 80
-          }
-        }
-      },
-      {
-        name: 'card',
-        width: 768,
-        height: 512,
-        formatOptions: {
-          format: 'webp',
-          options: {
-            quality: 85,
-          }
-        }
-      },
-      {
-        name: 'hero',
-        width: 1920,
-        height: 1080,
-        formatOptions: {
-          format: 'webp',
-          options: {
-            quality: 90,
-          }
-        }
-      },
-    ]
+    // Convert all uploads to WebP format for optimal size and quality
+    formatOptions: {
+      format: 'webp',
+      options: {
+        quality: 85
+      }
+    }
   },
   hooks: useR2 ? {
     beforeValidate: [
@@ -129,50 +101,23 @@ export const Media: CollectionConfig = {
           try {
             const mediaDir = '/tmp/payload-media'
 
-            // Upload original file to R2 first
-            const originalPath = path.join(mediaDir, result.filename)
+            // Upload converted WebP file to R2
+            const filePath = path.join(mediaDir, result.filename)
             try {
-              // Check if original file exists
-              await fs.access(originalPath)
+              // Check if file exists
+              await fs.access(filePath)
 
-              // Get MIME type from result or fallback to detection from filename
-              const mimeType = (result as any).mimeType || 'image/jpeg'
+              // Get MIME type (should be image/webp after conversion)
+              const mimeType = (result as any).mimeType || 'image/webp'
 
-              // Upload original file to R2
-              const originalUrl = await uploadToR2(result.filename, originalPath, mimeType)
-              result.url = originalUrl
+              // Upload file to R2
+              const fileUrl = await uploadToR2(result.filename, filePath, mimeType)
+              result.url = fileUrl
 
-              // Delete original file from temp storage after upload
-              await fs.unlink(originalPath).catch(() => {})
+              // Delete file from temp storage after upload
+              await fs.unlink(filePath).catch(() => {})
             } catch (err) {
-              console.error('[R2 Upload] Error uploading original file:', err)
-            }
-
-            // Upload image sizes to R2
-            if (result.sizes) {
-              for (const [sizeName, sizeData] of Object.entries(result.sizes)) {
-                if (sizeData && typeof sizeData === 'object' && 'filename' in sizeData && sizeData.filename) {
-                  const sizeFilename = sizeData.filename as string
-                  const sizePath = path.join(mediaDir, sizeFilename)
-
-                  try {
-                    // Check if file exists before uploading
-                    await fs.access(sizePath)
-
-                    const sizeUrl = await uploadToR2(sizeFilename, sizePath, 'image/webp')
-                    ;(result.sizes as any)[sizeName] = {
-                      ...sizeData,
-                      url: sizeUrl,
-                      filename: sizeFilename  // Keep the original size filename
-                    }
-
-                    // Delete size file from temp storage after upload
-                    await fs.unlink(sizePath).catch(() => {})
-                  } catch (err) {
-                    console.error(`[R2 Upload] Error uploading ${sizeName}:`, err)
-                  }
-                }
-              }
+              console.error('[R2 Upload] Error uploading file:', err)
             }
 
           } catch (error) {
@@ -196,24 +141,6 @@ export const Media: CollectionConfig = {
           } catch (error) {
             // Ignore errors if file doesn't exist in R2
             console.debug('File not in R2 or already deleted')
-          }
-        }
-
-        // Delete image sizes from R2
-        if (doc.sizes) {
-          for (const sizeData of Object.values(doc.sizes)) {
-            if (sizeData && typeof sizeData === 'object' && 'filename' in sizeData) {
-              try {
-                const params = {
-                  Bucket: r2BucketName,
-                  Key: sizeData.filename as string,
-                }
-                await r2Client!.send(new DeleteObjectCommand(params))
-              } catch (error) {
-                // Ignore errors if file doesn't exist in R2
-                console.debug('Size file not in R2 or already deleted')
-              }
-            }
           }
         }
       }
