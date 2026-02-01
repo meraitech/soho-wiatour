@@ -1,4 +1,4 @@
-import { GlobalSettings as PayloadGlobalSettings, Media } from "@/payload-types";
+import { GlobalSetting as PayloadGlobalSettings, Media } from "@/payload-types";
 
 /**
  * Social media item with enabled status
