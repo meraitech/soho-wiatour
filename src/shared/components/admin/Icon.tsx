@@ -17,7 +17,7 @@ const getCachedAdminBranding = unstable_cache(
 )
 
 export const Icon = async () => {
-  let iconUrl = '/icon.png' // Default fallback to static asset
+  let iconUrl = '/favicon.ico' // Default fallback to favicon
 
   try {
     const adminBranding = await getCachedAdminBranding()
