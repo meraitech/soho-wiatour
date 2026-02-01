@@ -21,14 +21,14 @@ import FootageSection from '@/shared/components/FootageSection'
    PAGE — Tour Detail
 ====================================================== */
 type PageProps = {
-  params: {
+  params: Promise<{
     slugName: string
-  }
+  }>
 }
 
 export default async function page({ params }: PageProps) {
   const text = id.landing
-  const { slugName } = params
+  const { slugName } = await params
   const tour = await TourService.getBySlug(slugName)
 
   if (!tour) notFound()
@@ -83,8 +83,8 @@ export default async function page({ params }: PageProps) {
           {/* img  */}
           <div className={'w-full aspect-video overflow-hidden relative' + STYLE_ROUNDED_CONTAINER}>
             <img
-              src={tour?.heroImage.url!}
-              alt={tour?.heroImage.alt}
+              src={tour?.heroImage?.url || ''}
+              alt={tour?.heroImage?.alt || ''}
               className="w-full h-full object-cover"
             />
           </div>

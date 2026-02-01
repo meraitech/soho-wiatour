@@ -159,7 +159,7 @@ export class TourService {
    * const related = await TourService.getRelated('tour123', 4)
    * // Returns: [{ id: 'tour456', title: 'Lombok Tour', ... }, ...]
    */
-  static async getRelated(currentTourId: string, limit: 6): Promise<Tour[]> {
+  static async getRelated(currentTourId: string, limit: number = 6): Promise<Tour[]> {
     const payload = await this.getPayload()
 
     const currentTour = await this.getById(currentTourId)

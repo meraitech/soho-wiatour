@@ -43,7 +43,7 @@ export default function HeroSection() {
     return () => ctx.revert()
   }, [])
 
-  useBentoFlipScroll({ wrapRef, galleryRef })
+  useBentoFlipScroll({ heroWrapRef: wrapRef, heroGalleryRef: galleryRef })
 
   const gridAreas = [
     '[grid-area:1/1/3/2]',
