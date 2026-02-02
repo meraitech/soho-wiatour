@@ -24,13 +24,21 @@ export function InfiniteMovingCards<T>({
       <div
         className={cn(
           'flex w-max gap-8',
-          direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right',
+          direction === 'left' ? 'animate-marquee-dynamic-left' : 'animate-marquee-dynamic-right',
           pauseOnHover && 'hover:[animation-play-state:paused]',
         )}
         style={{ animationDuration: duration }}
       >
-        {[...items, ...items].map((item, idx) => (
-          <div key={idx} className="shrink-0">
+        {/* SET 1 */}
+        {items.map((item, idx) => (
+          <div key={`a-${idx}`} className="shrink-0">
+            {renderItem(item, idx)}
+          </div>
+        ))}
+
+        {/* SET 2 (DUPLICATE) */}
+        {items.map((item, idx) => (
+          <div key={`b-${idx}`} className="shrink-0">
             {renderItem(item, idx)}
           </div>
         ))}
