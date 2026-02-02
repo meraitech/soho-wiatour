@@ -286,7 +286,7 @@ export default function page() {
     const displayTestimonials = testimonials.length > 0 ? testimonials : testimonial.items
 
     return (
-      <section className={STYLE_MARGIN_CONTAINER}>
+      <section id="testimonial" className={STYLE_MARGIN_CONTAINER}>
         <Container className="flex flex-col items-center relative overflow-hidden ">
           <HeaderSection
             titleSmall={testimonial.header.titleSmall}

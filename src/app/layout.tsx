@@ -1,8 +1,3 @@
-import React from 'react'
-import { SmoothScrollProvider } from '@/shared/components/provider/SmoothScrollProvider'
-import '@/shared/styles/global.css'
-import { Footer } from '@/shared/components/layout/Footer'
-import { Navbar } from '@/shared/components/layout/Navbar'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -19,12 +14,8 @@ export default async function Layout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <SmoothScrollProvider>
-      <main className="flex flex-col ">
-        <Navbar />
-        {children}
-        <Footer />
-      </main>
-    </SmoothScrollProvider>
+    <html lang="id">
+      <body>{children}</body>
+    </html>
   )
 }

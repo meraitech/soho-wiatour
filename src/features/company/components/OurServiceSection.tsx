@@ -125,7 +125,7 @@ export function OurServiceSection() {
   ========================= */
 
   return (
-    <section className={STYLE_MARGIN_CONTAINER}>
+    <section id="service" className={STYLE_MARGIN_CONTAINER}>
       <Container className="flex flex-col items-center">
         <HeaderSection
           titleSmall={text.services.header.titleSmall}
