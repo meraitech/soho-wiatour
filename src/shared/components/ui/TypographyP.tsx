@@ -1,6 +1,6 @@
 import React from 'react'
 
-type TypographyPProps = React.HTMLAttributes<HTMLHeadingElement>
+type TypographyPProps = React.HTMLAttributes<HTMLParagraphElement>
 
 export const TypographyP = ({ children, className, ...props }: TypographyPProps) => {
   return (

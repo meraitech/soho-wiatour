@@ -9,13 +9,13 @@ import {
 } from '@/shared/constants/style/margin'
 import { STYLE_ROUNDED_CONTAINER } from '@/shared/constants/style/rounded'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
-import { TypographyP } from '@/shared/components/ui/TypographyP'
 import id from '@/shared/assets/jsons/id.json'
-import { InfiniteMovingCards } from '@/shared/components/ui/InfiniteMovingCard'
 import { TourService } from '@/features/tours/services'
 import ItinerarySection from '@/features/tours/components/ItinerarySection'
 import { notFound } from 'next/navigation'
 import FootageSection from '@/shared/components/FootageSection'
+import clsx from 'clsx'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 
 /* ======================================================
    PAGE — Tour Detail
@@ -100,28 +100,31 @@ export default async function page({ params }: PageProps) {
     return (
       <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <Container className="flex flex-col gap-14">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="flex flex-col gap-4 justify-center">
-              <TypographyH2 className="mb-4">Detail Perjalanan</TypographyH2>
-              <TypographyP>{tour?.description}</TypographyP>
+          {tour?.travelDetails?.map((item, index) => (
+            <div key={index} className={clsx('grid md:grid-cols-2 gap-12')}>
+              <div
+                className={clsx(
+                  'flex flex-col gap-4 justify-center',
+                  index % 2 === 1 && 'md:order-2',
+                )}
+              >
+                {index === 0 && <TypographyH2 className="mb-4">Detail Perjalanan</TypographyH2>}
+                <RichText data={item.description} />
+              </div>
+              <div
+                className={clsx(
+                  'bg-muted w-full md:max-w-120 max-md:aspect-5/3 aspect-square rounded-3xl overflow-hidden',
+                  index % 2 === 1 ? 'mr-auto' : 'ml-auto',
+                )}
+              >
+                <img
+                  src={item.image.url!}
+                  alt={item.image.alt}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
-            <div className="ml-auto bg-accent w-full md:max-w-120 max-md:aspect-5/3 aspect-square"></div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="flex flex-col gap-4 justify-center md:order-2">
-              <TypographyP>
-                Selain destinasi unggulan, perjalanan ini juga memberikan waktu yang cukup untuk
-                beristirahat dan menikmati suasana kota. Itinerary disusun agar tidak terlalu padat,
-                sehingga Anda dapat menikmati setiap momen perjalanan dengan lebih santai.
-              </TypographyP>
-              <TypographyP>
-                Dengan pendampingan tim berpengalaman, setiap proses perjalanan—mulai dari
-                keberangkatan hingga kepulangan—berjalan dengan tertib dan aman.
-              </TypographyP>
-            </div>
-            <div className="mr-auto bg-accent w-full md:max-w-120  max-md:aspect-5/3 aspect-square"></div>
-          </div>
+          ))}
         </Container>
       </section>
     )
