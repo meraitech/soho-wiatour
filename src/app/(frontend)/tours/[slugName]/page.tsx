@@ -16,6 +16,21 @@ import { TourService } from '@/features/tours/services'
 import ItinerarySection from '@/features/tours/components/ItinerarySection'
 import { notFound } from 'next/navigation'
 import FootageSection from '@/shared/components/FootageSection'
+import { Metadata } from 'next'
+import { createTourMetadata } from '@/features/seo/tour.metadata'
+import Image from 'next/image'
+
+/* ======================================================
+   METADATA
+====================================================== */
+export async function generateMetadata({
+  params,
+}: {
+  params: { slugName: string }
+}): Promise<Metadata> {
+  const tour = await TourService.getBySlug(params.slugName)
+  return createTourMetadata(tour!)
+}
 
 /* ======================================================
    PAGE — Tour Detail
@@ -82,10 +97,13 @@ export default async function page({ params }: PageProps) {
 
           {/* img  */}
           <div className={'w-full aspect-video overflow-hidden relative' + STYLE_ROUNDED_CONTAINER}>
-            <img
+            <Image
               src={tour?.heroImage.url!}
-              alt={tour?.heroImage.alt}
+              alt={tour?.heroImage.alt!}
+              width={1200}
+              height={800}
               className="w-full h-full object-cover"
+              priority
             />
           </div>
         </Container>
