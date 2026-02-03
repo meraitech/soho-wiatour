@@ -9,9 +9,12 @@ import {
 } from '@/shared/constants/style/margin'
 import { STYLE_ROUNDED_CONTAINER } from '@/shared/constants/style/rounded'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
+<<<<<<< Updated upstream
 import { TypographyP } from '@/shared/components/ui/TypographyP'
 import id from '@/shared/assets/jsons/id.json'
 import { InfiniteMovingCards } from '@/shared/components/ui/InfiniteMovingCard'
+=======
+>>>>>>> Stashed changes
 import { TourService } from '@/features/tours/services'
 import ItinerarySection from '@/features/tours/components/ItinerarySection'
 import { notFound } from 'next/navigation'
@@ -19,6 +22,12 @@ import FootageSection from '@/shared/components/FootageSection'
 import { Metadata } from 'next'
 import { createTourMetadata } from '@/features/seo/tour.metadata'
 import Image from 'next/image'
+<<<<<<< Updated upstream
+=======
+import clsx from 'clsx'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+import { TourHighlight } from '@/features/tours/components/TourHighlight'
+>>>>>>> Stashed changes
 
 /* ======================================================
    METADATA
@@ -29,12 +38,14 @@ export async function generateMetadata({
   params: { slugName: string }
 }): Promise<Metadata> {
   const tour = await TourService.getBySlug(params.slugName)
-  return createTourMetadata(tour!)
+  if (!tour) return {}
+  return createTourMetadata(tour)
 }
 
 /* ======================================================
    PAGE — Tour Detail
 ====================================================== */
+<<<<<<< Updated upstream
 type PageProps = {
   params: {
     slugName: string
@@ -43,6 +54,10 @@ type PageProps = {
 
 export default async function page({ params }: PageProps) {
   const text = id.landing
+=======
+
+export default async function Page({ params }: { params: { slugName: string } }) {
+>>>>>>> Stashed changes
   const { slugName } = params
   const tour = await TourService.getBySlug(slugName)
 
@@ -74,7 +89,7 @@ export default async function page({ params }: PageProps) {
           SECTION TOUR HIGHLIGHT
       ====================================================== */}
       <div className={STYLE_MARGIN_CONTAINER_BOTTOM}>
-        {/* {tour?.id && <TourHighlight currentTourId={tour.id} />} */}
+        {tour?.id && <TourHighlight currentTourId={tour.id} />}
       </div>
     </div>
   )
@@ -118,10 +133,38 @@ export default async function page({ params }: PageProps) {
     return (
       <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <Container className="flex flex-col gap-14">
+<<<<<<< Updated upstream
           <div className="grid md:grid-cols-2 gap-12">
             <div className="flex flex-col gap-4 justify-center">
               <TypographyH2 className="mb-4">Detail Perjalanan</TypographyH2>
               <TypographyP>{tour?.description}</TypographyP>
+=======
+          {tour?.travelDetails?.map((item, index) => (
+            <div key={index} className={clsx('grid md:grid-cols-2 gap-12')}>
+              <div
+                className={clsx(
+                  'flex flex-col gap-4 justify-center',
+                  index % 2 === 1 && 'md:order-2',
+                )}
+              >
+                {index === 0 && <TypographyH2 className="mb-4">Detail Perjalanan</TypographyH2>}
+                <RichText data={item.description} />
+              </div>
+              <div
+                className={clsx(
+                  'bg-muted w-full md:max-w-120 max-md:aspect-5/3 aspect-square rounded-3xl overflow-hidden',
+                  index % 2 === 1 ? 'mr-auto' : 'ml-auto',
+                )}
+              >
+                <Image
+                  src={item.image.url!}
+                  alt={item.image.alt}
+                  width={1280}
+                  height={800}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+>>>>>>> Stashed changes
             </div>
             <div className="ml-auto bg-accent w-full md:max-w-120 max-md:aspect-5/3 aspect-square"></div>
           </div>

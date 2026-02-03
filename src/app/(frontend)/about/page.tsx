@@ -1,7 +1,6 @@
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { Container } from '@/shared/components/provider/Container'
-import { Button } from '@/shared/components/ui/Button'
 import { TitleSmallWithIcon } from '@/shared/components/ui/TitleSmallWithIcon'
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
@@ -14,9 +13,10 @@ import {
 } from '@/shared/constants/style/margin'
 import { STYLE_ROUNDED_CONTAINER } from '@/shared/constants/style/rounded'
 import { faEye, faTasks, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import Image from 'next/image'
 import React from 'react'
 
-export default function page() {
+export default function Page() {
   return (
     <div>
       {/* ======================================================
@@ -64,9 +64,11 @@ export default function page() {
 
           {/* img  */}
           <div className={'w-full aspect-video overflow-hidden relative' + STYLE_ROUNDED_CONTAINER}>
-            <img
+            <Image
               src="/assets/web/about/hero.webp"
               alt="Photo Semua Team Wiatour"
+              width={1280}
+              height={800}
               className="w-full h-full object-cover scale-110"
             />
           </div>
@@ -97,9 +99,11 @@ export default function page() {
               </TypographyP>
             </div>
             <div className="ml-auto bg-accent w-full md:max-w-120 md:aspect-6/7 aspect-video relative overflow-hidden rounded-3xl">
-              <img
+              <Image
                 src="/assets/web/about/about.webp"
                 alt="Photo CEO Wiradrana dan Team"
+                width={1280}
+                height={800}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -114,12 +118,14 @@ export default function page() {
   ====================================================== */
   function CEOQuotesSection() {
     return (
-      <section className={STYLE_MARGIN_CONTAINER}>
+      <section id="ceo" className={STYLE_MARGIN_CONTAINER}>
         <Container className="flex max-lg:flex-col gap-14">
-          <div className="ml-auto bg-accent w-full lg:w-110 shrink-0 aspect-square relative overflow-hidden rounded-3xl">
-            <img
+          <div className="ml-auto bg-muted w-full lg:w-110 shrink-0 aspect-square relative overflow-hidden rounded-3xl">
+            <Image
               src="/assets/web/about/ceo.webp"
               alt="Photo CEO Wiradrana Putri Harefa"
+              width={1280}
+              height={800}
               className="w-full h-full object-cover"
             />
           </div>
@@ -151,32 +157,42 @@ export default function page() {
       h3,
       p,
       imgUrl,
+      position = 'left',
     }: {
       title: string
       icon: IconDefinition
       h3: string
       p: string
       imgUrl: string
+      position?: 'left' | 'right'
     }) => {
       return (
         <div className="w-full grid md:grid-cols-2 gap-8 overflow-hidden">
-          <div
-            className={`service-step flex flex-col w-full my-auto max-md:order-1 md:max-w-100 gap-4`}
-          >
-            <TitleSmallWithIcon text={title} icon={icon} />
+          <div className={`flex ${position == 'right' && 'order-2'}`}>
+            <div
+              className={`service-step flex flex-col w-full my-auto max-md:order-1 md:max-w-100 gap-4 `}
+            >
+              <TitleSmallWithIcon text={title} icon={icon} />
 
-            <TypographyH3 className="mb-2">{h3}</TypographyH3>
-            <TypographyP>{p}</TypographyP>
+              <TypographyH3 className="mb-2">{h3}</TypographyH3>
+              <TypographyP>{p}</TypographyP>
+            </div>
           </div>
           <div className="w-full aspect-4/3 rounded-2xl overflow-hidden bg-muted mt-4">
-            <img src={imgUrl} alt={title + ' Image'} className="w-full h-full object-cover" />
+            <Image
+              src={imgUrl}
+              alt={title + ' Image'}
+              width={1280}
+              height={800}
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       )
     }
 
     return (
-      <section className={STYLE_MARGIN_CONTAINER}>
+      <section id="visi" className={STYLE_MARGIN_CONTAINER}>
         <Container className="flex flex-col items-center">
           <HeaderSection
             titleSmall={'Arah & Tujuan Kami'}
@@ -190,14 +206,15 @@ export default function page() {
               icon={faEye}
               h3="Menjadi Pilihan Utama Perjalanan Digital"
               p="Mewujudkan perusahaan perjalanan berbasis digital yang dipercaya pelanggan melalui pelayanan profesional, inovatif, dan berkelanjutan."
-              imgUrl="/images/footer.webp"
+              imgUrl="/assets/web/home/hero-1.jpg"
             />
             <VMCard
               title="Misi Kami"
               icon={faTasks}
+              position="right"
               h3="Memberikan Layanan yang Bernilai"
               p="Menyelenggarakan layanan perjalanan yang terencana, aman, dan berorientasi pada kepuasan pelanggan, serta menciptakan nilai tambah bagi seluruh pemangku kepentingan."
-              imgUrl="/images/footer.webp"
+              imgUrl="/assets/web/home/hero-5.webp"
             />
           </div>
         </Container>

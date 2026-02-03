@@ -7,6 +7,6 @@ export const metadata: Metadata = {
     'Paket tour murah ke berbagai destinasi Indonesia. Cocok untuk budget traveler, open trip hemat, dan private tour harga terjangkau.',
 }
 
-export default function page() {
+export default function Page() {
   return <div>page</div>
 }

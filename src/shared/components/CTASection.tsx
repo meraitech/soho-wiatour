@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from './ui/Button'
-import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '../constants/style/margin'
+import { STYLE_MARGIN_CONTAINER } from '../constants/style/margin'
 
 export type CTAProps = {
   quote: string
@@ -19,7 +19,9 @@ export default function CTASection({ item }: { item: CTAProps }) {
 
       <div className="flex max-md:flex-col gap-4 z-1">
         <Button>{item.button1}</Button>
-        <Button variant="monocrome_white">{item.button2}</Button>
+        <Button href="" variant="monocrome_white">
+          {item.button2}
+        </Button>
       </div>
     </section>
   )

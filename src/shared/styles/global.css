@@ -103,6 +103,14 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 @keyframes marquee-left {
   from {
     transform: translateX(0);

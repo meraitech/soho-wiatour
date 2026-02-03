@@ -6,8 +6,8 @@ export const Navbar = () => {
     { label: 'Halaman Utama', href: '/', ariaLabel: 'Landing Page' },
     { label: 'Tours', href: '/tours', ariaLabel: 'Tour Page' },
     { label: 'Tentang Kami', href: '/about', ariaLabel: 'Tentang Kami Page' },
-    { label: 'Layanan Kami', href: '/service', ariaLabel: 'Our Services' },
-    { label: 'Testimonials', href: '/testimonial', ariaLabel: 'Testimony Clients' },
+    { label: 'Layanan Kami', href: '/#services', ariaLabel: 'Our Services' },
+    { label: 'Testimonials', href: '/#testimonial', ariaLabel: 'Testimony Clients' },
   ]
   return (
     <header className="fixed top-0 left-0 w-full z-50">

@@ -73,7 +73,7 @@ function useElementWidth<T extends HTMLElement>(ref: React.RefObject<T | null>):
     update()
     window.addEventListener('resize', update)
     return () => window.removeEventListener('resize', update)
-  }, [])
+  }, [ref])
 
   return width
 }

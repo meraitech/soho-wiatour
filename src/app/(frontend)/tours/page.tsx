@@ -1,7 +1,4 @@
 import React from 'react'
-import id from '@/shared/assets/jsons/id.json'
-import CTASection from '@/shared/components/CTASection'
-import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { Container } from '@/shared/components/provider/Container'
 import {
@@ -17,10 +14,8 @@ import { TourSummary } from '@/features/tours/types'
    PAGE — Tours Page
 ====================================================== */
 
-export default async function page() {
-  const text = id.landing
+export default async function Page() {
   const tours = await TourService.getAll()
-
   return (
     <div className="overflow-hidden">
       {/* ======================================================

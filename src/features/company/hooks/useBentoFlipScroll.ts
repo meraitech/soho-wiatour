@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef } from 'react'
 import type React from 'react'
-import { gsap, Flip, ScrollTrigger } from '@/shared/lib/gsap'
+import { gsap, Flip } from '@/shared/lib/gsap'
 
 type Params = {
     heroWrapRef: React.RefObject<HTMLDivElement | null>

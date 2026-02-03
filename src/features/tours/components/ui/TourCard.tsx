@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { TypographyH3 } from '@/shared/components/ui/TypographyH3'
 import { STYLE_ROUNDED_CARD } from '@/shared/constants/style/rounded'
 import clsx from 'clsx'
+import Image from 'next/image'
 
 type Props = {
   title: string
@@ -28,9 +29,11 @@ export const TourCard = ({ width = 'w-full', slug, title, imgUrl, imgAlt }: Prop
         </div>
 
         <div className="absolute inset-0 bg-muted">
-          <img
+          <Image
             src={imgUrl}
             alt={imgAlt}
+            width={1280}
+            height={800}
             className="w-full h-full object-cover group-hover:scale-105 duration-300"
           />
         </div>

@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '../ui/Button'
+import Image from 'next/image'
 
 export type CardNavLink = {
   label: string
@@ -109,7 +110,7 @@ const CardNav: React.FC<CardNavProps> = ({
       tl?.kill()
       tlRef.current = null
     }
-  }, [ease, items])
+  }, [ease, items, createTimeline])
 
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -187,9 +188,9 @@ const CardNav: React.FC<CardNavProps> = ({
           </div>
 
           <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-0">
-            <img src={logo} alt={logoAlt} className="logo h-7" />
+            <Image src={logo} alt={logoAlt} width={1280} height={800} className="logo h-7 w-auto" />
           </div>
-          <Button className="max-md:hidden" variant="color">
+          <Button href="#" className="max-md:hidden" variant="color">
             Hubungi Kami
           </Button>
         </div>
@@ -227,9 +228,11 @@ const CardNav: React.FC<CardNavProps> = ({
             ref={setCardRef(1)}
           >
             <div className="nav-card-links mt-auto flex flex-col gap-0.5 relative overflow-hidden rounded-2xl">
-              <img
+              <Image
                 src="/assets/web/layout/navbar.webp"
-                alt=""
+                alt="Foto Utama Wiatour bersama di Luar Negeri"
+                width={1280}
+                height={800}
                 draggable={false}
                 className="nav-card-link w-full h-full object-cover scale-125"
               />

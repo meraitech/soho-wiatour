@@ -1,6 +1,12 @@
 'use client'
 
+<<<<<<< Updated upstream
 import React, { useLayoutEffect, useRef } from 'react'
+=======
+import React, { useLayoutEffect, useRef, useEffect, useState } from 'react'
+import Image from 'next/image'
+import id from '@/shared/assets/jsons/id.json'
+>>>>>>> Stashed changes
 
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
@@ -8,13 +14,10 @@ import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
 import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
-
 import { faComputerMouse } from '@fortawesome/free-solid-svg-icons'
-
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
 
-import id from '@/shared/assets/jsons/id.json'
 import { useBentoFlipScroll } from '@/features/company/hooks/useBentoFlipScroll'
 import { VelocityScroller } from '@/shared/components/ScrollVelocity'
 import { TestimonialCard } from '@/features/company/components/TestimonialCard'
@@ -26,7 +29,7 @@ import { OurServiceSection } from '@/features/company/components/OurServiceSecti
    PAGE — Landing Page (Main Page)
 ====================================================== */
 
-export default function page() {
+export default function Page() {
   const text = id.landing
   return (
     <div className="overflow-x-hidden">
@@ -131,14 +134,14 @@ export default function page() {
     ]
 
     const images = [
-      'https://images.unsplash.com/photo-1718876688960-4ae86c2f33d1?q=80&w=2670',
-      'https://images.unsplash.com/photo-1500981458086-b8a11cd163af?q=80&w=2340',
-      'https://images.unsplash.com/photo-1626603503426-deaafeccedc9?q=80&w=1925',
-      'https://images.unsplash.com/photo-1595628218785-bf323bcc3ecc?q=80&w=1364',
-      'https://images.unsplash.com/photo-1741320159899-df923b71de08?q=80&w=1287',
-      'https://images.unsplash.com/photo-1712141481069-793132cc5769?q=80&w=1336',
-      'https://images.unsplash.com/photo-1566908463863-abb4672c53a2?q=80&w=1364',
-      'https://images.unsplash.com/photo-1694860843772-9fd8747f189f?q=80&w=1287',
+      '/assets/web/home/hero-1.jpg',
+      '/assets/web/home/hero-2.jpg',
+      '/assets/web/home/hero-4.jpg',
+      '/assets/web/home/hero-6.webp',
+      '/assets/web/home/hero-3.jpg',
+      '/assets/web/home/hero-5.webp',
+      '/assets/web/home/hero-7.webp',
+      '/assets/web/home/hero-8.webp',
     ]
 
     /* ======================================================
@@ -173,7 +176,13 @@ export default function page() {
               ${gridAreas[i]}
             `}
             >
-              <img src={src} alt="" className="w-full h-full object-cover" />
+              <Image
+                src={src}
+                alt={'Foto ' + i + ' Wiatour'}
+                width={1920}
+                height={1080}
+                className="w-full h-full object-cover"
+              />
             </div>
           ))}
         </div>
@@ -208,14 +217,7 @@ export default function page() {
             </div>
           </div>
 
-          <div
-            className="
-          flex items-center gap-2
-          border py-2 px-4 rounded-full
-          text-background/30 text-sm
-          animate-bounce backdrop-blur-sm
-        "
-          >
+          <div className="flex items-center gap-2 border py-2 px-4 rounded-full text-background/30 text-sm animate-bounce backdrop-blur-sm">
             <span>Scroll Down</span>
             <FontAwesomeIcon icon={faComputerMouse} />
           </div>
@@ -229,7 +231,7 @@ export default function page() {
   ====================================================== */
   function AboutSection() {
     return (
-      <section className={STYLE_MARGIN_CONTAINER}>
+      <section id="about" className={STYLE_MARGIN_CONTAINER}>
         <div className={STYLE_MARGIN_CONTAINER_TOP}></div>
         <Container className={'grid md:grid-cols-2 gap-8'}>
           {/* left  */}
@@ -245,9 +247,11 @@ export default function page() {
 
           {/* right  */}
           <div className="bg-muted rounded-2xl overflow-hidden">
-            <img
-              src="https://plus.unsplash.com/premium_photo-1718146017949-c54d1fd3854d?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt=""
+            <Image
+              src="/assets/web/home/about.jpg"
+              alt="Foto Tim Wiatour"
+              width={1280}
+              height={800}
               className="object-cover md:aspect-6/7 aspect-4/3 duration-300"
             />
           </div>
@@ -261,6 +265,34 @@ export default function page() {
   ====================================================== */
   function TestimonialSection() {
     const testimonial = text.testimonial
+<<<<<<< Updated upstream
+=======
+    const [testimonials, setTestimonials] = useState<
+      Array<{ quotes: string; imgUrl: string; name: string }>
+    >([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+      async function fetchTestimonials() {
+        try {
+          const response = await fetch('/api/testimonials?limit=10')
+          const data = await response.json()
+          setTestimonials(data.testimonials || [])
+        } catch (error) {
+          console.error('Error fetching testimonials:', error)
+          // Fallback to static data if API fails
+          setTestimonials(testimonial.items)
+        } finally {
+          setLoading(false)
+        }
+      }
+
+      fetchTestimonials()
+    }, [testimonial.items])
+
+    // Use testimonials from CMS or fallback to static data
+    const displayTestimonials = testimonials.length > 0 ? testimonials : testimonial.items
+>>>>>>> Stashed changes
 
     return (
       <section className={STYLE_MARGIN_CONTAINER}>

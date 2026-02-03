@@ -2,6 +2,7 @@ import { TitleSmallWithIcon } from '@/shared/components/ui/TitleSmallWithIcon'
 import { TypographyH3 } from '@/shared/components/ui/TypographyH3'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons'
+import Image from 'next/image'
 
 export const ServiceCard = ({
   title_small,
@@ -26,7 +27,13 @@ export const ServiceCard = ({
       <TypographyP>{paragraph}</TypographyP>
 
       <div className="md:hidden w-full aspect-4/3  rounded-2xl overflow-hidden bg-muted mt-4">
-        <img src={image} alt={title + ' Image'} className="w-full h-full object-cover" />
+        <Image
+          src={image}
+          alt={title + ' Image'}
+          width={1280}
+          height={800}
+          className="w-full h-full object-cover"
+        />
       </div>
     </div>
   )

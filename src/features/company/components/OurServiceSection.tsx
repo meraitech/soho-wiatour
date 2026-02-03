@@ -118,14 +118,18 @@ export function OurServiceSection() {
       killTriggers()
       ctx.revert()
     }
-  }, [])
+  }, [initScroll])
 
   /* =========================
      RENDER
   ========================= */
 
   return (
+<<<<<<< Updated upstream
     <section className={STYLE_MARGIN_CONTAINER}>
+=======
+    <section id="services" className={STYLE_MARGIN_CONTAINER}>
+>>>>>>> Stashed changes
       <Container className="flex flex-col items-center">
         <HeaderSection
           titleSmall={text.services.header.titleSmall}
@@ -143,7 +147,9 @@ export function OurServiceSection() {
             <img
               ref={serviceImageRef}
               src={ourServices[0].imgUrl}
-              alt=""
+              alt={'Gambar Service'}
+              width={800}
+              height={800}
               className="w-full h-full object-cover"
             />
           </div>
