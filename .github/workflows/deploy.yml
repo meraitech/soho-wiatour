@@ -1,7 +1,8 @@
 name: Build and Push Docker Image
 
 # This workflow builds and pushes the Docker image to GitHub Container Registry
-# Secrets (DATABASE_URL, PAYLOAD_SECRET, etc.) should be set in Coolify, NOT here
+# Secrets (PAYLOAD_SECRET) needed in GitHub Actions for build time
+# Other secrets (DATABASE_URL, R2_*) should be set in Coolify for runtime
 
 on:
   push:
@@ -61,6 +62,7 @@ jobs:
         run: pnpm build
         env:
           NODE_OPTIONS: --max-old-space-size=8000
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
