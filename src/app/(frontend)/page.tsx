@@ -224,10 +224,10 @@ export default function Page() {
         <div className={STYLE_MARGIN_CONTAINER_TOP}></div>
         <Container className={'grid md:grid-cols-2 gap-8'}>
           {/* left  */}
-          <div className="flex flex-col justify-center items-start gap-14 md:max-w-100">
+          <div className="flex flex-col justify-center items-start gap-14 md:max-w-125">
             <div className="flex flex-col gap-6 items-start">
               {/* <TitleSmallWithIcon text={text.about.titleSmall} icon={faBuilding} /> */}
-              <span>{text.about.titleSmall}</span>
+              <span className="md:text-lg">{text.about.titleSmall}</span>
               <TypographyH2 className="mt-2">{text.about.title}</TypographyH2>
               <TypographyP>{text.about.description}</TypographyP>
             </div>

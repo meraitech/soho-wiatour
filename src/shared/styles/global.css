@@ -22,7 +22,7 @@
      NEUTRAL
   ========================= */
   --color-background: #eefbff;
-  --color-foreground: #020617;
+  --color-foreground: #06176d;
 
   --color-surface: #f8fafc;
   --color-surface-foreground: #020617;
@@ -43,7 +43,7 @@
   /* =========================
      UI
   ========================= */
-  --color-border: #ffffff48;
+  --color-border: #06176d;
   --color-border-muted: #f1f5f9;
 
   --color-ring: #0f172a;
@@ -53,6 +53,7 @@
   --color-disabled-foreground: #9ca3af;
 
   background-color: var(--color-background);
+  color: var(--color-foreground);
 }
 
 @theme {

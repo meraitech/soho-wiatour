@@ -26,7 +26,7 @@ export const ServiceCard = ({
       <TypographyH3 className="mb-2">{title}</TypographyH3>
       <TypographyP>{paragraph}</TypographyP>
 
-      <div className="md:hidden w-full aspect-4/3  rounded-2xl overflow-hidden bg-muted mt-4">
+      <div className="md:hidden w-full aspect-4/3  rounded-2xl overflow-hidden mt-4">
         <Image
           src={image}
           alt={title + ' Image'}
