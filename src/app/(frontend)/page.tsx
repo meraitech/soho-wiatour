@@ -61,159 +61,224 @@ export default function Page() {
    SECTION HERO
   ====================================================== */
   function HeroSection() {
-    const heroWrapRef = useRef<HTMLDivElement | null>(null)
-    const heroGalleryRef = useRef<HTMLDivElement | null>(null)
+    const videoRef = useRef<HTMLDivElement | null>(null)
 
     /* ======================================================
      GSAP SCROLL LOGIC
   ====================================================== */
     useLayoutEffect(() => {
-      if (!heroWrapRef.current) return
+      if (!videoRef.current) return
 
       const ctx = gsap.context(() => {
-        const heroTitle = gsap.utils.toArray<HTMLDivElement>('.hero-title')
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: heroWrapRef.current,
-            start: 'top top+=1',
-            end: 'center top',
-            scrub: true,
-
-            // 🔑 TOGGLE CLASS DI HERO WRAPPER
-            toggleClass: {
-              targets: heroWrapRef.current,
-              className: 'bg-foreground',
-            },
-          },
+        // set initial state (WAJIB)
+        gsap.set(videoRef.current, {
+          scale: 0.7,
+          transformOrigin: 'top center',
         })
 
-        // Fade title out
-        tl.to(heroTitle, {
-          autoAlpha: 0,
+        gsap.to(videoRef.current, {
+          scale: 1,
           ease: 'none',
-        })
-
-        // Gallery subtle fade
-        tl.from(
-          heroGalleryRef.current,
-          {
-            opacity: 0.7,
-            ease: 'none',
+          scrollTrigger: {
+            trigger: videoRef.current,
+            start: 'top 60%',
+            end: '60% 60%',
+            scrub: true,
+            markers: true,
           },
-          '<',
-        )
-      }, heroWrapRef)
+        })
+      }, videoRef)
 
       return () => ctx.revert()
     }, [])
 
-    /* ======================================================
-     OPTIONAL EXTRA SCROLL EFFECT
-  ====================================================== */
-    useBentoFlipScroll({ heroWrapRef, heroGalleryRef })
-
-    /* ======================================================
-     STATIC DATA
-  ====================================================== */
-    const gridAreas = [
-      '[grid-area:1/1/3/2]',
-      '[grid-area:1/2/2/3]',
-      '[grid-area:2/2/4/3]',
-      '[grid-area:1/3/3/4]',
-      '[grid-area:3/1/4/2]',
-      '[grid-area:3/3/5/4]',
-      '[grid-area:4/1/5/2]',
-      '[grid-area:4/2/5/3]',
-    ]
-
-    const images = [
-      '/assets/web/home/hero-1.jpg',
-      '/assets/web/home/hero-2.jpg',
-      '/assets/web/home/hero-4.jpg',
-      '/assets/web/home/hero-6.webp',
-      '/assets/web/home/hero-3.jpg',
-      '/assets/web/home/hero-5.webp',
-      '/assets/web/home/hero-7.webp',
-      '/assets/web/home/hero-8.webp',
-    ]
-
-    /* ======================================================
-     RENDER
-  ====================================================== */
     return (
-      <section
-        ref={heroWrapRef}
-        className="
-        relative w-full h-screen
-        bg-foreground
-        flex items-center justify-center
-        overflow-hidden
-      "
-      >
-        {/* GALLERY */}
-        <div
-          ref={heroGalleryRef}
-          className="
-          grid gap-[1.5vh]
-          grid-cols-[repeat(3,32.5vw)]
-          grid-rows-[repeat(4,23vh)]
-          justify-center content-center
-        "
-        >
-          {images.map((src, i) => (
-            <div
-              key={i}
-              className={`
-              gallery-item
-              relative overflow-hidden rounded-2xl
-              ${gridAreas[i]}
-            `}
-            >
-              <Image
-                src={src}
-                alt={'Foto ' + i + ' Wiatour'}
-                width={1920}
-                height={1080}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* HERO CONTENT */}
-        <div
-          className="
-        hero-title
-        z-5 text-background
-        flex flex-col items-center
-        absolute inset-0
-        justify-center py-10
-      "
-        >
-          <div
-            className="
-          flex flex-col items-center
-          lg:gap-12 md:gap-8 gap-6
-          xl:max-w-5xl lg:max-w-4xl
-          md:max-w-3xl sm:max-w-2xl
-        "
-          >
+      <section className="">
+        <Container className="flex flex-col">
+          {/* Title  */}
+          <div className="h-[70dvh] flex flex-col items-center mx-auto justify-center lg:gap-12 md:gap-8 gap-6 xl:max-w-5xl lg:max-w-4xl md:max-w-3xl sm:max-w-2xl ">
             <TypographyH1 className="text-center">{text.hero.title}</TypographyH1>
 
             <div className="flex md:gap-6 gap-4">
               <Button href="#tour-highlight" size="lg">
                 {text.hero.ctaPrimary}
               </Button>
-              <Button href="#cta" variant="monocrome_white" size="lg">
+              <Button href="#cta" variant="monocrome_black" size="lg">
                 {text.hero.ctaSecondary}
               </Button>
             </div>
           </div>
-        </div>
+
+          <div ref={videoRef} className="w-full relative h-screen rounded-3xl overflow-hidden">
+            <video
+              className="absolute inset-0 w-full h-full object-cover"
+              src="/assets/web/home/hero.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+            />
+          </div>
+        </Container>
       </section>
     )
   }
+  // function HeroSection() {
+  //   const heroWrapRef = useRef<HTMLDivElement | null>(null)
+  //   const heroGalleryRef = useRef<HTMLDivElement | null>(null)
+
+  //   /* ======================================================
+  //    GSAP SCROLL LOGIC
+  // ====================================================== */
+  //   useLayoutEffect(() => {
+  //     if (!heroWrapRef.current) return
+
+  //     const ctx = gsap.context(() => {
+  //       const heroTitle = gsap.utils.toArray<HTMLDivElement>('.hero-title')
+
+  //       const tl = gsap.timeline({
+  //         scrollTrigger: {
+  //           trigger: heroWrapRef.current,
+  //           start: 'top top+=1',
+  //           end: 'center top',
+  //           scrub: true,
+
+  //           // 🔑 TOGGLE CLASS DI HERO WRAPPER
+  //           toggleClass: {
+  //             targets: heroWrapRef.current,
+  //             className: 'bg-foreground',
+  //           },
+  //         },
+  //       })
+
+  //       // Fade title out
+  //       tl.to(heroTitle, {
+  //         autoAlpha: 0,
+  //         ease: 'none',
+  //       })
+
+  //       // Gallery subtle fade
+  //       tl.from(
+  //         heroGalleryRef.current,
+  //         {
+  //           opacity: 0.7,
+  //           ease: 'none',
+  //         },
+  //         '<',
+  //       )
+  //     }, heroWrapRef)
+
+  //     return () => ctx.revert()
+  //   }, [])
+
+  //   /* ======================================================
+  //    OPTIONAL EXTRA SCROLL EFFECT
+  // ====================================================== */
+  //   useBentoFlipScroll({ heroWrapRef, heroGalleryRef })
+
+  //   /* ======================================================
+  //    STATIC DATA
+  // ====================================================== */
+  //   const gridAreas = [
+  //     '[grid-area:1/1/3/2]',
+  //     '[grid-area:1/2/2/3]',
+  //     '[grid-area:2/2/4/3]',
+  //     '[grid-area:1/3/3/4]',
+  //     '[grid-area:3/1/4/2]',
+  //     '[grid-area:3/3/5/4]',
+  //     '[grid-area:4/1/5/2]',
+  //     '[grid-area:4/2/5/3]',
+  //   ]
+
+  //   const images = [
+  //     '/assets/web/home/hero-1.jpg',
+  //     '/assets/web/home/hero-2.jpg',
+  //     '/assets/web/home/hero-4.jpg',
+  //     '/assets/web/home/hero-6.webp',
+  //     '/assets/web/home/hero-3.jpg',
+  //     '/assets/web/home/hero-5.webp',
+  //     '/assets/web/home/hero-7.webp',
+  //     '/assets/web/home/hero-8.webp',
+  //   ]
+
+  //   /* ======================================================
+  //    RENDER
+  // ====================================================== */
+  //   return (
+  //     <section
+  //       ref={heroWrapRef}
+  //       className="
+  //       relative w-full h-screen
+  //       bg-foreground
+  //       flex items-center justify-center
+  //       overflow-hidden
+  //     "
+  //     >
+  //       {/* GALLERY */}
+  //       <div
+  //         ref={heroGalleryRef}
+  //         className="
+  //         grid gap-[1.5vh]
+  //         grid-cols-[repeat(3,32.5vw)]
+  //         grid-rows-[repeat(4,23vh)]
+  //         justify-center content-center
+  //       "
+  //       >
+  //         {images.map((src, i) => (
+  //           <div
+  //             key={i}
+  //             className={`
+  //             gallery-item
+  //             relative overflow-hidden rounded-2xl
+  //             ${gridAreas[i]}
+  //           `}
+  //           >
+  //             <Image
+  //               src={src}
+  //               alt={'Foto ' + i + ' Wiatour'}
+  //               width={1920}
+  //               height={1080}
+  //               className="w-full h-full object-cover"
+  //             />
+  //           </div>
+  //         ))}
+  //       </div>
+
+  //       {/* HERO CONTENT */}
+  //       <div
+  //         className="
+  //       hero-title
+  //       z-5 text-background
+  //       flex flex-col items-center
+  //       absolute inset-0
+  //       justify-center py-10
+  //     "
+  //       >
+  //         <div
+  //           className="
+  //         flex flex-col items-center
+  //         lg:gap-12 md:gap-8 gap-6
+  //         xl:max-w-5xl lg:max-w-4xl
+  //         md:max-w-3xl sm:max-w-2xl
+  //       "
+  //         >
+  //           <TypographyH1 className="text-center">{text.hero.title}</TypographyH1>
+
+  //           <div className="flex md:gap-6 gap-4">
+  //             <Button href="#tour-highlight" size="lg">
+  //               {text.hero.ctaPrimary}
+  //             </Button>
+  //             <Button href="#cta" variant="monocrome_white" size="lg">
+  //               {text.hero.ctaSecondary}
+  //             </Button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   )
+  // }
 
   /* ======================================================
    SECTION ABOUT
