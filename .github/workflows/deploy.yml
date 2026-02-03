@@ -52,6 +52,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate Payload types
+        run: pnpm generate:types
+        env:
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+
       - name: Type check
         run: pnpm tsc --noEmit
 

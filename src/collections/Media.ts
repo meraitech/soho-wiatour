@@ -5,21 +5,24 @@ import fs from 'fs/promises'
 import path from 'path'
 
 // Check if R2 is configured
-const useR2 = process.env.R2_ACCOUNT_ID &&
+const useR2 =
+  process.env.R2_ACCOUNT_ID &&
   process.env.R2_ACCESS_KEY_ID &&
   process.env.R2_SECRET_ACCESS_KEY &&
   process.env.R2_BUCKET_NAME &&
   process.env.R2_PUBLIC_URL
 
 // Initialize R2 client if configured
-const r2Client = useR2 ? new S3Client({
-  region: 'auto',
-  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
-  },
-}) : null
+const r2Client = useR2
+  ? new S3Client({
+      region: 'auto',
+      endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+      credentials: {
+        accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+      },
+    })
+  : null
 
 const r2BucketName = process.env.R2_BUCKET_NAME || ''
 const r2PublicUrl = process.env.R2_PUBLIC_URL || ''
@@ -47,7 +50,8 @@ export const Media: CollectionConfig = {
   slug: 'media',
   admin: {
     defaultColumns: ['alt', 'updatedAt'],
-    description: 'Upload images with maximum size of 2MB. Supported formats: JPG, PNG, WebP, GIF, and other image formats.',
+    description:
+      'Upload images with maximum size of 2MB. Supported formats: JPG, PNG, WebP, GIF, and other image formats.',
   },
   access: {
     // Public read access - images are used in frontend
@@ -66,93 +70,100 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: 'webp',
       options: {
-        quality: 85
-      }
-    }
+        quality: 85,
+      },
+    },
   },
-  hooks: useR2 ? {
-    beforeValidate: [
-      async ({ data }) => {
-        // Check file size before validation using data.filesize (2MB = 2097152 bytes)
-        const maxSize = 2 * 1024 * 1024 // 2MB
+  hooks: useR2
+    ? {
+        beforeValidate: [
+          async ({ data }) => {
+            // Check file size before validation using data.filesize (2MB = 2097152 bytes)
+            const maxSize = 2 * 1024 * 1024 // 2MB
 
-        const filesize = (data as any)?.filesize
-        if (filesize && filesize > maxSize) {
-          const sizeInMB = (filesize / 1024 / 1024).toFixed(2)
-          const errorMessage = `File size exceeds 2MB limit. Your file is ${sizeInMB}MB`
+            const filesize = (data as any)?.filesize
+            if (filesize && filesize > maxSize) {
+              const sizeInMB = (filesize / 1024 / 1024).toFixed(2)
+              const errorMessage = `File size exceeds 2MB limit. Your file is ${sizeInMB}MB`
 
-          // Log to console for debugging
-          console.error('[Media Validation]', errorMessage)
+              // Log to console for debugging
+              console.error('[Media Validation]', errorMessage)
 
-          // Throw error - Payload will catch and display
-          const error = new Error(errorMessage) as any
-          error.name = 'ValidationError'
-          error.field = 'file'
-          throw error
-        }
-
-        return data
-      }
-    ],
-    afterOperation: [
-      async ({ operation, result }) => {
-        // Upload to R2 after file is processed and saved by Payload
-        if ((operation === 'create' || operation === 'update') && result && result.filename) {
-          try {
-            const mediaDir = '/tmp/payload-media'
-
-            // Upload converted WebP file to R2
-            const filePath = path.join(mediaDir, result.filename)
-            try {
-              // Check if file exists
-              await fs.access(filePath)
-
-              // Get MIME type (should be image/webp after conversion)
-              const mimeType = (result as any).mimeType || 'image/webp'
-
-              // Upload file to R2
-              const fileUrl = await uploadToR2(result.filename, filePath, mimeType)
-              result.url = fileUrl
-
-              // Delete file from temp storage after upload
-              await fs.unlink(filePath).catch(() => { })
-            } catch (err) {
-              console.error('[R2 Upload] Error uploading file:', err)
+              // Throw error - Payload will catch and display
+              const error = new Error(errorMessage) as any
+              error.name = 'ValidationError'
+              error.field = 'file'
+              throw error
             }
 
-          } catch (error) {
-            console.error('[R2 Upload] Error in R2 upload process:', error)
-          }
-        }
-        return result
-      }
-    ],
-    afterDelete: [
-      async ({ doc }) => {
-        // Files are already deleted by Payload, just clean up from R2 if needed
-        // This is a safety check in case R2 has files that shouldn't be there
-        if (doc.filename) {
-          try {
-            const params = {
-              Bucket: r2BucketName,
-              Key: doc.filename,
+            return data
+          },
+        ],
+        afterOperation: [
+          async ({ operation, result }) => {
+            // Upload to R2 after file is processed and saved by Payload
+            // Type guard to ensure result is a document (not BulkOperationResult)
+            const doc =
+              result && 'id' in result
+                ? (result as { filename?: string; url?: string; mimeType?: string })
+                : null
+
+            if ((operation === 'create' || operation === 'update') && doc?.filename) {
+              try {
+                const mediaDir = '/tmp/payload-media'
+
+                // Upload converted WebP file to R2
+                const filePath = path.join(mediaDir, doc.filename)
+                try {
+                  // Check if file exists
+                  await fs.access(filePath)
+
+                  // Get MIME type (should be image/webp after conversion)
+                  const mimeType = doc.mimeType || 'image/webp'
+
+                  // Upload file to R2
+                  const fileUrl = await uploadToR2(doc.filename, filePath, mimeType)
+                  doc.url = fileUrl
+
+                  // Delete file from temp storage after upload
+                  await fs.unlink(filePath).catch(() => {})
+                } catch (err) {
+                  console.error('[R2 Upload] Error uploading file:', err)
+                }
+              } catch (error) {
+                console.error('[R2 Upload] Error in R2 upload process:', error)
+              }
             }
-            await r2Client!.send(new DeleteObjectCommand(params))
-          } catch (error) {
-            // Ignore errors if file doesn't exist in R2
-            console.debug('File not in R2 or already deleted')
-          }
-        }
+            return result
+          },
+        ],
+        afterDelete: [
+          async ({ doc }) => {
+            // Files are already deleted by Payload, just clean up from R2 if needed
+            // This is a safety check in case R2 has files that shouldn't be there
+            if (doc.filename) {
+              try {
+                const params = {
+                  Bucket: r2BucketName,
+                  Key: doc.filename,
+                }
+                await r2Client!.send(new DeleteObjectCommand(params))
+              } catch (error) {
+                // Ignore errors if file doesn't exist in R2
+                console.debug('File not in R2 or already deleted')
+              }
+            }
+          },
+        ],
       }
-    ]
-  } : undefined,
+    : undefined,
 
   fields: [
     {
       name: 'alt',
       type: 'text',
       required: true,
-      label: 'alt text'
+      label: 'alt text',
     },
   ],
 }
