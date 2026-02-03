@@ -115,7 +115,7 @@ export const Media: CollectionConfig = {
               result.url = fileUrl
 
               // Delete file from temp storage after upload
-              await fs.unlink(filePath).catch(() => {})
+              await fs.unlink(filePath).catch(() => { })
             } catch (err) {
               console.error('[R2 Upload] Error uploading file:', err)
             }
