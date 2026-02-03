@@ -13,7 +13,7 @@ const getCachedAdminBranding = unstable_cache(
     return globalSettings?.adminBranding || {}
   },
   ['admin-branding'],
-  { revalidate: 3600 } // 1 hour
+  { revalidate: 3600 }, // 1 hour
 )
 
 export const Icon = async () => {
@@ -22,7 +22,11 @@ export const Icon = async () => {
   try {
     const adminBranding = await getCachedAdminBranding()
     // Check if icon exists and is a Media object (has url property)
-    if (adminBranding.icon && typeof adminBranding.icon === 'object' && 'url' in adminBranding.icon) {
+    if (
+      adminBranding.icon &&
+      typeof adminBranding.icon === 'object' &&
+      'url' in adminBranding.icon
+    ) {
       const url = adminBranding.icon.url
       if (typeof url === 'string') {
         iconUrl = url
@@ -33,12 +37,5 @@ export const Icon = async () => {
     // Use default fallback on error
   }
 
-  return (
-    <img
-      src={iconUrl}
-      alt="Wiatour Icon"
-      width={30}
-      height={30}
-    />
-  )
+  return <img src={iconUrl} alt="Wiatour Icon" width={30} height={30} />
 }

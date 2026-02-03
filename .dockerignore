@@ -1,14 +1,16 @@
 # Dependencies
 node_modules
-.pnp
-.pnp.js
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
 
 # Next.js
 .next
 out
 
-# Production
-build
+# Testing
+coverage
+.nyc_output
 
 # Misc
 .DS_Store
@@ -20,28 +22,52 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local env files
-.env*.local
 .env
-
-# Vercel
-.vercel
-
-# TypeScript
-*.tsbuildinfo
-
-# Media
-/media
-
-# PayloadCMS (generated files)
-**/importMap.js
-payload-types.ts
+.env*.local
+.env.production
+.env.development
 
 # IDE
-.cursor
 .vscode
 .idea
+*.swp
+*.swo
+*~
 
-# Test results
-/test-results/
-/playwright-report/
-/blob-report/
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+README.md
+AGENTS.md
+CLAUDE.md
+LICENSE
+
+# CI/CD
+.github
+
+# Payload generated files
+payload-types.ts
+src/app/_components.tsx
+src/app/_globals.tsx
+src/app/_payload-config.ts
+
+# Media (should be mounted as volume)
+media
+tmp
+.temp
+
+# Cache
+.turbo
+.cache
+
+# Build artifacts
+dist
+build

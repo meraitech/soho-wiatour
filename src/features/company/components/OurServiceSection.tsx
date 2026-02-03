@@ -7,7 +7,7 @@ import { HeaderSection } from '@/shared/components/HeaderSection'
 
 import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
 import id from '@/shared/assets/jsons/id.json'
-import { ServiceCard } from './ServiceCard'
+import { ServiceCard } from '../../testimonials/components/ServiceCard'
 
 export function OurServiceSection() {
   const text = id.landing
@@ -118,14 +118,14 @@ export function OurServiceSection() {
       killTriggers()
       ctx.revert()
     }
-  }, [])
+  }, [initScroll])
 
   /* =========================
      RENDER
   ========================= */
 
   return (
-    <section className={STYLE_MARGIN_CONTAINER}>
+    <section id="services" className={STYLE_MARGIN_CONTAINER}>
       <Container className="flex flex-col items-center">
         <HeaderSection
           titleSmall={text.services.header.titleSmall}
@@ -138,12 +138,14 @@ export function OurServiceSection() {
           {/* LEFT — IMAGE */}
           <div
             ref={serviceLeftRef}
-            className="w-full max-md:hidden bg-muted md:aspect-square aspect-4/3 rounded-2xl overflow-hidden max-md:order-2"
+            className="w-full max-md:hidden md:aspect-square aspect-4/3 rounded-2xl overflow-hidden max-md:order-2"
           >
             <img
               ref={serviceImageRef}
               src={ourServices[0].imgUrl}
-              alt=""
+              alt={'Gambar Service'}
+              width={800}
+              height={800}
               className="w-full h-full object-cover"
             />
           </div>

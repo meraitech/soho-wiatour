@@ -7,7 +7,7 @@ export const TypographyH1 = ({ children, className, ...props }: TypographyH1Prop
     <h1
       {...props}
       className={
-        'xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-now duration-300 ' +
+        'xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-now duration-300 ' +
         className
       }
     >

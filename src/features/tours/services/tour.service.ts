@@ -1,7 +1,7 @@
-import { getPayloadHMR } from "@payloadcms/next/utilities";
-import configPromise from '@payload-config';
-import { Tour, TourSummary } from "../types";
-import { getPayload } from 'payload';
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+import configPromise from '@payload-config'
+import { Tour, TourSummary } from '../types'
+import { getPayload } from 'payload'
 import config from '@payload-config'
 
 export async function getAll(): Promise<TourSummary[]> {
@@ -19,11 +19,11 @@ export async function getAll(): Promise<TourSummary[]> {
       createdAt: true,
     },
     where: {
-      status: { equals: 'published' }
+      status: { equals: 'published' },
     },
   })
 
-  return result.docs as TourSummary[]
+  return result.docs as unknown as TourSummary[]
 }
 
 export async function getById(id: string): Promise<Tour | null> {
@@ -33,10 +33,10 @@ export async function getById(id: string): Promise<Tour | null> {
     const tour = await payload.findByID({
       collection: 'tours',
       id,
-      depth: 2
+      depth: 2,
     })
 
-    return tour as Tour
+    return tour as unknown as Tour
   } catch {
     return null
   }
@@ -62,7 +62,7 @@ export async function getRelated(currentTourId: string, limit = 6): Promise<Tour
     depth: 1,
   })
 
-  return result.docs as Tour[]
+  return result.docs as unknown as Tour[]
 }
 
 export class TourService {
@@ -92,11 +92,11 @@ export class TourService {
         createdAt: true,
       },
       where: {
-        status: { equals: 'published' }
+        status: { equals: 'published' },
       },
     })
 
-    return result.docs as TourSummary[]
+    return result.docs as unknown as TourSummary[]
   }
 
   /**
@@ -114,7 +114,7 @@ export class TourService {
       collection: 'tours',
       where: {
         slug: { equals: slug },
-        status: { equals: 'published' }
+        status: { equals: 'published' },
       },
       depth: 2,
       limit: 1,
@@ -122,9 +122,8 @@ export class TourService {
 
     if (result.docs.length === 0) return null
 
-    return result.docs[0] as Tour
+    return result.docs[0] as unknown as Tour
   }
-
 
   /**
    * Get a tour by its ID (including drafts)
@@ -141,10 +140,10 @@ export class TourService {
       const tour = await payload.findByID({
         collection: 'tours',
         id,
-        depth: 2
+        depth: 2,
       })
 
-      return tour as Tour
+      return tour as unknown as Tour
     } catch {
       return null
     }
@@ -165,7 +164,7 @@ export class TourService {
     const currentTour = await this.getById(currentTourId)
 
     if (currentTour?.relatedTours && currentTour.relatedTours.length > 0) {
-      return currentTour.relatedTours.slice(0, limit) as Tour[]
+      return currentTour.relatedTours.slice(0, limit) as unknown as Tour[]
     }
 
     const result = await payload.find({
@@ -179,7 +178,7 @@ export class TourService {
       depth: 1,
     })
 
-    return result.docs as Tour[]
+    return result.docs as unknown as Tour[]
   }
 
   /**

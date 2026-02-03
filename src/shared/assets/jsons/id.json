@@ -46,23 +46,23 @@
                 {
                     "quotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.",
                     "name": "John Doe",
-                    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/9/96/Logo_Trans7.png"
+                    "imgUrl": "/images/trans7.png"
                 },
                 {
                     "quotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.",
                     "name": "John Doe",
-                    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/9/96/Logo_Trans7.png"
+                    "imgUrl": "/images/trans7.png"
                 },
                 {
                     "quotes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has.",
                     "name": "John Doe",
-                    "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/9/96/Logo_Trans7.png"
+                    "imgUrl": "/images/trans7.png"
                 }
             ]
         },
         "cta": {
             "quote": "You only live once, so start your dream journey with us !!",
-            "button1": "Mulai Perjalanan Anda",
+            "button1": "Lihat Tour Lainnya",
             "button2": "Hubungi Kami"
         }
     }

@@ -7,6 +7,7 @@ import { useRef, useLayoutEffect } from 'react'
 import { useBentoFlipScroll } from '../hooks/useBentoFlipScroll'
 import id from '@/shared/assets/jsons/id.json'
 import { Button } from '@/shared/components/ui/Button'
+import Image from 'next/image'
 
 export default function HeroSection() {
   const wrapRef = useRef<HTMLDivElement | null>(null)
@@ -85,7 +86,13 @@ export default function HeroSection() {
             key={i}
             className={`gallery-item relative overflow-hidden rounded-2xl ${gridAreas[i]}`}
           >
-            <img src={src} alt="" className="w-full h-full object-cover" />
+            <Image
+              src={src}
+              alt={'Foto ' + i + ' Wiatour Tour'}
+              width={1280}
+              height={800}
+              className="w-full h-full object-cover"
+            />
           </div>
         ))}
       </div>

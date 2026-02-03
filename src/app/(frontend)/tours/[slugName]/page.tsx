@@ -14,8 +14,26 @@ import { TourService } from '@/features/tours/services'
 import ItinerarySection from '@/features/tours/components/ItinerarySection'
 import { notFound } from 'next/navigation'
 import FootageSection from '@/shared/components/FootageSection'
+import { Metadata } from 'next'
+import { createTourMetadata } from '@/features/seo/tour.metadata'
+import Image from 'next/image'
 import clsx from 'clsx'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import { TourHighlight } from '@/features/tours/components/TourHighlight'
+
+/* ======================================================
+   METADATA
+====================================================== */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slugName: string }>
+}): Promise<Metadata> {
+  const { slugName } = await params
+  const tour = await TourService.getBySlug(slugName)
+  if (!tour) return {}
+  return createTourMetadata(tour)
+}
 
 /* ======================================================
    PAGE — Tour Detail
@@ -59,7 +77,7 @@ export default async function page({ params }: PageProps) {
           SECTION TOUR HIGHLIGHT
       ====================================================== */}
       <div className={STYLE_MARGIN_CONTAINER_BOTTOM}>
-        {/* {tour?.id && <TourHighlight currentTourId={tour.id} />} */}
+        {tour?.id && <TourHighlight currentTourId={tour.id} />}
       </div>
     </div>
   )
@@ -82,10 +100,13 @@ export default async function page({ params }: PageProps) {
 
           {/* img  */}
           <div className={'w-full aspect-video overflow-hidden relative' + STYLE_ROUNDED_CONTAINER}>
-            <img
-              src={tour?.heroImage?.url || ''}
-              alt={tour?.heroImage?.alt || ''}
+            <Image
+              src={tour?.heroImage.url || ''}
+              alt={tour?.heroImage.alt || ''}
+              width={1200}
+              height={800}
               className="w-full h-full object-cover"
+              priority
             />
           </div>
         </Container>

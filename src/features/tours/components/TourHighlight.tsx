@@ -109,13 +109,15 @@ export const TourHighlight = ({ currentTourId }: { currentTourId: string }) => {
   }, [])
 
   return (
-    <section className={'overflow-hidden' + STYLE_MARGIN_CONTAINER}>
+    <section id="tour-highlight" className={'overflow-hidden' + STYLE_MARGIN_CONTAINER}>
       <Container className="flex max-md:flex-col items-center gap-12">
         {/* LEFT */}
-        <div className="flex flex-col w-full md:max-w-70 shrink-0 gap-8 items-start">
+        <div className="flex flex-col w-full md:max-w-80 shrink-0 gap-8 items-start">
           <div className="flex flex-col gap-4">
             <span>Tour Pilihan</span>
-            <TypographyH2>Destinasi yang Paling Diminati</TypographyH2>
+            <h2 className={'lg:text-5xl md:text-4xl text-3xl font-medium '}>
+              Destinasi yang Paling Diminati
+            </h2>
           </div>
           <Button onClick={() => router.push('/tours')} variant="monocrome_black">
             Semua Tour

@@ -3,6 +3,7 @@
 import { Media } from '@/payload-types'
 import { STYLE_MARGIN_CONTAINER_BOTTOM } from '../constants/style/margin'
 import { InfiniteMovingCards } from './ui/InfiniteMovingCard'
+import Image from 'next/image'
 
 type Props = {
   gallery: Array<{
@@ -24,9 +25,11 @@ export default function FootageSection({ gallery }: Props) {
         speed="slow"
         renderItem={(item, index) => (
           <div key={index} className="rounded-xl overflow-hidden bg-muted">
-            <img
+            <Image
               src={item.image.url!}
               alt={`${item.image.alt}`}
+              width={1200}
+              height={800}
               className="h-100 w-auto object-contain"
             />
           </div>
@@ -38,9 +41,11 @@ export default function FootageSection({ gallery }: Props) {
         direction="right"
         renderItem={(item, index) => (
           <div key={index} className="rounded-xl overflow-hidden bg-muted">
-            <img
+            <Image
               src={item.image.url!}
               alt={`${item.image.alt}`}
+              width={1200}
+              height={800}
               className="h-100 w-auto object-contain"
             />
           </div>
