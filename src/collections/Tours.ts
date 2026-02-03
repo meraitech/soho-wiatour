@@ -1,6 +1,6 @@
 import { formatSlug } from "@/shared/lib/utils";
 import { CollectionConfig } from "payload";
-import { checkRole, hasAnyRole } from "@/shared/lib/access";
+import { checkRole } from "@/shared/lib/access";
 
 export const Tours: CollectionConfig = {
   slug: 'tours',
@@ -11,10 +11,10 @@ export const Tours: CollectionConfig = {
   access: {
     // Public read access - anyone can view tours
     read: () => true,
-    // Only admins and editors can create tours
-    create: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
-    // Only admins and editors can update tours
-    update: ({ req }) => hasAnyRole(req.user, ['admin', 'editor']),
+    // Only admins can create tours
+    create: ({ req }) => checkRole(req.user, 'admin'),
+    // Only admins can update tours
+    update: ({ req }) => checkRole(req.user, 'admin'),
     // Only admins can delete tours
     delete: ({ req }) => checkRole(req.user, 'admin'),
   },

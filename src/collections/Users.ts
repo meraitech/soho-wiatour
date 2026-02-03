@@ -22,20 +22,12 @@ export const Users: CollectionConfig = {
       required: true,
       defaultValue: 'admin',
       admin: {
-        description: 'User role determines their access level in the admin panel',
+        description: 'All users are admins with full access to the admin panel',
       },
       options: [
         {
           label: 'Admin',
           value: 'admin',
-        },
-        {
-          label: 'Editor',
-          value: 'editor',
-        },
-        {
-          label: 'Viewer',
-          value: 'viewer',
         },
       ],
     },

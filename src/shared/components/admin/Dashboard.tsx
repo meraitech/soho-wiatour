@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { FaPlus, FaList, FaImages } from 'react-icons/fa'
+import { faPlus, faList, faImages } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface Stats {
   totalTours: number
@@ -193,21 +194,21 @@ const Dashboard: React.FC = () => {
             href="/admin/collections/tours/create"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
-            <FaPlus className="mr-2" />
+            <FontAwesomeIcon icon={faPlus} className="mr-2" />
             Create New Tour
           </Link>
           <Link
             href="/admin/collections/tours"
             className="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
           >
-            <FaList className="mr-2" />
+            <FontAwesomeIcon icon={faList} className="mr-2" />
             View All Tours
           </Link>
           <Link
             href="/admin/collections/media"
             className="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
           >
-            <FaImages className="mr-2" />
+            <FontAwesomeIcon icon={faImages} className="mr-2" />
             Manage Media
           </Link>
         </div>

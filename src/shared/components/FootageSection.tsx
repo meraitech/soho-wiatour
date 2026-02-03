@@ -13,29 +13,6 @@ type Props = {
 }
 
 export default function FootageSection({ gallery }: Props) {
-  //   const footages = [
-  //     {
-  //       imgUrl:
-  //         'https://images.unsplash.com/photo-1519922639192-e73293ca430e?q=80&w=2372&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  //       title: 'Trans 7',
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://plus.unsplash.com/premium_photo-1663040271283-bd044a62da1a?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  //       title: 'Trans 7',
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://images.unsplash.com/photo-1519922639192-e73293ca430e?q=80&w=2372&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  //       title: 'Trans 7',
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://images.unsplash.com/photo-1489516408517-0c0a15662682?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  //       title: 'Trans 7',
-  //     },
-  //   ]
-
   return (
     <div
       className={
@@ -51,7 +28,7 @@ export default function FootageSection({ gallery }: Props) {
             <Image
               src={item.image.url!}
               alt={`${item.image.alt}`}
-              width={1280}
+              width={1200}
               height={800}
               className="h-100 w-auto object-contain"
             />
@@ -60,14 +37,14 @@ export default function FootageSection({ gallery }: Props) {
       />
       <InfiniteMovingCards
         items={gallery}
-        speed="slow"
+        speed="normal"
         direction="right"
         renderItem={(item, index) => (
           <div key={index} className="rounded-xl overflow-hidden bg-muted">
             <Image
               src={item.image.url!}
               alt={`${item.image.alt}`}
-              width={1280}
+              width={1200}
               height={800}
               className="h-100 w-auto object-contain"
             />

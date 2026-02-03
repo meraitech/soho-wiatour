@@ -11,7 +11,7 @@ export interface Tour extends Omit<
   heroImage: Media
   travelDetails?: Array<{
     image: Media
-    description: any // Rich Text
+    description: PayloadRichText // Rich Text
     id?: string
   }>
   itineraries?: Array<{
@@ -28,6 +28,9 @@ export interface Tour extends Omit<
   }>
   relatedTours?: Tour[]
 }
+
+export type PayloadRichText =
+  NonNullable<PayloadTour['travelDetails']>[number]['description']
 
 /**
 * Simplified type untuk list page (tidak perlu semua data)

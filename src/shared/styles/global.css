@@ -107,11 +107,7 @@ html {
   scroll-behavior: smooth;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-@keyframes marquee-left {
+@keyframes marquee-dynamic-left {
   from {
     transform: translateX(0);
   }
@@ -120,21 +116,21 @@ html {
   }
 }
 
-@keyframes marquee-right {
+@keyframes marquee-dynamic-right {
   from {
-    transform: translateX(-50%);
-  }
-  to {
     transform: translateX(0);
   }
+  to {
+    transform: translateX(50%);
+  }
 }
 
-.animate-marquee-left {
-  animation: marquee-left linear infinite;
+.animate-marquee-dynamic-left {
+  animation: marquee-dynamic-left linear infinite;
 }
 
-.animate-marquee-right {
-  animation: marquee-right linear infinite;
+.animate-marquee-dynamic-right {
+  animation: marquee-dynamic-right linear infinite;
 }
 
 .no-scrollbar {

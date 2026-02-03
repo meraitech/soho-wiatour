@@ -8,6 +8,8 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Tours } from './collections/Tours'
+import { Testimonials } from './collections/Testimonials'
+import { GlobalSettings } from './globals/GlobalSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,7 +38,8 @@ export default buildConfig({
       }
     }
   },
-  collections: [Users, Media, Tours],
+  collections: [Users, Media, Tours, Testimonials],
+  globals: [GlobalSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

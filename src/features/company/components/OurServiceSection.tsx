@@ -125,11 +125,7 @@ export function OurServiceSection() {
   ========================= */
 
   return (
-<<<<<<< Updated upstream
-    <section className={STYLE_MARGIN_CONTAINER}>
-=======
     <section id="services" className={STYLE_MARGIN_CONTAINER}>
->>>>>>> Stashed changes
       <Container className="flex flex-col items-center">
         <HeaderSection
           titleSmall={text.services.header.titleSmall}

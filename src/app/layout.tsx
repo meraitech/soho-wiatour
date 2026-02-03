@@ -9,3 +9,13 @@ export const metadata: Metadata = {
     'Cari tour murah? Wiatour menyediakan paket wisata murah, open trip hemat, dan private tour terjangkau ke destinasi favorit Indonesia.',
   metadataBase: new URL('https://wiatour.com'),
 }
+
+export default async function Layout(props: { children: React.ReactNode }) {
+  const { children } = props
+
+  return (
+    <html lang="id">
+      <body>{children}</body>
+    </html>
+  )
+}

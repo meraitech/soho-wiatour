@@ -109,7 +109,7 @@ export const TourHighlight = ({ currentTourId }: { currentTourId: string }) => {
   }, [])
 
   return (
-    <section className={'overflow-hidden' + STYLE_MARGIN_CONTAINER}>
+    <section id="tour-highlight" className={'overflow-hidden' + STYLE_MARGIN_CONTAINER}>
       <Container className="flex max-md:flex-col items-center gap-12">
         {/* LEFT */}
         <div className="flex flex-col w-full md:max-w-70 shrink-0 gap-8 items-start">

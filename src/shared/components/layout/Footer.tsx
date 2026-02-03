@@ -5,7 +5,6 @@ import {
   faTiktok,
   faWhatsapp,
   faXTwitter,
-  IconDefinition,
 } from '@fortawesome/free-brands-svg-icons'
 import React from 'react'
 import { Container } from '../provider/Container'
@@ -16,8 +15,9 @@ import { faArrowUp, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import { SettingsService } from '@/features/settings/services/settings.service'
 import Image from 'next/image'
+import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
 
-export const Footer = () => {
+export const Footer = async () => {
   const text = id.landing
 
   // Fetch settings from CMS
@@ -31,7 +31,7 @@ export const Footer = () => {
 
   // Map social media platform names to FontAwesome icons
   const getSocialIcon = (platform: string) => {
-    const iconMap: Record<string, IconDefinition> = {
+    const iconMap: Record<string, any> = {
       instagram: faInstagram,
       facebook: faFacebook,
       tiktok: faTiktok,
@@ -73,19 +73,19 @@ export const Footer = () => {
   const listHome = [
     {
       label: 'Ringkasan Wiatour',
-      url: '/#about',
+      url: '/',
     },
     {
       label: 'Layanan',
-      url: '/#services',
+      url: 'url',
     },
     {
       label: 'Semua Tour',
-      url: '/tours',
+      url: 'url',
     },
     {
       label: 'Testimoni',
-      url: '/#testimonial',
+      url: 'url',
     },
   ]
 
@@ -96,13 +96,26 @@ export const Footer = () => {
     },
     {
       label: 'Kata CEO',
-      url: '/about/#ceo',
+      url: '/about',
     },
     {
       label: 'Visi & Misi',
-      url: '/about/#visi',
+      url: '/about',
     },
   ]
+
+  const cta = {
+    button1: {
+      label: text.cta.button1,
+      href: '#tour-highlight',
+    },
+    button2: {
+      label: text.cta.button2,
+      href: whatsappApiLink({
+        text: 'Halo,%20selamat%20siang.%0ASaya%20menghubungi%20Anda%20melalui%20website%20wiatour.com.%0ASaya%20tertarik%20untuk%20mendapatkan%20informasi%20lebih%20detail%20mengenai%20paket%20tour%20yang%20tersedia.%0ATerima%20kasih.',
+      }),
+    },
+  }
 
   return (
     <footer className="w-full overflow-hidden relative flex">
@@ -120,13 +133,7 @@ export const Footer = () => {
       <div className="z-3 w-full">
         <section className="h-full flex flex-col justify-between pt-8">
           <Container className="h-full flex items-center justify-center">
-            <CTASection
-              item={{
-                quote: text.cta.quote,
-                button1: text.cta.button1,
-                button2: text.cta.button2,
-              }}
-            />
+            <CTASection quote={ctaQuote} button1={cta.button1} button2={cta.button2} />
           </Container>
 
           <div className="md:p-8 p-6 bg-secondary w-full flex flex-col text-background border-t border-border">
@@ -138,13 +145,7 @@ export const Footer = () => {
               }
             >
               <div className="lg:col-span-2 max-md:col-span-2 md:row-span-2">
-                <Image
-                  src={logoPath}
-                  alt="Wiatour Logo"
-                  width={800}
-                  height={800}
-                  className="h-12 w-auto object-contain"
-                />
+                <img src={logoPath} alt="Wiatour Logo" className="h-12" />
               </div>
               <section className="text-background/60 flex flex-col gap-2">
                 <h3 className="text-background font-medium mb-2">Home</h3>

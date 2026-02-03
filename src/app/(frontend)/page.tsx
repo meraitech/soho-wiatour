@@ -1,12 +1,6 @@
 'use client'
 
-<<<<<<< Updated upstream
-import React, { useLayoutEffect, useRef } from 'react'
-=======
 import React, { useLayoutEffect, useRef, useEffect, useState } from 'react'
-import Image from 'next/image'
-import id from '@/shared/assets/jsons/id.json'
->>>>>>> Stashed changes
 
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
@@ -24,6 +18,8 @@ import { TestimonialCard } from '@/features/company/components/TestimonialCard'
 import { gsap } from '@/shared/lib/gsap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OurServiceSection } from '@/features/company/components/OurServiceSection'
+import Image from 'next/image'
+import id from '@/shared/assets/jsons/id.json'
 
 /* ======================================================
    PAGE — Landing Page (Main Page)
@@ -210,8 +206,10 @@ export default function Page() {
             <TypographyH1 className="text-center">{text.hero.title}</TypographyH1>
 
             <div className="flex md:gap-6 gap-4">
-              <Button size="lg">{text.hero.ctaPrimary}</Button>
-              <Button variant="monocrome_white" size="lg">
+              <Button href="#tour-highlight" size="lg">
+                {text.hero.ctaPrimary}
+              </Button>
+              <Button href="#cta" variant="monocrome_white" size="lg">
                 {text.hero.ctaSecondary}
               </Button>
             </div>
@@ -265,11 +263,7 @@ export default function Page() {
   ====================================================== */
   function TestimonialSection() {
     const testimonial = text.testimonial
-<<<<<<< Updated upstream
-=======
-    const [testimonials, setTestimonials] = useState<
-      Array<{ quotes: string; imgUrl: string; name: string }>
-    >([])
+    const [testimonials, setTestimonials] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -288,14 +282,13 @@ export default function Page() {
       }
 
       fetchTestimonials()
-    }, [testimonial.items])
+    }, [])
 
     // Use testimonials from CMS or fallback to static data
     const displayTestimonials = testimonials.length > 0 ? testimonials : testimonial.items
->>>>>>> Stashed changes
 
     return (
-      <section className={STYLE_MARGIN_CONTAINER}>
+      <section id="testimonial" className={STYLE_MARGIN_CONTAINER}>
         <Container className="flex flex-col items-center relative overflow-hidden ">
           <HeaderSection
             titleSmall={testimonial.header.titleSmall}
@@ -303,27 +296,29 @@ export default function Page() {
           />
           <div className={STYLE_MARGIN_CONTAINER_TOP} />
 
-          <div className="flex flex-col gap-6 relative w-full">
-            <div className="bg-linear-to-r from-background w-30 h-full absolute left-0 top-0 z-5" />
-            {/* ROW 1 */}
-            <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
-              <div className="flex gap-6">
-                {testimonial.items.map((item, index) => (
-                  <TestimonialCard key={`row1-${index}`} item={item} />
-                ))}
-              </div>
-            </VelocityScroller>
+          {!loading && (
+            <div className="flex flex-col gap-6 relative w-full">
+              <div className="bg-linear-to-r from-background w-30 h-full absolute left-0 top-0 z-5" />
+              {/* ROW 1 */}
+              <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
+                <div className="flex gap-6">
+                  {displayTestimonials.map((item, index) => (
+                    <TestimonialCard key={`row1-${index}`} item={item} />
+                  ))}
+                </div>
+              </VelocityScroller>
 
-            {/* ROW 2 */}
-            <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
-              <div className="flex gap-6">
-                {testimonial.items.map((item, index) => (
-                  <TestimonialCard key={`row2-${index}`} item={item} />
-                ))}
-              </div>
-            </VelocityScroller>
-            <div className="bg-linear-to-l from-background w-30 h-full absolute right-0 top-0 z-5" />
-          </div>
+              {/* ROW 2 */}
+              <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
+                <div className="flex gap-6">
+                  {displayTestimonials.map((item, index) => (
+                    <TestimonialCard key={`row2-${index}`} item={item} />
+                  ))}
+                </div>
+              </VelocityScroller>
+              <div className="bg-linear-to-l from-background w-30 h-full absolute right-0 top-0 z-5" />
+            </div>
+          )}
         </Container>
       </section>
     )

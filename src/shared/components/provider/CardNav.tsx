@@ -13,13 +13,6 @@ export type CardNavLink = {
   ariaLabel: string
 }
 
-// export type CardNavItem = {
-//   label: string
-//   bgColor: string
-//   textColor: string
-//   links: CardNavLink[]
-// }
-
 export interface CardNavProps {
   logo: string
   logoAlt?: string
@@ -30,6 +23,7 @@ export interface CardNavProps {
   menuColor?: string
   buttonBgColor?: string
   buttonTextColor?: string
+  actionHref: string
 }
 
 const CardNav: React.FC<CardNavProps> = ({
@@ -40,6 +34,7 @@ const CardNav: React.FC<CardNavProps> = ({
   ease = 'power3.out',
   baseColor = '#fff',
   menuColor,
+  actionHref,
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -190,7 +185,7 @@ const CardNav: React.FC<CardNavProps> = ({
           <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-0">
             <Image src={logo} alt={logoAlt} width={1280} height={800} className="logo h-7 w-auto" />
           </div>
-          <Button href="#" className="max-md:hidden" variant="color">
+          <Button href={actionHref} className="max-md:hidden" variant="color">
             Hubungi Kami
           </Button>
         </div>

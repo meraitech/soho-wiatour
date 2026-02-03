@@ -8,6 +8,7 @@ import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { STYLE_MARGIN_CONTAINER_BOTTOM } from '@/shared/constants/style/margin'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
 import { useState } from 'react'
 
 type Props = {
@@ -22,8 +23,6 @@ type Props = {
 }
 
 export default function ItinerarySection({ itineraries }: Props) {
-  // 🔑 state utama
-  console.log(itineraries)
   const [activeIndex, setActiveIndex] = useState(0)
   const activeItem = itineraries[activeIndex]
 
@@ -48,20 +47,20 @@ export default function ItinerarySection({ itineraries }: Props) {
                   key={index}
                   onClick={() => setActiveIndex(index)}
                   className={`
-                    py-4 border-b w-full flex justify-between items-center
+                    py-4 px-2 border-b rounded-2xl w-full flex justify-between items-center group
                     transition-colors duration-300 cursor-pointer 
-                    ${isActive ? 'bg-foreground/10' : 'hover:bg-foreground/5'}
+                    ${isActive ? 'bg-primary/15' : 'hover:bg-primary/10'}
                   `}
                 >
                   <span className="text-xl line-clamp-1">
-                    {'Day' + item.day + ': ' + item.activityName}
+                    {'Day ' + item.day + ': ' + item.activityName}
                   </span>
 
                   <div
                     className={`
                       w-12 h-12 p-4 border flex items-center justify-center rounded-full
                       transition-transform duration-300
-                      ${isActive ? 'rotate-0' : '-rotate-45'}
+                      ${isActive ? 'rotate-0' : '-rotate-45 group-hover:rotate-0'}
                     `}
                   >
                     <FontAwesomeIcon icon={faArrowRight} />
@@ -79,7 +78,15 @@ export default function ItinerarySection({ itineraries }: Props) {
               animate-fade max-md:order-1
             "
           >
-            <div className="w-full aspect-video bg-amber-800 rounded-xl" />
+            <div className="w-full aspect-video bg-muted rounded-xl overflow-hidden">
+              <Image
+                src={activeItem.thumbnail.url!}
+                alt={activeItem.thumbnail.alt}
+                width={1200}
+                height={800}
+                className="w-full h-full object-cover"
+              />
+            </div>
 
             <TypographyH3>{activeItem.activityName}</TypographyH3>
 
