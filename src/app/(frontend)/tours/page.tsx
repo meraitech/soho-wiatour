@@ -17,7 +17,7 @@ import { TourSummary } from '@/features/tours/types'
 export default async function Page() {
   const tours = await TourService.getAll()
   return (
-    <div className="overflow-hidden">
+    <div id="tour-highlight" className="overflow-hidden">
       {/* ======================================================
          SECTION HERO 
       ====================================================== */}

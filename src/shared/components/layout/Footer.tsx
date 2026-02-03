@@ -73,19 +73,19 @@ export const Footer = async () => {
   const listHome = [
     {
       label: 'Ringkasan Wiatour',
-      url: '/',
+      url: '/#about',
     },
     {
       label: 'Layanan',
-      url: 'url',
+      url: '/#services',
     },
     {
       label: 'Semua Tour',
-      url: 'url',
+      url: '/tours',
     },
     {
       label: 'Testimoni',
-      url: 'url',
+      url: '/#testimonial',
     },
   ]
 
@@ -96,11 +96,11 @@ export const Footer = async () => {
     },
     {
       label: 'Kata CEO',
-      url: '/about',
+      url: '/#ceo',
     },
     {
       label: 'Visi & Misi',
-      url: '/about',
+      url: '/#visi',
     },
   ]
 
