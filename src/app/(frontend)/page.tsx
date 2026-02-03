@@ -84,7 +84,6 @@ export default function Page() {
             start: 'top 60%',
             end: '60% 60%',
             scrub: true,
-            markers: true,
           },
         })
       }, videoRef)
