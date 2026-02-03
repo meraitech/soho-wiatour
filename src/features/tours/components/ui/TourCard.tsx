@@ -25,7 +25,7 @@ export const TourCard = ({ width = 'w-full', slug, title, imgUrl, imgAlt }: Prop
         )}
       >
         <div className="z-5 flex flex-col justify-end h-full w-full p-6 bg-linear-to-t from-foreground/80 via-transparent">
-          <TypographyH3 className="text-background line-clamp-2">{title}</TypographyH3>
+          <h3 className="text-background line-clamp-2 g:text-3xl md:text-2xl text-xl">{title}</h3>
         </div>
 
         <div className="absolute inset-0 bg-muted">

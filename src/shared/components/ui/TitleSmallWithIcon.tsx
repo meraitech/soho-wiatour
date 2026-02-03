@@ -13,7 +13,7 @@ export const TitleSmallWithIcon = ({ text, icon }: Props) => {
       <div className="h-7 p-1.5 rounded flex items-center justify-center aspect-square bg-primary text-background">
         <FontAwesomeIcon icon={icon} />
       </div>
-      <span>{text}</span>
+      <span className="md:text-lg">{text}</span>
     </div>
   )
 }

@@ -17,6 +17,7 @@ export type CTAProps = {
 export default function CTASection({ quote, button1, button2 }: CTAProps) {
   return (
     <section
+      id="cta"
       className={'flex flex-col items-center text-background gap-12 ' + STYLE_MARGIN_CONTAINER}
     >
       <blockquote className="lg:text-6xl md:text-5xl sm:text-4xl text-3xl lg:max-w-3xl md:max-w-2xl sm:max-w-xl max-w-lg text-center z-1 duration-300">

@@ -22,7 +22,11 @@ export const Logo = async () => {
   try {
     const adminBranding = await getCachedAdminBranding()
     // Check if logo exists and is a Media object (has url property)
-    if (adminBranding.logo && typeof adminBranding.logo === 'object' && 'url' in adminBranding.logo) {
+    if (
+      adminBranding.logo &&
+      typeof adminBranding.logo === 'object' &&
+      'url' in adminBranding.logo
+    ) {
       const url = adminBranding.logo.url
       if (typeof url === 'string') {
         logoUrl = url
@@ -33,12 +37,5 @@ export const Logo = async () => {
     // Use default fallback on error
   }
 
-  return (
-    <img
-      src={logoUrl}
-      alt="Wiatour Logo"
-      width={200}
-      height={60}
-    />
-  )
+  return <img src={logoUrl} alt="Wiatour Logo" width={200} height={60} />
 }
