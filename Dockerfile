@@ -23,6 +23,16 @@ RUN corepack enable pnpm && \
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
+
+# Build arguments for required environment variables
+ARG PAYLOAD_SECRET
+ARG DATABASE_URL
+
+# Set environment variables for build
+ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
+ENV DATABASE_URL=${DATABASE_URL}
+ENV NODE_ENV=production
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
@@ -42,7 +52,7 @@ RUN corepack enable pnpm && \
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
@@ -65,7 +75,7 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV PORT 3000
+ENV PORT=3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \

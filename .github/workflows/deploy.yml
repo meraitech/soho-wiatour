@@ -101,6 +101,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64
+          build-args: |
+            PAYLOAD_SECRET=${{ secrets.PAYLOAD_SECRET }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
 
       - name: Image digest
         run: echo ${{ steps.meta.outputs.digest }}
