@@ -29,7 +29,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -105,5 +105,8 @@ jobs:
             PAYLOAD_SECRET=${{ secrets.PAYLOAD_SECRET }}
             DATABASE_URL=${{ secrets.DATABASE_URL }}
 
-      - name: Image digest
-        run: echo ${{ steps.meta.outputs.digest }}
+      # --- BAGIAN INI DITAMBAHKAN ---
+      - name: Trigger Coolify Deployment
+        run: |
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' \
+               --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
