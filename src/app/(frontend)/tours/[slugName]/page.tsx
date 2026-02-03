@@ -27,9 +27,10 @@ import { TourHighlight } from '@/features/tours/components/TourHighlight'
 export async function generateMetadata({
   params,
 }: {
-  params: { slugName: string }
+  params: Promise<{ slugName: string }>
 }): Promise<Metadata> {
-  const tour = await TourService.getBySlug(params.slugName)
+  const { slugName } = await params
+  const tour = await TourService.getBySlug(slugName)
   if (!tour) return {}
   return createTourMetadata(tour)
 }
