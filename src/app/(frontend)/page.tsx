@@ -267,7 +267,7 @@ export default function page() {
     useEffect(() => {
       async function fetchTestimonials() {
         try {
-          const response = await fetch('/api/testimonials?limit=10')
+          const response = await fetch('/api/testimonials-public?limit=10')
           const data = await response.json()
           setTestimonials(data.testimonials || [])
         } catch (error) {
