@@ -8,7 +8,6 @@ import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
 import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
-import { faComputerMouse } from '@fortawesome/free-solid-svg-icons'
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
 
@@ -16,7 +15,6 @@ import { useBentoFlipScroll } from '@/features/company/hooks/useBentoFlipScroll'
 import { VelocityScroller } from '@/shared/components/ScrollVelocity'
 import { TestimonialCard } from '@/features/company/components/TestimonialCard'
 import { gsap } from '@/shared/lib/gsap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { OurServiceSection } from '@/features/company/components/OurServiceSection'
 import Image from 'next/image'
 import id from '@/shared/assets/jsons/id.json'
@@ -190,11 +188,9 @@ export default function Page() {
         z-5 text-background
         flex flex-col items-center
         absolute inset-0
-        justify-between py-10
+        justify-center py-10
       "
         >
-          <div />
-
           <div
             className="
           flex flex-col items-center
@@ -213,11 +209,6 @@ export default function Page() {
                 {text.hero.ctaSecondary}
               </Button>
             </div>
-          </div>
-
-          <div className="flex items-center gap-2 border py-2 px-4 rounded-full text-background/30 text-sm animate-bounce backdrop-blur-sm">
-            <span>Scroll Down</span>
-            <FontAwesomeIcon icon={faComputerMouse} />
           </div>
         </div>
       </section>

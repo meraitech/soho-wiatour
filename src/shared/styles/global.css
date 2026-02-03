@@ -21,7 +21,7 @@
   /* =========================
      NEUTRAL
   ========================= */
-  --color-background: #ffffff;
+  --color-background: #eefbff;
   --color-foreground: #020617;
 
   --color-surface: #f8fafc;
@@ -51,6 +51,8 @@
 
   --color-disabled: #e5e7eb;
   --color-disabled-foreground: #9ca3af;
+
+  background-color: var(--color-background);
 }
 
 @theme {
