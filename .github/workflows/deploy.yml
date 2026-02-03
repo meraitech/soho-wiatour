@@ -1,0 +1,46 @@
+name: Build & Deploy Docker
+
+on:
+  push:
+    branches: ["main"] # Ganti dengan branch utama Anda (master/main)
+
+env:
+  # Ganti dengan username & nama repo Anda (HURUF KECIL SEMUA)
+  # Format: ghcr.io/username/nama-repo:latest
+  IMAGE_NAME: ghcr.io/meraitech/soho-wiatour:latest
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    # Izin ini WAJIB agar bisa push ke GHCR tanpa PAT manual
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE_NAME }}
+
+  trigger-deployment:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Coolify Webhook
+        run: |
+          # Perintah ini memberitahu Coolify untuk menarik image baru
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' \
+               --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
