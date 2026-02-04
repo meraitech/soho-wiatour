@@ -196,7 +196,7 @@ const CardNav: React.FC<CardNavProps> = ({
 
         {/* ================= CONTENT ================= */}
         <div
-          className={`card-nav-content absolute left-0 right-0 top-15 bottom-0 p-4 grid grid-cols-2 gap-3 ${
+          className={`card-nav-content absolute left-0 right-0 top-15 bottom-0 p-4 grid md:grid-cols-2 gap-3 ${
             isExpanded ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
           }`}
           aria-hidden={!isExpanded}
