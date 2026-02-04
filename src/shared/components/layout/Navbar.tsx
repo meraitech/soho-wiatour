@@ -31,8 +31,6 @@ export const Navbar = async () => {
         items={items}
         baseColor="#fff"
         menuColor="#000"
-        buttonBgColor="#111"
-        buttonTextColor="#fff"
         ease="power3.out"
         actionHref={whatsappApiLink({ text })}
       />

@@ -51,6 +51,14 @@ export default async function page({ params }: PageProps) {
   const text = id.landing
   const { slugName } = await params
   const tour = await TourService.getBySlug(slugName)
+  const href = whatsappApiLink({
+    text: encodeURIComponent(
+      `Halo, selamat siang.
+Saya menghubungi Anda melalui website wiatour.com.
+Saya tertarik dengan *"${tour?.title}"* dan ingin menanyakan detail serta harga terbaru.
+Terima kasih.`,
+    ),
+  })
 
   if (!tour) notFound()
 
@@ -100,7 +108,9 @@ export default async function page({ params }: PageProps) {
           <div className="max-w-4xl mx-auto text-center flex flex-col gap-8 items-center">
             <span>Paket Wisata Internasional</span>
             <TypographyH1>{tour?.title}</TypographyH1>
-            <Button className="mt-4">Pesan Sekarang</Button>
+            <Button href={href} className="mt-4">
+              Pesan Sekarang
+            </Button>
           </div>
 
           {/* img  */}
@@ -160,19 +170,9 @@ export default async function page({ params }: PageProps) {
      SECTION DETAIL
     ====================================================== */
   function FooterSection() {
-    const text = encodeURIComponent(
-      `Halo, selamat siang.
-Saya menghubungi Anda melalui website wiatour.com.
-Saya tertarik dengan *"${tour?.title}"* dan ingin menanyakan detail serta harga terbaru.
-Terima kasih.`,
-    )
     return (
       <section className={`fixed bottom-0 right-0 m-6 z-50`}>
-        <Button
-          className="gap-2"
-          size="lg"
-          href={whatsappApiLink({ phoneNumber: '6282285578265', text })}
-        >
+        <Button className="gap-2" size="lg" href={href}>
           <span>Pesan Paket ini</span>
           <FontAwesomeIcon icon={faWhatsapp} className="text-2xl" />
         </Button>
