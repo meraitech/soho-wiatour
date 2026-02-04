@@ -57,7 +57,6 @@ Saya tertarik dengan *"${tour?.title}"* dan ingin menanyakan detail serta harga 
 Terima kasih.`,
     ),
   })
-
   if (!tour) notFound()
 
   return (
