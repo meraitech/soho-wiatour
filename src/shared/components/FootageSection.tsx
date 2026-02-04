@@ -30,7 +30,7 @@ export default function FootageSection({ gallery }: Props) {
               alt={`${item.image.alt}`}
               width={1200}
               height={800}
-              className="h-100 w-auto object-contain"
+              className="lg:h-100 md:h-70 h-50 w-auto object-contain duration-300"
             />
           </div>
         )}
@@ -46,7 +46,7 @@ export default function FootageSection({ gallery }: Props) {
               alt={`${item.image.alt}`}
               width={1200}
               height={800}
-              className="h-100 w-auto object-contain"
+              className="lg:h-100 md:h-70 h-50 w-auto object-contain duration-300"
             />
           </div>
         )}

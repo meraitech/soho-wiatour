@@ -20,6 +20,9 @@ import Image from 'next/image'
 import clsx from 'clsx'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
+import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
 
 /* ======================================================
    METADATA
@@ -52,7 +55,7 @@ export default async function page({ params }: PageProps) {
   if (!tour) notFound()
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* ======================================================
          SECTION HERO 
       ====================================================== */}
@@ -79,6 +82,8 @@ export default async function page({ params }: PageProps) {
       <div className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         {tour?.id && <TourHighlight currentTourId={tour.id} />}
       </div>
+
+      <FooterSection />
     </div>
   )
 
@@ -147,6 +152,30 @@ export default async function page({ params }: PageProps) {
             </div>
           ))}
         </Container>
+      </section>
+    )
+  }
+
+  /* ======================================================
+     SECTION DETAIL
+    ====================================================== */
+  function FooterSection() {
+    const text = encodeURIComponent(
+      `Halo, selamat siang.
+Saya menghubungi Anda melalui website wiatour.com.
+Saya tertarik dengan *"${tour?.title}"* dan ingin menanyakan detail serta harga terbaru.
+Terima kasih.`,
+    )
+    return (
+      <section className={`fixed bottom-0 right-0 m-6 z-50`}>
+        <Button
+          className="gap-2"
+          size="lg"
+          href={whatsappApiLink({ phoneNumber: '6282285578265', text })}
+        >
+          <span>Pesan Paket ini</span>
+          <FontAwesomeIcon icon={faWhatsapp} className="text-2xl" />
+        </Button>
       </section>
     )
   }

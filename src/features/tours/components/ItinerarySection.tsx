@@ -31,7 +31,7 @@ export default function ItinerarySection({ itineraries }: Props) {
       <Container className="flex flex-col gap-14">
         {/* Title */}
         <div className="flex flex-col gap-4">
-          <span>Rangkaian Perjalanan</span>
+          <span className="md:text-lg">Rangkaian Perjalanan</span>
           <TypographyH2>Detail Itinerary</TypographyH2>
         </div>
 
@@ -46,13 +46,9 @@ export default function ItinerarySection({ itineraries }: Props) {
                 <button
                   key={index}
                   onClick={() => setActiveIndex(index)}
-                  className={`
-                    py-4 px-2 border-b rounded-2xl w-full flex justify-between items-center group
-                    transition-colors duration-300 cursor-pointer 
-                    ${isActive ? 'bg-primary/15' : 'hover:bg-primary/10'}
-                  `}
+                  className={`p-4 border-b w-full flex justify-between items-center group transition-colors duration-300 cursor-pointer ${isActive ? 'bg-primary/15' : 'hover:bg-primary/10'} `}
                 >
-                  <span className="text-xl line-clamp-1">
+                  <span className="lg:text-xl text-lg line-clamp-1 w-full text-start">
                     {'Day ' + item.day + ': ' + item.activityName}
                   </span>
 

@@ -4,7 +4,6 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { TourCard } from './ui/TourCard'
-import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { Button } from '@/shared/components/ui/Button'
 import { Container } from '@/shared/components/provider/Container'
 import { PreventClickOnDrag } from '@/shared/components/provider/PreventClickOnDrag'
