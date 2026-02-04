@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-name: Build & Deploy Docker
-
-on:
-  push:
-    branches: ["main"] # Ganti dengan branch utama Anda (master/main)
-
-env:
-  # Ganti dengan username & nama repo Anda (HURUF KECIL SEMUA)
-  # Format: ghcr.io/username/nama-repo:latest
-  IMAGE_NAME: ghcr.io/meraitech/soho-wiatour:latest
-=======
 name: Build and Push Docker Image
 
 # This workflow builds and pushes the Docker image to GitHub Container Registry
@@ -25,16 +13,11 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: meraitech/soho-wiatour
->>>>>>> develop
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-<<<<<<< HEAD
-    # Izin ini WAJIB agar bisa push ke GHCR tanpa PAT manual
-=======
 
->>>>>>> develop
     permissions:
       contents: read
       packages: write
@@ -43,29 +26,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-<<<<<<< HEAD
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ env.IMAGE_NAME }}
-
-  trigger-deployment:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger Coolify Webhook
-        run: |
-          # Perintah ini memberitahu Coolify untuk menarik image baru
-=======
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -148,6 +108,5 @@ jobs:
       # --- BAGIAN INI DITAMBAHKAN ---
       - name: Trigger Coolify Deployment
         run: |
->>>>>>> develop
           curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' \
                --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
