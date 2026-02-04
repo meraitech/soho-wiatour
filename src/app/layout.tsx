@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: {
@@ -16,6 +17,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="id">
       <body>{children}</body>
+      <GoogleAnalytics gaId="G-6J0BXZJNG5" />
     </html>
   )
 }
