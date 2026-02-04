@@ -2,10 +2,14 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
+import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '../ui/Button'
-import Image from 'next/image'
+
+/* ======================================================
+   TYPES
+====================================================== */
 
 export type CardNavLink = {
   label: string
@@ -21,10 +25,12 @@ export interface CardNavProps {
   ease?: string
   baseColor?: string
   menuColor?: string
-  buttonBgColor?: string
-  buttonTextColor?: string
   actionHref: string
 }
+
+/* ======================================================
+   COMPONENT
+====================================================== */
 
 const CardNav: React.FC<CardNavProps> = ({
   logo,
@@ -33,110 +39,104 @@ const CardNav: React.FC<CardNavProps> = ({
   className = '',
   ease = 'power3.out',
   baseColor = '#fff',
-  menuColor,
+  menuColor = '#000',
   actionHref,
 }) => {
-  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
+
   const navRef = useRef<HTMLDivElement | null>(null)
   const cardsRef = useRef<HTMLDivElement[]>([])
   const tlRef = useRef<gsap.core.Timeline | null>(null)
 
-  const calculateHeight = () => {
-    const navEl = navRef.current
-    if (!navEl) return 260
+  // 🔑 PERFORMANCE FIX: simpan height sekali
+  const expandedHeightRef = useRef<number>(260)
 
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
-    if (isMobile) {
-      const contentEl = navEl.querySelector('.card-nav-content') as HTMLElement
-      if (contentEl) {
-        const wasVisible = contentEl.style.visibility
-        const wasPointerEvents = contentEl.style.pointerEvents
-        const wasPosition = contentEl.style.position
-        const wasHeight = contentEl.style.height
-
-        contentEl.style.visibility = 'visible'
-        contentEl.style.pointerEvents = 'auto'
-        contentEl.style.position = 'static'
-        contentEl.style.height = 'auto'
-
-        contentEl.offsetHeight
-
-        const topBar = 60
-        const padding = 16
-        const contentHeight = contentEl.scrollHeight
-
-        contentEl.style.visibility = wasVisible
-        contentEl.style.pointerEvents = wasPointerEvents
-        contentEl.style.position = wasPosition
-        contentEl.style.height = wasHeight
-
-        return topBar + contentHeight + padding
-      }
-    }
-    return 260
+  const setCardRef = (i: number) => (el: HTMLDivElement | null) => {
+    if (el) cardsRef.current[i] = el
   }
 
-  const createTimeline = () => {
+  /* ======================================================
+     HEIGHT MEASUREMENT (ONCE)
+  ====================================================== */
+  const measureExpandedHeight = () => {
     const navEl = navRef.current
-    if (!navEl) return null
+    if (!navEl) return
 
+    const contentEl = navEl.querySelector('.card-nav-content') as HTMLElement
+    if (!contentEl) return
+
+    // Simpan state
+    const prevHeight = navEl.style.height
+    const prevVisibility = contentEl.style.visibility
+    const prevPointer = contentEl.style.pointerEvents
+    const prevPosition = contentEl.style.position
+
+    // Paksa tampil TANPA animasi
+    navEl.style.height = 'auto'
+    contentEl.style.visibility = 'visible'
+    contentEl.style.pointerEvents = 'auto'
+    contentEl.style.position = 'static'
+
+    // Force layout sekali
+    expandedHeightRef.current = navEl.offsetHeight
+
+    // Balikin state awal
+    navEl.style.height = prevHeight || '60px'
+    contentEl.style.visibility = prevVisibility
+    contentEl.style.pointerEvents = prevPointer
+    contentEl.style.position = prevPosition
+  }
+
+  /* ======================================================
+     GSAP INIT (ONCE)
+  ====================================================== */
+  useLayoutEffect(() => {
+    const navEl = navRef.current
+    if (!navEl) return
+
+    // ⛔ hitung height SEKALI
+    measureExpandedHeight()
+
+    // Initial state (SAMA seperti sebelumnya)
     gsap.set(navEl, { height: 60, overflow: 'hidden' })
-    gsap.set(cardsRef.current, { y: 50, opacity: 0 })
+    gsap.set(cardsRef.current, { y: 50, opacity: 0, willChange: 'transform, opacity' })
 
     const tl = gsap.timeline({ paused: true })
 
     tl.to(navEl, {
-      height: calculateHeight,
+      height: expandedHeightRef.current, // 🔑 pakai cached height
       duration: 0.4,
       ease,
     })
 
-    tl.to(cardsRef.current, { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 }, '-=0.1')
+    tl.to(
+      cardsRef.current,
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.4,
+        ease,
+        stagger: 0.08,
+      },
+      '-=0.1',
+    )
 
-    return tl
-  }
-
-  useLayoutEffect(() => {
-    const tl = createTimeline()
     tlRef.current = tl
 
     return () => {
-      tl?.kill()
+      tl.kill()
       tlRef.current = null
     }
-  }, [ease, items, createTimeline])
+  }, [ease])
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      if (!tlRef.current) return
-
-      if (isExpanded) {
-        const newHeight = calculateHeight()
-        gsap.set(navRef.current, { height: newHeight })
-
-        tlRef.current.kill()
-        const newTl = createTimeline()
-        if (newTl) {
-          newTl.progress(1)
-          tlRef.current = newTl
-        }
-      } else {
-        tlRef.current.kill()
-        const newTl = createTimeline()
-        if (newTl) {
-          tlRef.current = newTl
-        }
-      }
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [isExpanded])
-
+  /* ======================================================
+     TOGGLE MENU
+  ====================================================== */
   const toggleMenu = () => {
     const tl = tlRef.current
     if (!tl) return
+
     if (!isExpanded) {
       setIsHamburgerOpen(true)
       setIsExpanded(true)
@@ -148,10 +148,9 @@ const CardNav: React.FC<CardNavProps> = ({
     }
   }
 
-  const setCardRef = (i: number) => (el: HTMLDivElement | null) => {
-    if (el) cardsRef.current[i] = el
-  }
-
+  /* ======================================================
+     RENDER
+  ====================================================== */
   return (
     <div
       className={`card-nav-container absolute left-1/2 -translate-x-1/2 w-[90%] max-w-200 z-50 top-[1.2em] md:top-[2em] ${className}`}
@@ -161,77 +160,78 @@ const CardNav: React.FC<CardNavProps> = ({
         className={`card-nav ${isExpanded ? 'open rounded-4xl' : 'rounded-full'} block h-15 p-0 shadow-md relative overflow-hidden will-change-[height]`}
         style={{ backgroundColor: baseColor }}
       >
+        {/* ================= TOP BAR ================= */}
         <div className="card-nav-top absolute inset-x-0 top-0 h-15 flex items-center justify-between p-2 pl-[1.1rem] z-2">
+          {/* HAMBURGER */}
           <div
-            className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''} group h-full px-2 flex flex-col items-center justify-center cursor-pointer gap-1.5 order-2 md:order-0`}
+            className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''} group h-full px-2 flex flex-col items-center justify-center cursor-pointer gap-1.5`}
             onClick={toggleMenu}
             role="button"
             aria-label={isExpanded ? 'Close menu' : 'Open menu'}
             tabIndex={0}
-            style={{ color: menuColor || '#000' }}
+            style={{ color: menuColor }}
           >
             <div
-              className={`hamburger-line w-7.5 h-0.5 bg-current transition-[transform,opacity,margin] duration-300 ease-linear origin-[50%_50%] ${
+              className={`hamburger-line w-7.5 h-0.5 bg-current transition-transform duration-300 ${
                 isHamburgerOpen ? 'translate-y-1 rotate-45' : ''
-              } group-hover:opacity-75`}
+              }`}
             />
             <div
-              className={`hamburger-line w-7.5 h-0.5 bg-current transition-[transform,opacity,margin] duration-300 ease-linear origin-[50%_50%] ${
+              className={`hamburger-line w-7.5 h-0.5 bg-current transition-transform duration-300 ${
                 isHamburgerOpen ? '-translate-y-1 -rotate-45' : ''
-              } group-hover:opacity-75`}
+              }`}
             />
           </div>
 
-          <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-0">
+          {/* LOGO */}
+          <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 max-md:pr-4">
             <Image src={logo} alt={logoAlt} width={1280} height={800} className="logo h-7 w-auto" />
           </div>
+
+          {/* CTA */}
           <Button href={actionHref} className="max-md:hidden" variant="color">
             Hubungi Kami
           </Button>
         </div>
 
+        {/* ================= CONTENT ================= */}
         <div
-          className={`card-nav-content absolute left-0 right-0 top-15 bottom-0 p-3 flex flex-col items-stretch gap-2 justify-start z-1 ${
+          className={`card-nav-content absolute left-0 right-0 top-15 bottom-0 p-4 grid md:grid-cols-2 gap-3 ${
             isExpanded ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
-          } md:flex-row md:items-end md:gap-3`}
+          }`}
           aria-hidden={!isExpanded}
         >
+          {/* LEFT CARD */}
           <div
-            className="nav-card select-none relative flex flex-col gap-2 p-[12px_16px] rounded-4xl min-w-0 flex-[1_1_auto] h-auto md:h-full md:min-h-0 md:flex-[1_1_0%]"
+            className="nav-card flex flex-col gap-2 p-[12px_16px] rounded-4xl"
             ref={setCardRef(0)}
           >
-            <div className="nav-card-links flex flex-col gap-0.5">
-              {items.map((lnk, i) => (
-                <a
-                  key={`${lnk.label}-${i}`}
-                  className="nav-card-link inline-flex items-center gap-1.5 no-underline cursor-pointer transition-opacity duration-300 hover:opacity-75 text-[15px] md:text-[16px] group"
-                  href={lnk.href}
-                  aria-label={lnk.ariaLabel}
-                >
-                  <FontAwesomeIcon
-                    icon={faArrowUp}
-                    className="nav-card-link-icon shrink-0 group-hover:rotate-45 duration-300"
-                    aria-hidden="true"
-                  />
-                  {lnk.label}
-                </a>
-              ))}
-            </div>
+            {items.map((lnk, i) => (
+              <a
+                key={`${lnk.label}-${i}`}
+                href={lnk.href}
+                aria-label={lnk.ariaLabel}
+                className="flex items-center gap-2 text-[15px] md:text-[16px] hover:opacity-75 transition-opacity"
+              >
+                <FontAwesomeIcon
+                  icon={faArrowUp}
+                  className="transition-transform group-hover:rotate-45"
+                />
+                {lnk.label}
+              </a>
+            ))}
           </div>
-          <div
-            className="nav-card select-none relative flex flex-col gap-2 p-[12px_16px] rounded-4xl min-w-0 flex-[1_1_auto] h-auto md:h-full md:min-h-0 max-md:hidden md:flex-[1_1_0%]"
-            ref={setCardRef(1)}
-          >
-            <div className="nav-card-links mt-auto flex flex-col gap-0.5 relative overflow-hidden rounded-2xl">
-              <Image
-                src="/assets/web/layout/navbar.webp"
-                alt="Foto Utama Wiatour bersama di Luar Negeri"
-                width={1280}
-                height={800}
-                draggable={false}
-                className="nav-card-link w-full h-full object-cover scale-125"
-              />
-            </div>
+
+          {/* RIGHT CARD */}
+          <div className="nav-card hidden md:block rounded-3xl overflow-hidden" ref={setCardRef(1)}>
+            <Image
+              src="/assets/web/layout/navbar.webp"
+              alt="Foto Utama Wiatour bersama di Luar Negeri"
+              width={1280}
+              height={800}
+              draggable={false}
+              className="w-full h-full object-cover scale-125"
+            />
           </div>
         </div>
       </nav>

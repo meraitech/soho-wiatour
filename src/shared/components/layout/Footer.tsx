@@ -24,7 +24,8 @@ export const Footer = async () => {
   const settings = await SettingsService.getPublicSettings()
 
   // Use logo from CMS or fallback to hardcoded path
-  const logoPath = settings.logoFooter?.url || '/brand/logo/h-2.webp'
+  const logoPath = '/brand/logo/h-2.webp'
+  // const logoPath = settings.logoFooter?.url || '/brand/logo/h-2.webp'
 
   // Use CTA quote from CMS or fallback to static data
   const ctaQuote = settings.ctaQuote || text.cta.quote

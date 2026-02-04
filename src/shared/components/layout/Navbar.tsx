@@ -1,6 +1,6 @@
 import React from 'react'
 import CardNav, { CardNavLink } from '../provider/CardNav'
-import { SettingsService } from '@/features/settings/services/settings.service'
+// import { SettingsService } from '@/features/settings/services/settings.service'
 import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
 
 export const Navbar = async () => {
@@ -13,11 +13,13 @@ export const Navbar = async () => {
   ]
 
   // Fetch settings from CMS
-  const settings = await SettingsService.getPublicSettings()
+  // const settings = await SettingsService.getPublicSettings()
 
   // Use logo from CMS or fallback to hardcoded path
   // Media has sizes: thumbnail, card, hero
-  const logoPath = settings.logoNavbar?.url || '/brand/logo/h-1.webp'
+  // const logoPath = settings.logoNavbar?.url || '/brand/logo/h-1.webp'
+  // console.log(logoPath)
+  const logoPath = '/brand/logo/h-1.webp'
   const text =
     'Halo,%20selamat%20siang.%0ASaya%20menghubungi%20Anda%20melalui%20website%20wiatour.com.%0ASaya%20tertarik%20untuk%20mendapatkan%20informasi%20lebih%20detail%20mengenai%20paket%20tour%20yang%20tersedia.%0ATerima%20kasih.'
 
@@ -29,8 +31,6 @@ export const Navbar = async () => {
         items={items}
         baseColor="#fff"
         menuColor="#000"
-        buttonBgColor="#111"
-        buttonTextColor="#fff"
         ease="power3.out"
         actionHref={whatsappApiLink({ text })}
       />

@@ -15,13 +15,13 @@ const useR2 =
 // Initialize R2 client if configured
 const r2Client = useR2
   ? new S3Client({
-      region: 'auto',
-      endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-      credentials: {
-        accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
-      },
-    })
+    region: 'auto',
+    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+    },
+  })
   : null
 
 const r2BucketName = process.env.R2_BUCKET_NAME || ''
@@ -76,86 +76,86 @@ export const Media: CollectionConfig = {
   },
   hooks: useR2
     ? {
-        beforeValidate: [
-          async ({ data }) => {
-            // Check file size before validation using data.filesize (2MB = 2097152 bytes)
-            const maxSize = 2 * 1024 * 1024 // 2MB
+      beforeValidate: [
+        async ({ data }) => {
+          // Check file size before validation using data.filesize (2MB = 2097152 bytes)
+          const maxSize = 2 * 1024 * 1024 // 2MB
 
-            const filesize = (data as any)?.filesize
-            if (filesize && filesize > maxSize) {
-              const sizeInMB = (filesize / 1024 / 1024).toFixed(2)
-              const errorMessage = `File size exceeds 2MB limit. Your file is ${sizeInMB}MB`
+          const filesize = (data as any)?.filesize
+          if (filesize && filesize > maxSize) {
+            const sizeInMB = (filesize / 1024 / 1024).toFixed(2)
+            const errorMessage = `File size exceeds 2MB limit. Your file is ${sizeInMB}MB`
 
-              // Log to console for debugging
-              console.error('[Media Validation]', errorMessage)
+            // Log to console for debugging
+            console.error('[Media Validation]', errorMessage)
 
-              // Throw error - Payload will catch and display
-              const error = new Error(errorMessage) as any
-              error.name = 'ValidationError'
-              error.field = 'file'
-              throw error
-            }
+            // Throw error - Payload will catch and display
+            const error = new Error(errorMessage) as any
+            error.name = 'ValidationError'
+            error.field = 'file'
+            throw error
+          }
 
-            return data
-          },
-        ],
-        afterOperation: [
-          async ({ operation, result }) => {
-            // Upload to R2 after file is processed and saved by Payload
-            // Type guard to ensure result is a document (not BulkOperationResult)
-            const doc =
-              result && 'id' in result
-                ? (result as { filename?: string; url?: string; mimeType?: string })
-                : null
+          return data
+        },
+      ],
+      afterOperation: [
+        async ({ operation, result }) => {
+          // Upload to R2 after file is processed and saved by Payload
+          // Type guard to ensure result is a document (not BulkOperationResult)
+          const doc =
+            result && 'id' in result
+              ? (result as { filename?: string; url?: string; mimeType?: string })
+              : null
 
-            if ((operation === 'create' || operation === 'update') && doc?.filename) {
+          if ((operation === 'create' || operation === 'update') && doc?.filename) {
+            try {
+              const mediaDir = '/tmp/payload-media'
+
+              // Upload converted WebP file to R2
+              const filePath = path.join(mediaDir, doc.filename)
               try {
-                const mediaDir = '/tmp/payload-media'
+                // Check if file exists
+                await fs.access(filePath)
 
-                // Upload converted WebP file to R2
-                const filePath = path.join(mediaDir, doc.filename)
-                try {
-                  // Check if file exists
-                  await fs.access(filePath)
+                // Get MIME type (should be image/webp after conversion)
+                const mimeType = doc.mimeType || 'image/webp'
 
-                  // Get MIME type (should be image/webp after conversion)
-                  const mimeType = doc.mimeType || 'image/webp'
+                // Upload file to R2
+                const fileUrl = await uploadToR2(doc.filename, filePath, mimeType)
+                doc.url = fileUrl
 
-                  // Upload file to R2
-                  const fileUrl = await uploadToR2(doc.filename, filePath, mimeType)
-                  doc.url = fileUrl
-
-                  // Delete file from temp storage after upload
-                  await fs.unlink(filePath).catch(() => {})
-                } catch (err) {
-                  console.error('[R2 Upload] Error uploading file:', err)
-                }
-              } catch (error) {
-                console.error('[R2 Upload] Error in R2 upload process:', error)
+                // Delete file from temp storage after upload
+                await fs.unlink(filePath).catch(() => { })
+              } catch (err) {
+                console.error('[R2 Upload] Error uploading file:', err)
               }
+            } catch (error) {
+              console.error('[R2 Upload] Error in R2 upload process:', error)
             }
-            return result
-          },
-        ],
-        afterDelete: [
-          async ({ doc }) => {
-            // Files are already deleted by Payload, just clean up from R2 if needed
-            // This is a safety check in case R2 has files that shouldn't be there
-            if (doc.filename) {
-              try {
-                const params = {
-                  Bucket: r2BucketName,
-                  Key: doc.filename,
-                }
-                await r2Client!.send(new DeleteObjectCommand(params))
-              } catch (error) {
-                // Ignore errors if file doesn't exist in R2
-                console.debug('File not in R2 or already deleted')
+          }
+          return result
+        },
+      ],
+      afterDelete: [
+        async ({ doc }) => {
+          // Files are already deleted by Payload, just clean up from R2 if needed
+          // This is a safety check in case R2 has files that shouldn't be there
+          if (doc.filename) {
+            try {
+              const params = {
+                Bucket: r2BucketName,
+                Key: doc.filename,
               }
+              await r2Client!.send(new DeleteObjectCommand(params))
+            } catch (error) {
+              // Ignore errors if file doesn't exist in R2
+              console.debug('File not in R2 or already deleted')
             }
-          },
-        ],
-      }
+          }
+        },
+      ],
+    }
     : undefined,
 
   fields: [

@@ -129,18 +129,16 @@ export default function Page() {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="flex flex-col gap-24 justify-center lg:w-6/7 duration-300">
-            <div>
-              <h2 className="sr-only">CEO Quote</h2>
-              <blockquote className="flex md:text-2xl text-xl mb-6">{`"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"`}</blockquote>
-              <span className="font-medium ">
-                Wiradrana Putri Harefa, S.Psi.{' '}
-                <span className="text-paragraph">Chief Executive Officer</span>{' '}
-              </span>
-            </div>
-            <span className="text-2xl">
-              7+ <span className="text-paragraph">Tahun Pengalaman</span>
+          <div className="flex flex-col md:gap-14 gap-10 justify-center lg:w-6/7 duration-300">
+            <h2 className="sr-only">CEO Quote</h2>
+            <blockquote className="flex lg:text-3xl text-2xl">{`"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"`}</blockquote>
+            <span className="font-medium ">
+              Wiradrana Putri Harefa, S.Psi.{' '}
+              <span className="text-paragraph">Chief Executive Officer</span>{' '}
             </span>
+            {/* <span className="text-2xl">
+              7+ <span className="text-paragraph">Tahun Pengalaman</span>
+            </span> */}
           </div>
         </Container>
       </section>
@@ -167,8 +165,8 @@ export default function Page() {
       position?: 'left' | 'right'
     }) => {
       return (
-        <div className="w-full grid md:grid-cols-2 gap-8 overflow-hidden">
-          <div className={`flex ${position == 'right' && 'order-2'}`}>
+        <div className="w-full grid md:grid-cols-2 md:gap-12 gap-8 overflow-hidden">
+          <div className={`flex ${position == 'right' ? 'order-2' : 'max-md:order-2'}`}>
             <div
               className={`service-step flex flex-col w-full my-auto max-md:order-1 md:max-w-100 gap-4 `}
             >
@@ -200,13 +198,13 @@ export default function Page() {
           />
           <div className={STYLE_MARGIN_CONTAINER_TOP} />
 
-          <div className="flex flex-col gap-20">
+          <div className="flex w-full flex-col gap-20">
             <VMCard
               title="Visi Kami"
               icon={faEye}
               h3="Menjadi Pilihan Utama Perjalanan Digital"
               p="Mewujudkan perusahaan perjalanan berbasis digital yang dipercaya pelanggan melalui pelayanan profesional, inovatif, dan berkelanjutan."
-              imgUrl="/assets/web/home/hero-1.jpg"
+              imgUrl="/assets/web/about/visi.png"
             />
             <VMCard
               title="Misi Kami"
@@ -214,7 +212,7 @@ export default function Page() {
               position="right"
               h3="Memberikan Layanan yang Bernilai"
               p="Menyelenggarakan layanan perjalanan yang terencana, aman, dan berorientasi pada kepuasan pelanggan, serta menciptakan nilai tambah bagi seluruh pemangku kepentingan."
-              imgUrl="/assets/web/home/hero-5.webp"
+              imgUrl="/assets/web/about/misi.png"
             />
           </div>
         </Container>
