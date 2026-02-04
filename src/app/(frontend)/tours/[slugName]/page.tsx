@@ -9,7 +9,6 @@ import {
 } from '@/shared/constants/style/margin'
 import { STYLE_ROUNDED_CONTAINER } from '@/shared/constants/style/rounded'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
-import id from '@/shared/assets/jsons/id.json'
 import { TourService } from '@/features/tours/services'
 import ItinerarySection from '@/features/tours/components/ItinerarySection'
 import { notFound } from 'next/navigation'
@@ -48,7 +47,6 @@ type PageProps = {
 }
 
 export default async function page({ params }: PageProps) {
-  const text = id.landing
   const { slugName } = await params
   const tour = await TourService.getBySlug(slugName)
   const href = whatsappApiLink({
