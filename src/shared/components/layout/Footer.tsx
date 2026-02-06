@@ -6,12 +6,11 @@ import {
   faWhatsapp,
   faXTwitter,
 } from '@fortawesome/free-brands-svg-icons'
-import React from 'react'
 import { Container } from '../provider/Container'
 import CTASection from '../CTASection'
 import id from '@/shared/assets/jsons/id.json'
 import { STYLE_MARGIN_CONTAINER_BOTTOM } from '@/shared/constants/style/margin'
-import { faArrowUp, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import { SettingsService } from '@/features/settings/services/settings.service'
 import Image from 'next/image'
@@ -57,12 +56,12 @@ export const Footer = async () => {
           {
             icon: faFacebook,
             label: 'Facebook',
-            url: '/',
+            url: 'https://www.facebook.com/p/WIA-Tour-Travel-61563058003151/',
           },
           {
             icon: faInstagram,
             label: 'Instagram',
-            url: '/',
+            url: 'https://www.instagram.com/wiatourtravel.id/',
           },
           {
             icon: faWhatsapp,
@@ -97,11 +96,11 @@ export const Footer = async () => {
     },
     {
       label: 'Kata CEO',
-      url: '/#ceo',
+      url: '/about/#ceo',
     },
     {
       label: 'Visi & Misi',
-      url: '/#visi',
+      url: '/about/#visi',
     },
   ]
 
@@ -136,6 +135,7 @@ export const Footer = async () => {
           <Container className="h-full flex items-center justify-center">
             <CTASection quote={ctaQuote} button1={cta.button1} button2={cta.button2} />
           </Container>
+          <h2 className="sr-only">Footer Navigations</h2>
 
           <div className="md:p-8 p-6 bg-secondary w-full flex flex-col text-background border-t border-border">
             {/* top  */}

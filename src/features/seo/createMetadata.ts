@@ -1,28 +1,33 @@
 import type { Metadata } from "next";
-import { DEFAULT_SEO } from "./defaults";
+import { SITE } from "./site.config";
 
-type CreateMetadataParams = {
+type Params = {
     title: string;
     description: string;
-    url: string;
+    path: string;
     image?: string;
+    keywords?: string[];
 };
 
 export function createMetadata({
     title,
     description,
-    url,
+    path,
     image,
-}: CreateMetadataParams): Metadata {
+    keywords,
+}: Params): Metadata {
+    const url = `${SITE.domain}${path}`;
+
     return {
-        ...DEFAULT_SEO,
         title,
         description,
+        keywords,
+
         alternates: {
             canonical: url,
         },
+
         openGraph: {
-            ...DEFAULT_SEO.openGraph,
             title,
             description,
             url,
@@ -30,8 +35,8 @@ export function createMetadata({
                 ? [{ url: image, width: 1200, height: 630 }]
                 : undefined,
         },
+
         twitter: {
-            ...DEFAULT_SEO.twitter,
             title,
             description,
             images: image ? [image] : undefined,
