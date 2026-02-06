@@ -1,12 +1,46 @@
 import type { Metadata } from "next";
+import { SITE } from "./site.config";
 
-export const DEFAULT_SEO: Metadata = {
-    openGraph: {
-        type: "article",
-        locale: "id_ID",
-        siteName: "Wiatour",
-    },
-    twitter: {
-        card: "summary_large_image",
-    },
-};
+export function buildRootMetadata(): Metadata {
+    const socialImage = `${SITE.domain}/social-preview.jpg`;
+
+    return {
+        metadataBase: new URL(SITE.domain),
+
+        title: {
+            default: SITE.defaultTitle,
+            template: `%s | ${SITE.name}`,
+        },
+
+        description: SITE.defaultDescription,
+        keywords: SITE.defaultKeywords,
+
+        openGraph: {
+            type: "website",
+            locale: "id_ID",
+            siteName: SITE.name,
+            title: SITE.defaultTitle,
+            description: SITE.defaultDescription,
+            url: SITE.domain,
+            images: [
+                {
+                    url: socialImage,
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+        },
+
+        twitter: {
+            card: "summary_large_image",
+            title: SITE.defaultTitle,
+            description: SITE.defaultDescription,
+            images: [socialImage],
+        },
+
+        robots: {
+            index: true,
+            follow: true,
+        },
+    };
+}
