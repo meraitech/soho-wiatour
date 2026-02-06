@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SITE } from "./site.config";
 
 export function buildRootMetadata(): Metadata {
-    const socialImage = `${SITE.domain}/social-preview.jpg`;
+    const socialImage = `${SITE.domain}/seo/social-preview.webp`;
 
     return {
         metadataBase: new URL(SITE.domain),
