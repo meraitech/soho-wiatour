@@ -99,48 +99,75 @@ export const Media: CollectionConfig = {
           return data
         },
       ],
-      afterOperation: [
-        async ({ operation, result }) => {
-          // Upload to R2 after file is processed and saved by Payload
-          // Type guard to ensure result is a document (not BulkOperationResult)
-          const doc =
-            result && 'id' in result
-              ? (result as { filename?: string; url?: string; mimeType?: string })
-              : null
-
-          if ((operation === 'create' || operation === 'update') && doc?.filename) {
-            try {
-              const mediaDir = '/tmp/payload-media'
-
-              // Upload converted WebP file to R2
-              const filePath = path.join(mediaDir, doc.filename)
-              try {
-                // Check if file exists
-                await fs.access(filePath)
-
-                // Get MIME type (should be image/webp after conversion)
-                const mimeType = doc.mimeType || 'image/webp'
-
-                // Upload file to R2
-                const fileUrl = await uploadToR2(doc.filename, filePath, mimeType)
-                doc.url = fileUrl
-
-                // Delete file from temp storage after upload
-                await fs.unlink(filePath).catch(() => { })
-              } catch (err) {
-                console.error('[R2 Upload] Error uploading file:', err)
-              }
-            } catch (error) {
-              console.error('[R2 Upload] Error in R2 upload process:', error)
-            }
+      afterChange: [
+        async ({ doc, req, operation }) => {
+          // Skip if this is just a URL update (not a file upload)
+          if ((req.context as any)?.skipR2Upload) {
+            return doc
           }
-          return result
+
+          // Only proceed if we have a new file to upload
+          if (!doc?.filename) {
+            return doc
+          }
+
+          try {
+            const mediaDir = '/tmp/payload-media'
+            const filePath = path.join(mediaDir, doc.filename)
+
+            try {
+              // Check if the new file exists in temp storage
+              await fs.access(filePath)
+
+              // For update operations, delete file with same name from R2 first
+              // This works when replacing with same filename
+              if (operation === 'update') {
+                try {
+                  const params = {
+                    Bucket: r2BucketName,
+                    Key: doc.filename,
+                  }
+                  await r2Client!.send(new DeleteObjectCommand(params))
+                  console.log('[R2 Upload] Deleted old file from R2:', doc.filename)
+                } catch (err) {
+                  // File might not exist in R2 yet, that's OK
+                  console.debug('[R2 Upload] File not in R2 yet, skipping delete')
+                }
+              }
+
+              // Get MIME type (should be image/webp after conversion)
+              const mimeType = doc.mimeType || 'image/webp'
+
+              // Upload new file to R2
+              const fileUrl = await uploadToR2(doc.filename, filePath, mimeType)
+
+              console.log('[R2 Upload] File uploaded successfully:', doc.filename)
+
+              // Delete file from temp storage after upload
+              await fs.unlink(filePath).catch(() => { })
+
+              // Update the URL in the database
+              await req.payload.update({
+                collection: 'media',
+                id: doc.id,
+                data: { url: fileUrl },
+                context: { skipR2Upload: true },
+                req,
+              })
+            } catch (err) {
+              // File might not exist in temp (already processed)
+              console.debug('[R2 Upload] File not in temp storage or already processed')
+            }
+          } catch (error) {
+            console.error('[R2 Upload] Error in R2 upload process:', error)
+          }
+
+          return doc
         },
       ],
       afterDelete: [
         async ({ doc }) => {
           // Files are already deleted by Payload, just clean up from R2 if needed
-          // This is a safety check in case R2 has files that shouldn't be there
           if (doc.filename) {
             try {
               const params = {
