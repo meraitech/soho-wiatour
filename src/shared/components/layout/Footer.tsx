@@ -15,6 +15,8 @@ import Link from 'next/link'
 import { SettingsService } from '@/features/settings/services/settings.service'
 import Image from 'next/image'
 import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
+import { BaseImage } from '../ui/BaseImage'
+import { resolveMediaUrl } from '@/shared/utils/resolveMediaUrl'
 
 export const Footer = async () => {
   const text = id.landing
@@ -122,12 +124,12 @@ export const Footer = async () => {
       <div className="absolute top-0 left-0 w-full h-8 z-2 bg-background rounded-b-3xl" />
       <div className="absolute bottom-0 left-0 w-full h-1/2 z-2 bg-linear-to-t from-secondary/80" />
       <div className="absolute left-0 top-0 w-full h-full z-1">
-        <Image
+        <BaseImage
           src="/brand/patern/2.svg"
           alt="Footer Image"
+          className="w-full h-full object-cover"
           width={1280}
           height={800}
-          className="w-full h-full object-cover"
         />
       </div>
       <div className="z-3 w-full">
@@ -145,8 +147,14 @@ export const Footer = async () => {
                 STYLE_MARGIN_CONTAINER_BOTTOM
               }
             >
-              <div className="lg:col-span-2 max-md:col-span-2 md:row-span-2">
-                <img src={logoPath} alt="Wiatour Logo" className="h-12" />
+              <div className="lg:col-span-2 max-md:col-span-2 md:row-span-2 mb-4">
+                <BaseImage
+                  src={logoPath}
+                  alt="Wiatour Logo"
+                  className="md:h-12 h-10 w-auto"
+                  width={1280}
+                  height={720}
+                />
               </div>
               <section className="text-background/60 flex flex-col gap-2">
                 <h3 className="text-background font-medium mb-2">Home</h3>
@@ -188,7 +196,7 @@ export const Footer = async () => {
             </div>
 
             {/* bottom  */}
-            <div className="flex items-center justify-between w-full text-sm">
+            <div className="flex max-md:flex-col gap-2 items-center justify-between w-full text-sm">
               <span className="text-background/60">
                 &copy; 2026 Wiatour. All rights reserved.{' '}
                 <span className="opacity-50">Made by Merai</span>

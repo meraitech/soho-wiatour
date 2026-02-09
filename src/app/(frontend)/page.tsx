@@ -18,6 +18,7 @@ import { gsap } from '@/shared/lib/gsap'
 import { OurServiceSection } from '@/features/company/components/OurServiceSection'
 import Image from 'next/image'
 import id from '@/shared/assets/jsons/id.json'
+import { BaseImage } from '@/shared/components/ui/BaseImage'
 
 /* ======================================================
    PAGE — Landing Page (Main Page)
@@ -299,13 +300,13 @@ export default function Page() {
           </div>
 
           {/* right  */}
-          <div className="bg-muted rounded-2xl overflow-hidden">
-            <Image
+
+          <div className="rounded-2xl relative overflow-hidden md:aspect-6/7 aspect-4/3">
+            <BaseImage
               src="/assets/web/home/about.jpg"
               alt="Foto Tim Wiatour"
-              width={1280}
-              height={800}
-              className="object-cover md:aspect-6/7 aspect-4/3 duration-300"
+              className="object-cover w-full h-full"
+              fill
             />
           </div>
         </Container>
@@ -353,7 +354,7 @@ export default function Page() {
 
           {!loading && (
             <div className="flex flex-col gap-6 relative w-full">
-              <div className="bg-linear-to-r from-background w-30 h-full absolute left-0 top-0 z-5" />
+              <div className="bg-linear-to-r from-background lg:w-20 md:w-14 w-7 h-full absolute left-0 top-0 z-5" />
               {/* ROW 1 */}
               <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
                 <div className="flex gap-6">
@@ -371,7 +372,7 @@ export default function Page() {
                   ))}
                 </div>
               </VelocityScroller>
-              <div className="bg-linear-to-l from-background w-30 h-full absolute right-0 top-0 z-5" />
+              <div className="bg-linear-to-l from-background lg:w-20 md:w-14 w-7 h-full absolute right-0 top-0 z-5" />
             </div>
           )}
         </Container>

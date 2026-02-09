@@ -2,10 +2,12 @@
 
 import { Media } from '@/payload-types'
 import { Container } from '@/shared/components/provider/Container'
+import { BaseImage } from '@/shared/components/ui/BaseImage'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { TypographyH3 } from '@/shared/components/ui/TypographyH3'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { STYLE_MARGIN_CONTAINER_BOTTOM } from '@/shared/constants/style/margin'
+import { resolveMediaUrl } from '@/shared/utils/resolveMediaUrl'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
@@ -74,13 +76,13 @@ export default function ItinerarySection({ itineraries }: Props) {
               animate-fade max-md:order-1
             "
           >
-            <div className="w-full aspect-video bg-muted rounded-xl overflow-hidden">
-              <Image
-                src={activeItem.thumbnail.url!}
+            <div className="w-full aspect-video bg-muted rounded-xl overflow-hidden relative">
+              <BaseImage
+                src={resolveMediaUrl(activeItem.thumbnail.url!)}
                 alt={activeItem.thumbnail.alt}
-                width={1200}
-                height={800}
                 className="w-full h-full object-cover"
+                fill
+                priority
               />
             </div>
 

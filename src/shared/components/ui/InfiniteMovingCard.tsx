@@ -23,7 +23,7 @@ export function InfiniteMovingCards<T>({
     <div className={cn('relative overflow-hidden', className)}>
       <div
         className={cn(
-          'flex w-max gap-8',
+          'flex w-max md:gap-8 gap-6',
           direction === 'left' ? 'animate-marquee-dynamic-left' : 'animate-marquee-dynamic-right',
           pauseOnHover && 'hover:[animation-play-state:paused]',
         )}

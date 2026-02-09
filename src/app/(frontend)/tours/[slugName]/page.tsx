@@ -22,6 +22,8 @@ import { TourHighlight } from '@/features/tours/components/TourHighlight'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
+import { BaseImage } from '@/shared/components/ui/BaseImage'
+import { resolveMediaUrl } from '@/shared/utils/resolveMediaUrl'
 
 /* ======================================================
    METADATA
@@ -112,12 +114,11 @@ Terima kasih.`,
 
           {/* img  */}
           <div className={'w-full aspect-video overflow-hidden relative' + STYLE_ROUNDED_CONTAINER}>
-            <Image
-              src={tour?.heroImage.url || ''}
+            <BaseImage
+              src={resolveMediaUrl(tour?.heroImage.url!)}
               alt={tour?.heroImage.alt || ''}
-              width={1200}
-              height={800}
               className="w-full h-full object-cover"
+              fill
               priority
             />
           </div>
@@ -146,14 +147,16 @@ Terima kasih.`,
               </div>
               <div
                 className={clsx(
-                  'bg-muted w-full md:max-w-120 max-md:aspect-5/3 aspect-square rounded-3xl overflow-hidden',
+                  'bg-muted w-full md:max-w-120 max-md:aspect-5/3 aspect-square rounded-3xl overflow-hidden relative',
                   index % 2 === 1 ? 'mr-auto' : 'ml-auto',
                 )}
               >
-                <img
-                  src={item.image.url!}
+                <BaseImage
+                  src={resolveMediaUrl(item.image.url!)}
                   alt={item.image.alt}
                   className="w-full h-full object-cover"
+                  fill
+                  loading="lazy"
                 />
               </div>
             </div>

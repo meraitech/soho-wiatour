@@ -88,6 +88,29 @@ const CardNav: React.FC<CardNavProps> = ({
     contentEl.style.position = prevPosition
   }
 
+  const getExpandedHeight = () => {
+    const navEl = navRef.current
+    if (!navEl) return 60
+
+    const contentEl = navEl.querySelector('.card-nav-content') as HTMLElement | null
+    if (!contentEl) return 60
+
+    // Pastikan konten bisa diukur (karena kamu pakai invisible saat collapsed)
+    const prevVisibility = contentEl.style.visibility
+    const prevPointer = contentEl.style.pointerEvents
+
+    contentEl.style.visibility = 'visible'
+    contentEl.style.pointerEvents = 'auto'
+
+    // 60 = top bar height (h-15)
+    const expanded = 60 + contentEl.scrollHeight
+
+    contentEl.style.visibility = prevVisibility
+    contentEl.style.pointerEvents = prevPointer
+
+    return expanded
+  }
+
   /* ======================================================
      GSAP INIT (ONCE)
   ====================================================== */
@@ -105,7 +128,7 @@ const CardNav: React.FC<CardNavProps> = ({
     const tl = gsap.timeline({ paused: true })
 
     tl.to(navEl, {
-      height: expandedHeightRef.current, // 🔑 pakai cached height
+      height: () => getExpandedHeight(), // 🔑 pakai cached height
       duration: 0.4,
       ease,
     })

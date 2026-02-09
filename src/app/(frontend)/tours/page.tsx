@@ -62,7 +62,7 @@ export default async function Page() {
     return (
       <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <h2 className="sr-only">All Tours</h2>
-        <Container className="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+        <Container className="grid md:grid-cols-3 grid-cols-2 gap-6">
           {tours.map((item, index) => (
             <TourCard
               key={'tour:' + index}
