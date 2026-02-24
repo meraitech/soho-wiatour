@@ -19,7 +19,7 @@ export const ServiceCard = ({
 }) => {
   return (
     <div
-      className={`service-step flex flex-col w-full max-md:order-1 md:max-w-100 gap-4 ${!isLast && 'md:h-screen'}`}
+      className={`service-step flex flex-col w-full max-md:order-1 gap-4 ${!isLast && 'md:h-screen'}`}
     >
       <TitleSmallWithIcon text={title_small} icon={faWandMagicSparkles} />
 

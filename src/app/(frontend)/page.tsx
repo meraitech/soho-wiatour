@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useLayoutEffect, useRef, useEffect, useState } from 'react'
+import { useLayoutEffect, useRef, useEffect, useState } from 'react'
 
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
@@ -10,13 +10,10 @@ import { Button } from '@/shared/components/ui/Button'
 import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
-
-import { useBentoFlipScroll } from '@/features/company/hooks/useBentoFlipScroll'
 import { VelocityScroller } from '@/shared/components/ScrollVelocity'
 import { TestimonialCard } from '@/features/company/components/TestimonialCard'
 import { gsap } from '@/shared/lib/gsap'
 import { OurServiceSection } from '@/features/company/components/OurServiceSection'
-import Image from 'next/image'
 import id from '@/shared/assets/jsons/id.json'
 import { BaseImage } from '@/shared/components/ui/BaseImage'
 

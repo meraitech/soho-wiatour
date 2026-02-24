@@ -135,7 +135,7 @@ export function OurServiceSection() {
 
         <div className={STYLE_MARGIN_CONTAINER_TOP} />
 
-        <div ref={serviceWrapRef} className="w-full grid md:grid-cols-2 gap-8">
+        <div ref={serviceWrapRef} className="w-full grid md:grid-cols-2 lg:gap-24 md:gap-16 gap-12">
           {/* LEFT — IMAGE */}
           <div
             ref={serviceLeftRef}

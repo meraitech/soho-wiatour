@@ -109,9 +109,9 @@ export const TourHighlight = ({ currentTourId }: { currentTourId: string }) => {
 
   return (
     <section id="tour-highlight" className={'overflow-hidden' + STYLE_MARGIN_CONTAINER}>
-      <Container className="flex max-md:flex-col items-center gap-12">
+      <Container className="flex max-lg:flex-col items-center gap-12">
         {/* LEFT */}
-        <div className="flex flex-col w-full md:max-w-80 shrink-0 gap-8 items-start">
+        <div className="flex flex-col w-full lg:max-w-80 shrink-0 gap-8 items-start">
           <div className="flex flex-col gap-4">
             <span>Tour Pilihan</span>
             <h2 className={'lg:text-5xl md:text-4xl text-3xl font-medium '}>
@@ -144,7 +144,7 @@ export const TourHighlight = ({ currentTourId }: { currentTourId: string }) => {
                   startScrollLeftRef={startScrollLeftRef}
                 >
                   <TourCard
-                    width="md:w-[330px] w-[270px]"
+                    width="lg:w-[330px] md:w-[270px] w-[200px]"
                     slug={item.slug}
                     imgUrl={item.thumbnail.url!}
                     title={item.title}

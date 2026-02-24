@@ -87,7 +87,7 @@ Terima kasih.`,
           SECTION TOUR HIGHLIGHT
       ====================================================== */}
       <div className={STYLE_MARGIN_CONTAINER_BOTTOM}>
-        {tour?.id && <TourHighlight currentTourId={tour.id} />}
+        <TourHighlight currentTourId={tour.id} />
       </div>
 
       <FooterSection />
