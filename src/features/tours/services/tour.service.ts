@@ -4,6 +4,19 @@ import { Tour, TourSummary } from '../types'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+function extractRelatedTourIDs(relatedTours?: Tour['relatedTours']): string[] {
+  if (!relatedTours?.length) return []
+
+  return relatedTours
+    .map((item) => {
+      if (!item) return null
+      if (typeof item === 'string') return item
+      if (typeof item.id === 'string') return item.id
+      return null
+    })
+    .filter((id): id is string => Boolean(id))
+}
+
 export async function getAll(): Promise<TourSummary[]> {
   const payload = await getPayload({ config })
 
@@ -48,7 +61,27 @@ export async function getRelated(currentTourId: string, limit = 6): Promise<Tour
   const currentTour = await getById(currentTourId)
 
   if (currentTour?.relatedTours && currentTour.relatedTours.length > 0) {
-    return currentTour.relatedTours.slice(0, limit) as Tour[]
+    const relatedIDs = extractRelatedTourIDs(currentTour.relatedTours).slice(0, limit)
+
+    if (relatedIDs.length > 0) {
+      const relatedResult = await payload.find({
+        collection: 'tours',
+        where: {
+          and: [
+            { id: { in: relatedIDs } },
+            { status: { equals: 'published' } },
+            { id: { not_equals: currentTourId } },
+          ],
+        },
+        depth: 1,
+        limit: relatedIDs.length,
+      })
+
+      const docsByID = new Map(relatedResult.docs.map((doc) => [doc.id, doc as unknown as Tour]))
+      return relatedIDs
+        .map((id) => docsByID.get(id))
+        .filter((tour): tour is Tour => Boolean(tour))
+    }
   }
 
   const result = await payload.find({
@@ -164,7 +197,27 @@ export class TourService {
     const currentTour = await this.getById(currentTourId)
 
     if (currentTour?.relatedTours && currentTour.relatedTours.length > 0) {
-      return currentTour.relatedTours.slice(0, limit) as unknown as Tour[]
+      const relatedIDs = extractRelatedTourIDs(currentTour.relatedTours).slice(0, limit)
+
+      if (relatedIDs.length > 0) {
+        const relatedResult = await payload.find({
+          collection: 'tours',
+          where: {
+            and: [
+              { id: { in: relatedIDs } },
+              { status: { equals: 'published' } },
+              { id: { not_equals: currentTourId } },
+            ],
+          },
+          depth: 1,
+          limit: relatedIDs.length,
+        })
+
+        const docsByID = new Map(relatedResult.docs.map((doc) => [doc.id, doc as unknown as Tour]))
+        return relatedIDs
+          .map((id) => docsByID.get(id))
+          .filter((tour): tour is Tour => Boolean(tour))
+      }
     }
 
     const result = await payload.find({

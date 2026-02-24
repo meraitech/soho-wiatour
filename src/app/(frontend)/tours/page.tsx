@@ -9,6 +9,7 @@ import { Button } from '@/shared/components/ui/Button'
 import { TourCard } from '@/features/tours/components/ui/TourCard'
 import { TourService } from '@/features/tours/services'
 import { TourSummary } from '@/features/tours/types'
+import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
 
 /* ======================================================
    PAGE — Tours Page
@@ -37,6 +38,12 @@ export default async function Page() {
    SECTION HERO
   ====================================================== */
   function HeroSection() {
+    const href = whatsappApiLink({
+      text: encodeURIComponent(
+        `Halo,Saya menghubungi Anda melalui website wiatour.com. Saya tertarik untuk mendapatkan informasi lebih detail mengenai paket tour yang tersedia. Terima kasih.`,
+      ),
+    })
+
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
         <Container>
@@ -47,7 +54,9 @@ export default async function Page() {
             {/* button  */}
             <div className="flex gap-4 mt-6">
               <Button>Lihat Semua Tour</Button>
-              <Button variant="monocrome_black">Hubungi Kami</Button>
+              <Button variant="monocrome_black" href={href}>
+                Hubungi Kami
+              </Button>
             </div>
           </div>
         </Container>

@@ -1,7 +1,3 @@
-'use client'
-
-import { useLayoutEffect, useRef, useEffect, useState } from 'react'
-
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
@@ -12,368 +8,152 @@ import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
 import { VelocityScroller } from '@/shared/components/ScrollVelocity'
 import { TestimonialCard } from '@/features/company/components/TestimonialCard'
-import { gsap } from '@/shared/lib/gsap'
 import { OurServiceSection } from '@/features/company/components/OurServiceSection'
+import { HomeHeroVideo } from '@/features/company/components/HomeHeroVideo'
+import { TestimonialService } from '@/features/testimonials/services'
 import id from '@/shared/assets/jsons/id.json'
 import { BaseImage } from '@/shared/components/ui/BaseImage'
+import { resolveMediaUrl } from '@/shared/utils/resolveMediaUrl'
+import type { Testimonial as LandingTestimonial } from '@/features/company/types/testimonial'
 
-/* ======================================================
-   PAGE — Landing Page (Main Page)
-====================================================== */
-
-export default function Page() {
+export default async function Page() {
   const text = id.landing
+  const testimonials = await getTestimonials(text.testimonial.items)
+
   return (
     <div className="overflow-x-hidden">
-      {/* ======================================================
-         SECTION HERO
-      ====================================================== */}
-      <HeroSection />
-
-      {/* ======================================================
-         SECTION ABOUT
-      ====================================================== */}
-      <AboutSection />
-
-      {/* ======================================================
-         SECTION SERVICES
-      ====================================================== */}
+      <HeroSection text={text.hero} />
+      <AboutSection text={text.about} />
       <OurServiceSection />
-
-      {/* ======================================================
-         SECTION TOUR HIGHLIGHT
-      ====================================================== */}
       <TourHighlight currentTourId="" />
-
-      {/* ======================================================
-         SECTION TESTIMONIALS 
-      ====================================================== */}
-      <TestimonialSection />
+      <TestimonialSection text={text.testimonial} testimonials={testimonials} />
     </div>
   )
+}
 
-  /* =========================
-     UI
-  ========================= */
-  /* ======================================================
-   SECTION HERO
-  ====================================================== */
-  function HeroSection() {
-    const videoRef = useRef<HTMLDivElement | null>(null)
+async function getTestimonials(fallbackItems: LandingTestimonial[]): Promise<LandingTestimonial[]> {
+  try {
+    const cmsTestimonials = await TestimonialService.getPublished(10)
 
-    /* ======================================================
-     GSAP SCROLL LOGIC
-  ====================================================== */
-    useLayoutEffect(() => {
-      if (!videoRef.current) return
+    const mappedTestimonials = cmsTestimonials.map((item) => ({
+      quotes: item.quotes,
+      name: item.name,
+      imgUrl: resolveMediaUrl(item.image?.url) || '/images/trans7.png',
+    }))
 
-      const ctx = gsap.context(() => {
-        // set initial state (WAJIB)
-        gsap.set(videoRef.current, {
-          scale: 0.7,
-          transformOrigin: 'top center',
-        })
-
-        gsap.to(videoRef.current, {
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: videoRef.current,
-            start: 'top 60%',
-            end: '60% 60%',
-            scrub: true,
-          },
-        })
-      }, videoRef)
-
-      return () => ctx.revert()
-    }, [])
-
-    return (
-      <section className="">
-        <Container className="flex flex-col">
-          {/* Title  */}
-          <div className="h-[70dvh] flex flex-col items-center mx-auto justify-center lg:gap-12 md:gap-8 gap-6 xl:max-w-5xl lg:max-w-4xl md:max-w-3xl sm:max-w-2xl ">
-            <TypographyH1 className="text-center">{text.hero.title}</TypographyH1>
-
-            <div className="flex md:gap-6 gap-4">
-              <Button href="#tour-highlight" size="lg">
-                {text.hero.ctaPrimary}
-              </Button>
-              <Button href="#cta" variant="monocrome_black" size="lg">
-                {text.hero.ctaSecondary}
-              </Button>
-            </div>
-          </div>
-
-          <div ref={videoRef} className="w-full relative h-screen rounded-3xl overflow-hidden">
-            <video
-              className="absolute inset-0 w-full h-full object-cover"
-              src="/assets/web/home/hero.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-hidden="true"
-            />
-          </div>
-        </Container>
-      </section>
-    )
+    return mappedTestimonials.length > 0 ? mappedTestimonials : fallbackItems
+  } catch {
+    return fallbackItems
   }
-  // function HeroSection() {
-  //   const heroWrapRef = useRef<HTMLDivElement | null>(null)
-  //   const heroGalleryRef = useRef<HTMLDivElement | null>(null)
+}
 
-  //   /* ======================================================
-  //    GSAP SCROLL LOGIC
-  // ====================================================== */
-  //   useLayoutEffect(() => {
-  //     if (!heroWrapRef.current) return
-
-  //     const ctx = gsap.context(() => {
-  //       const heroTitle = gsap.utils.toArray<HTMLDivElement>('.hero-title')
-
-  //       const tl = gsap.timeline({
-  //         scrollTrigger: {
-  //           trigger: heroWrapRef.current,
-  //           start: 'top top+=1',
-  //           end: 'center top',
-  //           scrub: true,
-
-  //           // 🔑 TOGGLE CLASS DI HERO WRAPPER
-  //           toggleClass: {
-  //             targets: heroWrapRef.current,
-  //             className: 'bg-foreground',
-  //           },
-  //         },
-  //       })
-
-  //       // Fade title out
-  //       tl.to(heroTitle, {
-  //         autoAlpha: 0,
-  //         ease: 'none',
-  //       })
-
-  //       // Gallery subtle fade
-  //       tl.from(
-  //         heroGalleryRef.current,
-  //         {
-  //           opacity: 0.7,
-  //           ease: 'none',
-  //         },
-  //         '<',
-  //       )
-  //     }, heroWrapRef)
-
-  //     return () => ctx.revert()
-  //   }, [])
-
-  //   /* ======================================================
-  //    OPTIONAL EXTRA SCROLL EFFECT
-  // ====================================================== */
-  //   useBentoFlipScroll({ heroWrapRef, heroGalleryRef })
-
-  //   /* ======================================================
-  //    STATIC DATA
-  // ====================================================== */
-  //   const gridAreas = [
-  //     '[grid-area:1/1/3/2]',
-  //     '[grid-area:1/2/2/3]',
-  //     '[grid-area:2/2/4/3]',
-  //     '[grid-area:1/3/3/4]',
-  //     '[grid-area:3/1/4/2]',
-  //     '[grid-area:3/3/5/4]',
-  //     '[grid-area:4/1/5/2]',
-  //     '[grid-area:4/2/5/3]',
-  //   ]
-
-  //   const images = [
-  //     '/assets/web/home/hero-1.jpg',
-  //     '/assets/web/home/hero-2.jpg',
-  //     '/assets/web/home/hero-4.jpg',
-  //     '/assets/web/home/hero-6.webp',
-  //     '/assets/web/home/hero-3.jpg',
-  //     '/assets/web/home/hero-5.webp',
-  //     '/assets/web/home/hero-7.webp',
-  //     '/assets/web/home/hero-8.webp',
-  //   ]
-
-  //   /* ======================================================
-  //    RENDER
-  // ====================================================== */
-  //   return (
-  //     <section
-  //       ref={heroWrapRef}
-  //       className="
-  //       relative w-full h-screen
-  //       bg-foreground
-  //       flex items-center justify-center
-  //       overflow-hidden
-  //     "
-  //     >
-  //       {/* GALLERY */}
-  //       <div
-  //         ref={heroGalleryRef}
-  //         className="
-  //         grid gap-[1.5vh]
-  //         grid-cols-[repeat(3,32.5vw)]
-  //         grid-rows-[repeat(4,23vh)]
-  //         justify-center content-center
-  //       "
-  //       >
-  //         {images.map((src, i) => (
-  //           <div
-  //             key={i}
-  //             className={`
-  //             gallery-item
-  //             relative overflow-hidden rounded-2xl
-  //             ${gridAreas[i]}
-  //           `}
-  //           >
-  //             <Image
-  //               src={src}
-  //               alt={'Foto ' + i + ' Wiatour'}
-  //               width={1920}
-  //               height={1080}
-  //               className="w-full h-full object-cover"
-  //             />
-  //           </div>
-  //         ))}
-  //       </div>
-
-  //       {/* HERO CONTENT */}
-  //       <div
-  //         className="
-  //       hero-title
-  //       z-5 text-background
-  //       flex flex-col items-center
-  //       absolute inset-0
-  //       justify-center py-10
-  //     "
-  //       >
-  //         <div
-  //           className="
-  //         flex flex-col items-center
-  //         lg:gap-12 md:gap-8 gap-6
-  //         xl:max-w-5xl lg:max-w-4xl
-  //         md:max-w-3xl sm:max-w-2xl
-  //       "
-  //         >
-  //           <TypographyH1 className="text-center">{text.hero.title}</TypographyH1>
-
-  //           <div className="flex md:gap-6 gap-4">
-  //             <Button href="#tour-highlight" size="lg">
-  //               {text.hero.ctaPrimary}
-  //             </Button>
-  //             <Button href="#cta" variant="monocrome_white" size="lg">
-  //               {text.hero.ctaSecondary}
-  //             </Button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </section>
-  //   )
-  // }
-
-  /* ======================================================
-   SECTION ABOUT
-  ====================================================== */
-  function AboutSection() {
-    return (
-      <section id="about" className={STYLE_MARGIN_CONTAINER}>
-        <div className={STYLE_MARGIN_CONTAINER_TOP}></div>
-        <Container className={'grid md:grid-cols-2 gap-8'}>
-          {/* left  */}
-          <div className="flex flex-col justify-center items-start gap-14 md:max-w-125">
-            <div className="flex flex-col gap-6 items-start">
-              {/* <TitleSmallWithIcon text={text.about.titleSmall} icon={faBuilding} /> */}
-              <span className="md:text-lg">{text.about.titleSmall}</span>
-              <TypographyH2 className="mt-2">{text.about.title}</TypographyH2>
-              <TypographyP>{text.about.description}</TypographyP>
-            </div>
-            <Button variant="monocrome_black"> {text.about.cta}</Button>
-          </div>
-
-          {/* right  */}
-
-          <div className="rounded-2xl relative overflow-hidden md:aspect-6/7 aspect-4/3">
-            <BaseImage
-              src="/assets/web/home/about.jpg"
-              alt="Foto Tim Wiatour"
-              className="object-cover w-full h-full"
-              fill
-            />
-          </div>
-        </Container>
-      </section>
-    )
+function HeroSection({
+  text,
+}: {
+  text: {
+    title: string
+    ctaPrimary: string
+    ctaSecondary: string
   }
+}) {
+  return (
+    <section>
+      <Container className="flex flex-col">
+        <div className="h-[70dvh] flex flex-col items-center mx-auto justify-center lg:gap-12 md:gap-8 gap-6 xl:max-w-5xl lg:max-w-4xl md:max-w-3xl sm:max-w-2xl">
+          <TypographyH1 className="text-center">{text.title}</TypographyH1>
 
-  /* ======================================================
-   SECTION TESTIMONIAL
-  ====================================================== */
-  function TestimonialSection() {
-    const testimonial = text.testimonial
-    const [testimonials, setTestimonials] = useState<any[]>([])
-    const [loading, setLoading] = useState(true)
+          <div className="flex md:gap-6 gap-4">
+            <Button href="#tour-highlight" size="lg">
+              {text.ctaPrimary}
+            </Button>
+            <Button href="#cta" variant="monocrome_black" size="lg">
+              {text.ctaSecondary}
+            </Button>
+          </div>
+        </div>
 
-    useEffect(() => {
-      async function fetchTestimonials() {
-        try {
-          const response = await fetch('/api/testimonials-public?limit=10')
-          const data = await response.json()
-          setTestimonials(data.testimonials || [])
-        } catch (error) {
-          console.error('Error fetching testimonials:', error)
-          // Fallback to static data if API fails
-          setTestimonials(testimonial.items)
-        } finally {
-          setLoading(false)
-        }
-      }
+        <HomeHeroVideo />
+      </Container>
+    </section>
+  )
+}
 
-      fetchTestimonials()
-    }, [])
+function AboutSection({
+  text,
+}: {
+  text: {
+    titleSmall: string
+    title: string
+    description: string
+    cta: string
+  }
+}) {
+  return (
+    <section id="about" className={STYLE_MARGIN_CONTAINER}>
+      <div className={STYLE_MARGIN_CONTAINER_TOP}></div>
+      <Container className={'grid md:grid-cols-2 gap-8'}>
+        <div className="flex flex-col justify-center items-start gap-14 md:max-w-125">
+          <div className="flex flex-col gap-6 items-start">
+            <span className="md:text-lg">{text.titleSmall}</span>
+            <TypographyH2 className="mt-2">{text.title}</TypographyH2>
+            <TypographyP>{text.description}</TypographyP>
+          </div>
+          <Button variant="monocrome_black"> {text.cta}</Button>
+        </div>
 
-    // Use testimonials from CMS or fallback to static data
-    const displayTestimonials = testimonials.length > 0 ? testimonials : testimonial.items
-
-    return (
-      <section id="testimonial" className={STYLE_MARGIN_CONTAINER}>
-        <Container className="flex flex-col items-center relative overflow-hidden ">
-          <HeaderSection
-            titleSmall={testimonial.header.titleSmall}
-            title={testimonial.header.title}
+        <div className="rounded-2xl relative overflow-hidden md:aspect-6/7 aspect-4/3">
+          <BaseImage
+            src="/assets/web/home/about.jpg"
+            alt="Foto Tim Wiatour"
+            className="object-cover w-full h-full"
+            fill
           />
-          <div className={STYLE_MARGIN_CONTAINER_TOP} />
+        </div>
+      </Container>
+    </section>
+  )
+}
 
-          {!loading && (
-            <div className="flex flex-col gap-6 relative w-full">
-              <div className="bg-linear-to-r from-background lg:w-20 md:w-14 w-7 h-full absolute left-0 top-0 z-5" />
-              {/* ROW 1 */}
-              <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
-                <div className="flex gap-6">
-                  {displayTestimonials.map((item, index) => (
-                    <TestimonialCard key={`row1-${index}`} item={item} />
-                  ))}
-                </div>
-              </VelocityScroller>
-
-              {/* ROW 2 */}
-              <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
-                <div className="flex gap-6">
-                  {displayTestimonials.map((item, index) => (
-                    <TestimonialCard key={`row2-${index}`} item={item} />
-                  ))}
-                </div>
-              </VelocityScroller>
-              <div className="bg-linear-to-l from-background lg:w-20 md:w-14 w-7 h-full absolute right-0 top-0 z-5" />
-            </div>
-          )}
-        </Container>
-      </section>
-    )
+function TestimonialSection({
+  text,
+  testimonials,
+}: {
+  text: {
+    header: {
+      titleSmall: string
+      title: string
+    }
   }
+  testimonials: LandingTestimonial[]
+}) {
+  return (
+    <section id="testimonial" className={STYLE_MARGIN_CONTAINER}>
+      <Container className="flex flex-col items-center relative overflow-hidden">
+        <HeaderSection titleSmall={text.header.titleSmall} title={text.header.title} />
+        <div className={STYLE_MARGIN_CONTAINER_TOP} />
+
+        <div className="flex flex-col gap-6 relative w-full">
+          <div className="bg-linear-to-r from-background lg:w-20 md:w-14 w-7 h-full absolute left-0 top-0 z-5" />
+
+          <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
+            <div className="flex gap-6">
+              {testimonials.map((item, index) => (
+                <TestimonialCard key={`row1-${index}`} item={item} />
+              ))}
+            </div>
+          </VelocityScroller>
+
+          <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
+            <div className="flex gap-6">
+              {testimonials.map((item, index) => (
+                <TestimonialCard key={`row2-${index}`} item={item} />
+              ))}
+            </div>
+          </VelocityScroller>
+
+          <div className="bg-linear-to-l from-background lg:w-20 md:w-14 w-7 h-full absolute right-0 top-0 z-5" />
+        </div>
+      </Container>
+    </section>
+  )
 }

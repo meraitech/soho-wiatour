@@ -21,7 +21,7 @@ export const Navbar = async () => {
   // console.log(logoPath)
   const logoPath = '/brand/logo/h-1.webp'
   const text =
-    'Halo,%20selamat%20siang.%0ASaya%20menghubungi%20Anda%20melalui%20website%20wiatour.com.%0ASaya%20tertarik%20untuk%20mendapatkan%20informasi%20lebih%20detail%20mengenai%20paket%20tour%20yang%20tersedia.%0ATerima%20kasih.'
+    'Halo,%20Saya%20menghubungi%20Anda%20melalui%20website%20wiatour.com.%0ASaya%20tertarik%20untuk%20mendapatkan%20informasi%20lebih%20detail%20mengenai%20paket%20tour%20yang%20tersedia.%0ATerima%20kasih.'
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">
