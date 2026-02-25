@@ -1,6 +1,6 @@
 'use client'
 
-import { useLayoutEffect, useRef } from 'react'
+import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { gsap, ScrollTrigger } from '@/shared/lib/gsap'
 import { Container } from '@/shared/components/provider/Container'
 import { HeaderSection } from '@/shared/components/HeaderSection'
@@ -18,6 +18,7 @@ export function OurServiceSection() {
   const serviceLeftRef = useRef<HTMLDivElement | null>(null)
   const serviceImageRef = useRef<HTMLImageElement | null>(null)
 
+  const [activeImageSrc, setActiveImageSrc] = useState(ourServices[0]?.imgUrl ?? '')
   const activeIndexRef = useRef(0)
   const serviceTriggersRef = useRef<ScrollTrigger[]>([])
 
@@ -25,37 +26,43 @@ export function OurServiceSection() {
      UTILS
   ========================= */
 
-  function killTriggers() {
+  const killTriggers = useCallback(() => {
     serviceTriggersRef.current.forEach((st) => st.kill())
     serviceTriggersRef.current = []
-  }
+  }, [])
 
-  function waitForImage(img: HTMLImageElement, cb: () => void) {
-    if (img.complete) cb()
-    else img.addEventListener('load', cb, { once: true })
-  }
+  const swapImage = useCallback(
+    (index: number) => {
+      const nextImageSrc = ourServices[index]?.imgUrl
+      if (!nextImageSrc) return
 
-  function swapImage(index: number) {
-    if (activeIndexRef.current === index) return
-    activeIndexRef.current = index
+      if (activeIndexRef.current === index) return
+      activeIndexRef.current = index
 
-    const img = serviceImageRef.current
-    if (!img) return
+      const img = serviceImageRef.current
+      if (!img) {
+        setActiveImageSrc(nextImageSrc)
+        return
+      }
 
-    gsap.to(img, {
-      autoAlpha: 0,
-      duration: 0.25,
-      onComplete: () => {
-        img.src = ourServices[index].imgUrl
-        gsap.to(img, { autoAlpha: 1, duration: 0.25 })
-      },
-    })
-  }
+      gsap.to(img, {
+        autoAlpha: 0,
+        duration: 0.2,
+        overwrite: true,
+        onComplete: () => {
+          setActiveImageSrc(nextImageSrc)
+        },
+      })
+    },
+    [ourServices],
+  )
 
-  function initScroll() {
+  const initScroll = useCallback(() => {
+    if (!serviceWrapRef.current) return
+
     killTriggers()
 
-    const steps = gsap.utils.toArray<HTMLElement>('.service-step')
+    const steps = gsap.utils.toArray<HTMLElement>('.service-step', serviceWrapRef.current)
     if (!steps.length || !serviceLeftRef.current) return
 
     const first = steps[0]
@@ -89,7 +96,7 @@ export function OurServiceSection() {
     })
 
     ScrollTrigger.refresh()
-  }
+  }, [killTriggers, swapImage])
 
   /* =========================
      EFFECT
@@ -97,19 +104,11 @@ export function OurServiceSection() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      if (!serviceImageRef.current) return
-
-      waitForImage(serviceImageRef.current, () => {
-        initScroll()
-      })
+      requestAnimationFrame(initScroll)
     }, serviceWrapRef)
 
     const onResize = () => {
-      killTriggers()
-
-      requestAnimationFrame(() => {
-        initScroll()
-      })
+      requestAnimationFrame(initScroll)
     }
 
     window.addEventListener('resize', onResize)
@@ -119,7 +118,7 @@ export function OurServiceSection() {
       killTriggers()
       ctx.revert()
     }
-  }, [initScroll])
+  }, [initScroll, killTriggers])
 
   /* =========================
      RENDER
@@ -143,10 +142,14 @@ export function OurServiceSection() {
           >
             <BaseImage
               ref={serviceImageRef}
-              src={ourServices[0].imgUrl}
+              src={activeImageSrc}
               alt={'Gambar Service'}
               className="w-full h-full object-cover"
               fill
+              onLoadingComplete={(img) => {
+                serviceImageRef.current = img
+                gsap.to(img, { autoAlpha: 1, duration: 0.2, overwrite: true })
+              }}
             />
           </div>
 
