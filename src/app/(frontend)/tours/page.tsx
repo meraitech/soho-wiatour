@@ -47,13 +47,13 @@ export default async function Page() {
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
         <Container>
-          <div className="md:max-w-3xl max-w-2xl mx-auto text-center flex flex-col gap-8 items-center">
+          <div className="md:max-w-3xl max-w-2xl mx-auto text-center flex flex-col md:gap-8 gap-4 items-center mt-8">
             <span>Paket Perjalanan</span>
             <TypographyH1>Temukan Perjalanan yang Tepat untuk Anda</TypographyH1>
 
             {/* button  */}
             <div className="flex gap-4 mt-6">
-              <Button>Lihat Semua Tour</Button>
+              <Button href="/tours#all_tour">Lihat Semua Tour</Button>
               <Button variant="monocrome_black" href={href}>
                 Hubungi Kami
               </Button>
@@ -69,7 +69,7 @@ export default async function Page() {
   ====================================================== */
   function AllToursSection({ tours }: { tours: TourSummary[] }) {
     return (
-      <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
+      <section id="all_tour" className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <h2 className="sr-only">All Tours</h2>
         <Container className="grid md:grid-cols-3 grid-cols-2 gap-6">
           {tours.map((item, index) => (

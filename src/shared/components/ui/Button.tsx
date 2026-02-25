@@ -32,6 +32,7 @@ export function Button({
     STYLE_BUTTON_BASE,
     STYLE_BUTTON_VARIANT[variant],
     STYLE_BUTTON_SIZE[size],
+    'duration-200 hover:scale-105',
     className,
   )
 

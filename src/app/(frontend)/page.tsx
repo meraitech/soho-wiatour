@@ -14,11 +14,17 @@ import { TestimonialService } from '@/features/testimonials/services'
 import id from '@/shared/assets/jsons/id.json'
 import { BaseImage } from '@/shared/components/ui/BaseImage'
 import { resolveMediaUrl } from '@/shared/utils/resolveMediaUrl'
-import type { Testimonial as LandingTestimonial } from '@/features/company/types/testimonial'
+
+type HomeTestimonial = {
+  id: string
+  quotes: string
+  name: string
+  imgUrl: string | null
+}
 
 export default async function Page() {
   const text = id.landing
-  const testimonials = await getTestimonials(text.testimonial.items)
+  const testimonials = await getTestimonials()
 
   return (
     <div className="overflow-x-hidden">
@@ -31,19 +37,18 @@ export default async function Page() {
   )
 }
 
-async function getTestimonials(fallbackItems: LandingTestimonial[]): Promise<LandingTestimonial[]> {
+async function getTestimonials(): Promise<HomeTestimonial[]> {
   try {
     const cmsTestimonials = await TestimonialService.getPublished(10)
 
-    const mappedTestimonials = cmsTestimonials.map((item) => ({
+    return cmsTestimonials.map((item) => ({
+      id: item.id,
       quotes: item.quotes,
       name: item.name,
-      imgUrl: resolveMediaUrl(item.image?.url) || '/images/trans7.png',
+      imgUrl: resolveMediaUrl(item.image?.url) || null,
     }))
-
-    return mappedTestimonials.length > 0 ? mappedTestimonials : fallbackItems
   } catch {
-    return fallbackItems
+    return []
   }
 }
 
@@ -124,7 +129,7 @@ function TestimonialSection({
       title: string
     }
   }
-  testimonials: LandingTestimonial[]
+  testimonials: HomeTestimonial[]
 }) {
   return (
     <section id="testimonial" className={STYLE_MARGIN_CONTAINER}>
@@ -132,27 +137,31 @@ function TestimonialSection({
         <HeaderSection titleSmall={text.header.titleSmall} title={text.header.title} />
         <div className={STYLE_MARGIN_CONTAINER_TOP} />
 
-        <div className="flex flex-col gap-6 relative w-full">
-          <div className="bg-linear-to-r from-background lg:w-20 md:w-14 w-7 h-full absolute left-0 top-0 z-5" />
+        {testimonials.length > 0 ? (
+          <div className="flex flex-col gap-6 relative w-full">
+            <div className="bg-linear-to-r from-background lg:w-20 md:w-14 w-7 h-full absolute left-0 top-0 z-5" />
 
-          <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
-            <div className="flex gap-6">
-              {testimonials.map((item, index) => (
-                <TestimonialCard key={`row1-${index}`} item={item} />
-              ))}
-            </div>
-          </VelocityScroller>
+            <VelocityScroller baseVelocity={80} numCopies={3} trackClassName="gap-6">
+              <div className="flex gap-6">
+                {testimonials.map((item) => (
+                  <TestimonialCard key={`row1-${item.id}`} item={item} />
+                ))}
+              </div>
+            </VelocityScroller>
 
-          <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
-            <div className="flex gap-6">
-              {testimonials.map((item, index) => (
-                <TestimonialCard key={`row2-${index}`} item={item} />
-              ))}
-            </div>
-          </VelocityScroller>
+            <VelocityScroller baseVelocity={-80} numCopies={3} trackClassName="gap-6">
+              <div className="flex gap-6">
+                {testimonials.map((item) => (
+                  <TestimonialCard key={`row2-${item.id}`} item={item} />
+                ))}
+              </div>
+            </VelocityScroller>
 
-          <div className="bg-linear-to-l from-background lg:w-20 md:w-14 w-7 h-full absolute right-0 top-0 z-5" />
-        </div>
+            <div className="bg-linear-to-l from-background lg:w-20 md:w-14 w-7 h-full absolute right-0 top-0 z-5" />
+          </div>
+        ) : (
+          <p className="text-paragraph">Belum ada testimonial yang dipublish.</p>
+        )}
       </Container>
     </section>
   )

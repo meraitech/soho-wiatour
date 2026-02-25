@@ -103,8 +103,8 @@ Terima kasih.`,
   function HeroSection() {
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
-        <Container className="flex flex-col gap-20">
-          <div className="max-w-4xl mx-auto text-center flex flex-col gap-8 items-center">
+        <Container className="flex flex-col gap-20 mt-8">
+          <div className="max-w-4xl mx-auto text-center flex flex-col md:gap-8 gap-4 items-center">
             <span>Paket Wisata Internasional</span>
             <TypographyH1>{tour?.title}</TypographyH1>
             <Button href={href} className="mt-4">

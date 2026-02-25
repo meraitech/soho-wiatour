@@ -57,7 +57,7 @@ export default function Page() {
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
         <Container className="flex flex-col gap-20">
-          <div className="max-w-4xl mx-auto text-center flex flex-col gap-8 items-center">
+          <div className="max-w-4xl mx-auto text-center flex flex-col gap-8 items-center mt-8">
             <span>Tentang Wiatour</span>
             <TypographyH1>Membawa Anda Lebih Dekat pada Setiap Cerita Perjalanan</TypographyH1>
           </div>

@@ -1,13 +1,13 @@
 import clsx from "clsx";
 
 export const STYLE_MARGIN_CONTAINER_TOP = clsx(
-    "md:pt-32 pt-20",
+    "lg:pt-32 md:pt-20 pt-12",
 );
 
 export const STYLE_MARGIN_CONTAINER_BOTTOM = clsx(
-    "md:pb-32 pb-20",
+    "lg:pb-32 md:pb-20 pb-12",
 );
 
 export const STYLE_MARGIN_CONTAINER = clsx(
-    "md:py-32 py-20",
+    "lg:py-32 md:py-20 py-12",
 );

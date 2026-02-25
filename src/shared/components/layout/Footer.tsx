@@ -109,7 +109,7 @@ export const Footer = async () => {
   const cta = {
     button1: {
       label: text.cta.button1,
-      href: '#tour-highlight',
+      href: '/tours',
     },
     button2: {
       label: text.cta.button2,
@@ -139,7 +139,7 @@ export const Footer = async () => {
           </Container>
           <h2 className="sr-only">Footer Navigations</h2>
 
-          <div className="md:p-8 p-6 bg-secondary w-full flex flex-col text-background border-t border-border">
+          <div className="md:p-8 p-6 bg-linear-to-t from-secondary via-secondary w-full flex flex-col text-background">
             {/* top  */}
             <div
               className={
