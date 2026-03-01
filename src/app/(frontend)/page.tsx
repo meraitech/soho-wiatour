@@ -3,7 +3,10 @@ import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
 import { TypographyP } from '@/shared/components/ui/TypographyP'
 import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
-import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
+import {
+  STYLE_MARGIN_CONTAINER_BOTTOM,
+  STYLE_MARGIN_CONTAINER_TOP,
+} from '@/shared/constants/style/margin'
 import { HeaderSection } from '@/shared/components/HeaderSection'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
 import { VelocityScroller } from '@/shared/components/ScrollVelocity'
@@ -94,7 +97,7 @@ function AboutSection({
   }
 }) {
   return (
-    <section id="about" className={STYLE_MARGIN_CONTAINER}>
+    <section id="about" className={STYLE_MARGIN_CONTAINER_BOTTOM}>
       <div className={STYLE_MARGIN_CONTAINER_TOP}></div>
       <Container className={'grid md:grid-cols-2 gap-8'}>
         <div className="flex flex-col justify-center items-start gap-14 md:max-w-125">
@@ -103,7 +106,9 @@ function AboutSection({
             <TypographyH2 className="mt-2">{text.title}</TypographyH2>
             <TypographyP>{text.description}</TypographyP>
           </div>
-          <Button variant="monocrome_black"> {text.cta}</Button>
+          <Button variant="monocrome_black" href="/about">
+            {text.cta}
+          </Button>
         </div>
 
         <div className="rounded-2xl relative overflow-hidden md:aspect-6/7 aspect-4/3">
@@ -132,7 +137,7 @@ function TestimonialSection({
   testimonials: HomeTestimonial[]
 }) {
   return (
-    <section id="testimonial" className={STYLE_MARGIN_CONTAINER}>
+    <section id="testimonial" className={STYLE_MARGIN_CONTAINER_BOTTOM}>
       <Container className="flex flex-col items-center relative overflow-hidden">
         <HeaderSection titleSmall={text.header.titleSmall} title={text.header.title} />
         <div className={STYLE_MARGIN_CONTAINER_TOP} />

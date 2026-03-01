@@ -56,6 +56,10 @@
   color: var(--color-foreground);
 }
 
+::selection {
+  background-color: #71d5ff;
+}
+
 @theme {
   /* Typography  */
   --font-now: Now-Medium;

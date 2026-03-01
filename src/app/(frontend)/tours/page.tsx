@@ -1,4 +1,3 @@
-import React from 'react'
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
 import { Container } from '@/shared/components/provider/Container'
 import {

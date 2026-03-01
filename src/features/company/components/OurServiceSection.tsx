@@ -125,7 +125,7 @@ export function OurServiceSection() {
   ========================= */
 
   return (
-    <section id="services" className={STYLE_MARGIN_CONTAINER}>
+    <section id="services">
       <Container className="flex flex-col items-center">
         <HeaderSection
           titleSmall={text.services.header.titleSmall}
@@ -161,7 +161,7 @@ export function OurServiceSection() {
                 title_small={item.titleSmall}
                 title={item.title}
                 paragraph={item.paragraph}
-                image={item.imgUrl} // ⬅️ PENTING
+                image={item.imgUrl}
                 isLast={ourServices.length === i + 1}
               />
             ))}

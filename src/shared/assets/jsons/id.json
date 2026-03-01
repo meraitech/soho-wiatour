@@ -19,20 +19,20 @@
             "items": [
                 {
                     "titleSmall": "Ready Made Tour",
-                    "title": "Perjalanan Praktis, Tanpa Repot",
-                    "paragraph": "Paket tour siap jalan dengan itinerary yang telah dirancang secara matang. Cocok untuk Anda yang menginginkan perjalanan nyaman tanpa perlu menyusun rencana dari awal.",
+                    "title": "Paket Tour Siap Jalan & Peserta Hanya Tinggal Duduk Manis.",
+                    "paragraph": "Kami menyediakan paket tour yang telah terencana dan dapat dipesan langsung oleh peserta.",
                     "imgUrl": "/assets/web/home/layanan-1.webp"
                 },
                 {
                     "titleSmall": "Tailor Made Tour",
-                    "title": "Dirancang Sesuai Keinginan Anda",
-                    "paragraph": "Perjalanan yang disesuaikan dengan kebutuhan, preferensi, dan tujuan Anda. Setiap detail dirancang bersama tim kami untuk menciptakan pengalaman yang lebih personal.",
+                    "title": "Layanan Tour Khusus Sesuai Kebutuhan Peserta.",
+                    "paragraph": "Kami menyediakan layanan pembuatan Tour khusus yang disesuaikan dengan kebutuhan peserta.",
                     "imgUrl": "/assets/web/home/layanan-2.webp"
                 },
                 {
                     "titleSmall": "Private & Open Trip",
-                    "title": "Fleksibel untuk Setiap Perjalanan",
-                    "paragraph": "Pilih perjalanan privat bersama grup Anda atau bergabung dalam open trip. Keduanya dirancang dengan standar kenyamanan dan pelayanan yang sama.",
+                    "title": "Tour Eksklusif yang di Rancang Khusus untuk Peserta.",
+                    "paragraph": "Kami memiliki produk untuk tour, baik secara regu khusus melalui private tour atau pun rombongan. Kami juga menyediakan incentive Tour untuk perusahaan.",
                     "imgUrl": "/assets/web/home/layanan-3.webp"
                 }
             ]
@@ -64,6 +64,41 @@
             "quote": "You only live once, so start your dream journey with us !!",
             "button1": "Lihat Tour Lainnya",
             "button2": "Hubungi Kami"
+        }
+    },
+    "about": {
+        "hero": {
+            "title": "Mengenal Wiatour Lebih Dekat"
+        },
+        "about": {
+            "title": "Partner Perjalanan yang Anda Percaya",
+            "description": [
+                "Wiatour adalah jasa tour & travel di bawah naungan PT. Twederfun Sejahtera Group, yang didirikan di Padang pada 12 November 2022. Kami menghadirkan layanan perjalanan berkualitas dengan standar profesional dan pengalaman yang berkesan.",
+                "Kami melayani paket wisata internasional dan domestik, tiket pesawat, reservasi hotel, serta private dan corporate trip yang dirancang secara nyaman dan fleksibel sesuai kebutuhan pelanggan.",
+                "Dengan filosofi “Personalized and Speciality Travel Services”, Wiatour berkomitmen memberikan pelayanan ramah, responsif, dan terpercaya, serta menciptakan setiap perjalanan menjadi momen yang bermakna dan tak terlupakan."
+            ],
+            "imgUrl": "/assets/web/about/about.webp"
+        },
+        "ceo": {
+            "quotes": "Kami percaya bahwa pelayanan terbaik lahir dari ketulusan. Oleh karena itu, kami Wiatour berkomitmen untuk memberikan perhatian pada setiap detail perjalanan Anda.",
+            "name": "Wiradrana Putri Harefa, S.Psi.",
+            "imgUrl": "/assets/web/about/ceo.webp"
+        },
+        "vission": {
+            "title": "Visi Kami",
+            "heading": "Pilihan utama perjalanan internasional yang profesional dan terpercaya",
+            "description": "Menjadi perusahaan biro perjalanan wisata terdepan yang menghadirkan layanan perjalanan luar negeri berkualitas internasional dengan standar profesional dan efisien",
+            "imgUrl": "/assets/web/about/visi.png"
+        },
+        "mission": {
+            "title": "Misi Kami",
+            "heading": "Menghadirkan layanan tour yang profesional, terpercaya, dan berorientasi pada kepuasan pelanggan.",
+            "description": [
+                "1. Menyelenggarakan perjalanan internasional yang aman, nyaman, dan profesional, dengan sistem yang terorganisir baik serta dapat dinikmati oleh semua kalangan usia.",
+                "2. Menghadirkan pengalaman wisata yang berkualitas dan bernilai tambah, tidak hanya bersifat rekreatif tetapi juga memperluas wawasan dan pengalaman global.",
+                "3. Membangun kepercayaan dan kepuasan pelanggan lintas generasi melalui pelayanan yang ramah, transparan, serta menciptakan momen perjalanan yang berkesan dan inspiratif."
+            ],
+            "imgUrl": "/assets/web/about/misi.png"
         }
     }
 }

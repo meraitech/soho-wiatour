@@ -14,9 +14,12 @@ import {
 import { STYLE_ROUNDED_CONTAINER } from '@/shared/constants/style/rounded'
 import { faEye, faTasks, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
-import React from 'react'
+import id from '@/shared/assets/jsons/id.json'
+import clsx from 'clsx'
 
 export default function Page() {
+  const text = id.about
+
   return (
     <div>
       {/* ======================================================
@@ -43,7 +46,6 @@ export default function Page() {
          SECTION TOUR HIGHLIGHT
       ====================================================== */}
       <TourHighlight currentTourId="" />
-      <div className={STYLE_MARGIN_CONTAINER_BOTTOM} />
     </div>
   )
 
@@ -56,7 +58,7 @@ export default function Page() {
   function HeroSection() {
     return (
       <section className={STYLE_MARGIN_CONTAINER}>
-        <Container className="flex flex-col gap-20">
+        <Container className="flex flex-col lg:gap-20 gap-14">
           <div className="max-w-4xl mx-auto text-center flex flex-col gap-8 items-center mt-8">
             <span>Tentang Wiatour</span>
             <TypographyH1>Membawa Anda Lebih Dekat pada Setiap Cerita Perjalanan</TypographyH1>
@@ -86,21 +88,14 @@ export default function Page() {
         <Container className="flex flex-col gap-14">
           <div className="grid md:grid-cols-2 gap-12">
             <div className="flex flex-col gap-4 justify-center lg:w-6/7 duration-300">
-              <TypographyH2 className="mb-4">Mengenal Wiatour Lebih Dekat</TypographyH2>
-              <TypographyP>
-                Wiatour adalah agen tour & travel yang berkomitmen menghadirkan perjalanan yang
-                aman, terencana, dan berkesan. Kami melayani berbagai kebutuhan perjalanan—mulai
-                dari paket wisata, tiket transportasi, hingga layanan perjalanan khusus—dengan
-                standar pelayanan profesional. melayani berbagai kebutuhan perjalanan—mulai dari
-                paket wisata, tiket transportasi, hingga layanan perjalanan khusus—dengan standar
-                pelayanan profesional. melayani berbagai kebutuhan perjalanan—mulai dari paket
-                wisata, tiket transportasi, hingga layanan perjalanan khusus—dengan standar
-                pelayanan profesional.
-              </TypographyP>
+              <TypographyH2 className="mb-4">{text.about.title}</TypographyH2>
+              {text.about.description.map((desc, item) => (
+                <TypographyP key={item}>{desc}</TypographyP>
+              ))}
             </div>
             <div className="ml-auto bg-accent w-full md:max-w-120 md:aspect-6/7 aspect-video relative overflow-hidden rounded-3xl">
               <Image
-                src="/assets/web/about/about.webp"
+                src={text.about.imgUrl}
                 alt="Photo CEO Wiradrana dan Team"
                 width={1280}
                 height={800}
@@ -118,11 +113,11 @@ export default function Page() {
   ====================================================== */
   function CEOQuotesSection() {
     return (
-      <section id="ceo" className={STYLE_MARGIN_CONTAINER}>
+      <section id="ceo" className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <Container className="flex max-lg:flex-col gap-14">
           <div className="ml-auto bg-muted w-full lg:w-110 shrink-0 aspect-square relative overflow-hidden rounded-3xl">
             <Image
-              src="/assets/web/about/ceo.webp"
+              src={text.ceo.imgUrl}
               alt="Photo CEO Wiradrana Putri Harefa"
               width={1280}
               height={800}
@@ -131,14 +126,11 @@ export default function Page() {
           </div>
           <div className="flex flex-col md:gap-14 gap-10 justify-center lg:w-6/7 duration-300">
             <h2 className="sr-only">CEO Quote</h2>
-            <blockquote className="flex lg:text-3xl text-2xl">{`"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"`}</blockquote>
+            <blockquote className="flex lg:text-3xl text-2xl">{`"${text.ceo.quotes}"`}</blockquote>
             <span className="font-medium ">
-              Wiradrana Putri Harefa, S.Psi.{' '}
-              <span className="text-paragraph">Chief Executive Officer</span>{' '}
+              {text.ceo.name + ' '}
+              <span className="text-paragraph">CEO</span>{' '}
             </span>
-            {/* <span className="text-2xl">
-              7+ <span className="text-paragraph">Tahun Pengalaman</span>
-            </span> */}
           </div>
         </Container>
       </section>
@@ -165,7 +157,12 @@ export default function Page() {
       position?: 'left' | 'right'
     }) => {
       return (
-        <div className="w-full grid md:grid-cols-2 md:gap-12 gap-8 overflow-hidden">
+        <div
+          className={clsx(
+            'w-full grid md:grid-cols-2 md:gap-12 gap-8 overflow-hidden',
+            STYLE_MARGIN_CONTAINER_TOP,
+          )}
+        >
           <div className={`flex ${position == 'right' ? 'order-2' : 'max-md:order-2'}`}>
             <div
               className={`service-step flex flex-col w-full my-auto max-md:order-1 md:max-w-100 gap-4 `}
@@ -176,7 +173,7 @@ export default function Page() {
               <TypographyP>{p}</TypographyP>
             </div>
           </div>
-          <div className="w-full aspect-4/3 rounded-2xl overflow-hidden bg-muted mt-4">
+          <div className="w-full aspect-4/3 rounded-2xl overflow-hidden bg-muted">
             <Image
               src={imgUrl}
               alt={title + ' Image'}
@@ -190,30 +187,58 @@ export default function Page() {
     }
 
     return (
-      <section id="visi" className={STYLE_MARGIN_CONTAINER}>
+      <section id="visi">
         <Container className="flex flex-col items-center">
           <HeaderSection
             titleSmall={'Arah & Tujuan Kami'}
             title={'Visi yang Kami Bangun, Misi yang Kami Jalankan'}
           />
-          <div className={STYLE_MARGIN_CONTAINER_TOP} />
-
-          <div className="flex w-full flex-col gap-20">
+          <div className="flex w-full flex-col">
             <VMCard
-              title="Visi Kami"
+              title={text.vission.title}
               icon={faEye}
-              h3="Menjadi Pilihan Utama Perjalanan Digital"
-              p="Mewujudkan perusahaan perjalanan berbasis digital yang dipercaya pelanggan melalui pelayanan profesional, inovatif, dan berkelanjutan."
-              imgUrl="/assets/web/about/visi.png"
+              h3={text.vission.heading}
+              p={text.vission.description}
+              imgUrl={text.vission.imgUrl}
             />
-            <VMCard
-              title="Misi Kami"
+            {/* <VMCard
+              title={text.mission.title}
               icon={faTasks}
               position="right"
-              h3="Memberikan Layanan yang Bernilai"
-              p="Menyelenggarakan layanan perjalanan yang terencana, aman, dan berorientasi pada kepuasan pelanggan, serta menciptakan nilai tambah bagi seluruh pemangku kepentingan."
-              imgUrl="/assets/web/about/misi.png"
-            />
+              h3={text.mission.heading}
+              p={text.mission.description}
+              imgUrl={text.mission.imgUrl}
+            /> */}
+            <div
+              className={clsx(
+                'w-full grid md:grid-cols-2 md:gap-12 gap-8 overflow-hidden',
+                STYLE_MARGIN_CONTAINER_TOP,
+              )}
+            >
+              <div className={`flex order-2`}>
+                <div className={`service-step flex flex-col w-full my-auto max-md:order-1 gap-4 `}>
+                  <TitleSmallWithIcon text={text.mission.title} icon={faTasks} />
+
+                  <TypographyH3 className="mb-2">{text.mission.heading}</TypographyH3>
+                  <ol className="flex flex-col gap-4">
+                    {text.mission.description.map((text, index) => (
+                      <li key={index}>
+                        <TypographyP>{text}</TypographyP>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+              <div className="w-full aspect-4/3 rounded-2xl overflow-hidden bg-muted">
+                <Image
+                  src={text.mission.imgUrl}
+                  alt={text.mission.title + ' Image'}
+                  width={1280}
+                  height={800}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </Container>
       </section>

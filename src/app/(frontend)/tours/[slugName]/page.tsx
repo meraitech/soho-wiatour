@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Container } from '@/shared/components/provider/Container'
 import { Button } from '@/shared/components/ui/Button'
 import { TypographyH1 } from '@/shared/components/ui/TypographyH1'
@@ -15,7 +13,6 @@ import { notFound } from 'next/navigation'
 import FootageSection from '@/shared/components/FootageSection'
 import { Metadata } from 'next'
 import { createTourMetadata } from '@/features/seo/tour.metadata'
-import Image from 'next/image'
 import clsx from 'clsx'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { TourHighlight } from '@/features/tours/components/TourHighlight'
@@ -135,7 +132,7 @@ Terima kasih.`,
       <section className={STYLE_MARGIN_CONTAINER_BOTTOM}>
         <Container className="flex flex-col gap-14">
           {tour?.travelDetails?.map((item, index) => (
-            <div key={index} className={clsx('grid md:grid-cols-2 gap-12')}>
+            <div key={index} className={clsx('grid md:grid-cols-2 lg:gap-28 gap-20')}>
               <div
                 className={clsx(
                   'flex flex-col gap-4 justify-center',

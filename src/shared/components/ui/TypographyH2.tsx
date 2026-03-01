@@ -6,7 +6,7 @@ export const TypographyH2 = ({ children, className, ...props }: TypographyH2Prop
   return (
     <h2
       {...props}
-      className={'lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-medium ' + className}
+      className={'lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-medium ' + className}
     >
       {children}
     </h2>
