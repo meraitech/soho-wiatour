@@ -69,6 +69,9 @@ function HeroSection({
       <Container className="flex flex-col">
         <div className="h-[70dvh] flex flex-col items-center mx-auto justify-center lg:gap-12 md:gap-8 gap-6 xl:max-w-5xl lg:max-w-4xl md:max-w-3xl sm:max-w-2xl">
           <TypographyH1 className="text-center">{text.title}</TypographyH1>
+          {/* <TypographyH1 className="text-center">
+            Jelajahi Dunia <br /> dengan Pengalaman <br /> yang Lebih Berarti
+          </TypographyH1> */}
 
           <div className="flex md:gap-6 gap-4">
             <Button href="#tour-highlight" size="lg">
