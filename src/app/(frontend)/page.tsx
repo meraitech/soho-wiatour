@@ -44,12 +44,16 @@ async function getTestimonials(): Promise<HomeTestimonial[]> {
   try {
     const cmsTestimonials = await TestimonialService.getPublished(10)
 
-    return cmsTestimonials.map((item) => ({
-      id: item.id,
-      quotes: item.quotes,
-      name: item.name,
-      imgUrl: resolveMediaUrl(item.image?.url) || null,
-    }))
+    return cmsTestimonials.map((item) => {
+      const imageUrl = item.image?.url ??
+        (item.image?.filename ? `/api/media/file/${item.image.filename}` : null)
+      return {
+        id: item.id,
+        quotes: item.quotes,
+        name: item.name,
+        imgUrl: resolveMediaUrl(imageUrl) || null,
+      }
+    })
   } catch {
     return []
   }

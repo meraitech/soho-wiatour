@@ -1,6 +1,10 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
+
+const r2PublicUrl = process.env.R2_PUBLIC_URL
+const r2Hostname = r2PublicUrl ? new URL(r2PublicUrl).hostname : null
+
 const nextConfig = {
   output: 'standalone',
   images: {
@@ -16,6 +20,9 @@ const nextConfig = {
         port: '3000',
         pathname: '/api/media/**',
       },
+      ...(r2Hostname
+        ? [{ protocol: 'https', hostname: r2Hostname, pathname: '/**' }]
+        : []),
     ],
   },
   // Your Next.js config here

@@ -15,12 +15,21 @@ export async function GET(
     )
   }
 
-  // If it's already a size variant, redirect directly to R2
-  if (filenamePath.includes('-400x300.webp') || filenamePath.includes('-768x512.webp') || filenamePath.includes('-1920x1080.webp')) {
-    return NextResponse.redirect(`${r2PublicUrl}/${filenamePath}`, 307)
-  }
+  try {
+    const r2Response = await fetch(`${r2PublicUrl}/${filenamePath}`)
 
-  // If it's the original file (no size suffix), serve directly from R2
-  // Original files are now stored in R2 with their original format
-  return NextResponse.redirect(`${r2PublicUrl}/${filenamePath}`, 307)
+    if (!r2Response.ok) {
+      return NextResponse.json({ error: 'File not found' }, { status: r2Response.status })
+    }
+
+    const contentType = r2Response.headers.get('Content-Type') || 'image/webp'
+    return new Response(r2Response.body, {
+      headers: {
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=31536000, immutable',
+      },
+    })
+  } catch {
+    return NextResponse.json({ error: 'Failed to fetch file' }, { status: 500 })
+  }
 }

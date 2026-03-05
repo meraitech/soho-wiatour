@@ -31,7 +31,6 @@ export const Testimonials: CollectionConfig = {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
-      required: true,
       label: 'Photo',
       admin: {
         description: 'Foto orang yang memberikan testimoni',
