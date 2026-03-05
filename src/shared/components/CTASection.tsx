@@ -25,7 +25,9 @@ export default function CTASection({ quote, button1, button2 }: CTAProps) {
       </blockquote>
 
       <div className="flex max-md:flex-col gap-4 z-1">
-        <Button href={button1.href}>{button1.label}</Button>
+        <Button href={button1.href} variant="accent">
+          {button1.label}
+        </Button>
         <Button href={button2.href} variant="monocrome_white">
           {button2.label}
         </Button>

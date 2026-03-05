@@ -110,7 +110,11 @@ Terima kasih.`,
           </div>
 
           {/* img  */}
-          <div className={'w-full aspect-video overflow-hidden relative' + STYLE_ROUNDED_CONTAINER}>
+          <div
+            className={
+              'w-full aspect-video overflow-hidden relative shadow-xl ' + STYLE_ROUNDED_CONTAINER
+            }
+          >
             <BaseImage
               src={resolveMediaUrl(tour?.heroImage.url!)}
               alt={tour?.heroImage.alt || ''}

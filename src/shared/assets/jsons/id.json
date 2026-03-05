@@ -7,8 +7,8 @@
         },
         "about": {
             "titleSmall": "Tentang Kami",
-            "title": "Partner Perjalanan yang Anda Percaya",
-            "description": "Wiatour adalah agen tour & travel yang berkomitmen menghadirkan perjalanan yang aman, terencana, dan berkesan. Kami melayani berbagai kebutuhan perjalanan—mulai dari paket wisata, tiket transportasi, hingga layanan perjalanan khusus—dengan standar pelayanan profesional.",
+            "title": "Teman Perjalanan yang Anda Percaya",
+            "description": "Wiatour adalah jasa tour & travel yang berkomitmen menghadirkan perjalanan yang aman, terencana, dan berkesan. Kami melayani berbagai kebutuhan perjalanan mulai dari paket wisata, tiket transportasi, hingga layanan perjalanan khususn dengan standar pelayanan profesional.",
             "cta": "Tentang Kami"
         },
         "services": {
@@ -18,21 +18,21 @@
             },
             "items": [
                 {
-                    "titleSmall": "Ready Made Tour",
-                    "title": "Paket Tour Siap Jalan & Peserta Hanya Tinggal Duduk Manis.",
-                    "paragraph": "Kami menyediakan paket tour yang telah terencana dan dapat dipesan langsung oleh peserta.",
+                    "titleSmall": "Tur Siap Pakai",
+                    "title": "Paket Tour Siap Jalan Tanpa Ribet",
+                    "paragraph": "Kami menyediakan paket tour yang telah terencana dan bisa kamu pesan langsung. ",
                     "imgUrl": "/assets/web/home/layanan-1.webp"
                 },
                 {
-                    "titleSmall": "Tailor Made Tour",
-                    "title": "Layanan Tour Khusus Sesuai Kebutuhan Peserta.",
-                    "paragraph": "Kami menyediakan layanan pembuatan Tour khusus yang disesuaikan dengan kebutuhan peserta.",
+                    "titleSmall": "Tur yang dibuat Khusus",
+                    "title": "Layanan Tour Khusus Sesuai Kebutuhan",
+                    "paragraph": "Kami menyediakan layanan pembuatan Tour khusus yang disesuaikan dengan kebutuhan.",
                     "imgUrl": "/assets/web/home/layanan-2.webp"
                 },
                 {
                     "titleSmall": "Private & Open Trip",
-                    "title": "Tour Eksklusif yang di Rancang Khusus untuk Peserta.",
-                    "paragraph": "Kami memiliki produk untuk tour, baik secara regu khusus melalui private tour atau pun rombongan. Kami juga menyediakan incentive Tour untuk perusahaan.",
+                    "title": "Tour Eksklusif yang Dirancang Secara Premium",
+                    "paragraph": "Kami memiliki Tour Eksklusif dan Premium yang mengutamakan pelayanan lebih dan kualitas yang terbaik.",
                     "imgUrl": "/assets/web/home/layanan-3.webp"
                 }
             ]
@@ -73,14 +73,13 @@
         "about": {
             "title": "Partner Perjalanan yang Anda Percaya",
             "description": [
-                "Wiatour adalah jasa tour & travel di bawah naungan PT. Twederfun Sejahtera Group, yang didirikan di Padang pada 12 November 2022. Kami menghadirkan layanan perjalanan berkualitas dengan standar profesional dan pengalaman yang berkesan.",
-                "Kami melayani paket wisata internasional dan domestik, tiket pesawat, reservasi hotel, serta private dan corporate trip yang dirancang secara nyaman dan fleksibel sesuai kebutuhan pelanggan.",
-                "Dengan filosofi “Personalized and Speciality Travel Services”, Wiatour berkomitmen memberikan pelayanan ramah, responsif, dan terpercaya, serta menciptakan setiap perjalanan menjadi momen yang bermakna dan tak terlupakan."
+                "Wiatour merupakan jasa tour & travel di bawah naungan PT. Twederfun Sejahtera Group yang berdiri di Padang pada 12 November 2022. Kami menyediakan layanan perjalanan profesional meliputi paket wisata domestik dan internasional, tiket pesawat, reservasi hotel, serta private dan corporate trip yang fleksibel sesuai kebutuhan pelanggan.",
+                "Dengan filosofi “Personalized and Speciality Travel Services”, Wiatour berkomitmen menghadirkan pelayanan ramah dan terpercaya, serta menjadikan setiap perjalanan sebagai pengalaman yang berkesan dan bermakna."
             ],
             "imgUrl": "/assets/web/about/about.webp"
         },
         "ceo": {
-            "quotes": "Kami percaya bahwa pelayanan terbaik lahir dari ketulusan. Oleh karena itu, kami Wiatour berkomitmen untuk memberikan perhatian pada setiap detail perjalanan Anda.",
+            "quotes": "Setiap langkah perjalanan Anda adalah amanah yang saya jaga.",
             "name": "Wiradrana Putri Harefa, S.Psi.",
             "imgUrl": "/assets/web/about/ceo.webp"
         },

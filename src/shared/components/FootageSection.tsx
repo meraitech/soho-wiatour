@@ -3,7 +3,6 @@
 import { Media } from '@/payload-types'
 import { STYLE_MARGIN_CONTAINER_BOTTOM } from '../constants/style/margin'
 import { InfiniteMovingCards } from './ui/InfiniteMovingCard'
-import Image from 'next/image'
 import { BaseImage } from './ui/BaseImage'
 import { resolveMediaUrl } from '../utils/resolveMediaUrl'
 

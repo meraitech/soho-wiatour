@@ -5,7 +5,7 @@ import { gsap, ScrollTrigger } from '@/shared/lib/gsap'
 import { Container } from '@/shared/components/provider/Container'
 import { HeaderSection } from '@/shared/components/HeaderSection'
 
-import { STYLE_MARGIN_CONTAINER, STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
+import { STYLE_MARGIN_CONTAINER_TOP } from '@/shared/constants/style/margin'
 import id from '@/shared/assets/jsons/id.json'
 import { ServiceCard } from '../../testimonials/components/ServiceCard'
 import { BaseImage } from '@/shared/components/ui/BaseImage'
@@ -148,7 +148,7 @@ export function OurServiceSection() {
               fill
               onLoadingComplete={(img) => {
                 serviceImageRef.current = img
-                gsap.to(img, { autoAlpha: 1, duration: 0.2, overwrite: true })
+                gsap.to(img, { autoAlpha: 1, duration: 0.001, overwrite: true })
               }}
             />
           </div>
