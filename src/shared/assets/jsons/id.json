@@ -9,7 +9,8 @@
             "titleSmall": "Tentang Kami",
             "title": "Teman Perjalanan yang Anda Percaya",
             "description": "Wiatour adalah jasa tour & travel yang berkomitmen menghadirkan perjalanan yang aman, terencana, dan berkesan. Kami melayani berbagai kebutuhan perjalanan mulai dari paket wisata, tiket transportasi, hingga layanan perjalanan khususn dengan standar pelayanan profesional.",
-            "cta": "Tentang Kami"
+            "cta": "Tentang Kami",
+            "imgUrl": "/assets/web/home/about.webp"
         },
         "services": {
             "header": {
@@ -20,7 +21,7 @@
                 {
                     "titleSmall": "Tur Siap Pakai",
                     "title": "Paket Tour Siap Jalan Tanpa Ribet",
-                    "paragraph": "Kami menyediakan paket tour yang telah terencana dan bisa kamu pesan langsung. ",
+                    "paragraph": "Kami memiliki paket tour yang telah terencana dan bisa kamu pesan langsung.",
                     "imgUrl": "/assets/web/home/layanan-1.webp"
                 },
                 {
@@ -34,6 +35,12 @@
                     "title": "Tour Eksklusif yang Dirancang Secara Premium",
                     "paragraph": "Kami memiliki Tour Eksklusif dan Premium yang mengutamakan pelayanan lebih dan kualitas yang terbaik.",
                     "imgUrl": "/assets/web/home/layanan-3.webp"
+                },
+                {
+                    "titleSmall": "Tiket Pesawat & Hotel",
+                    "title": "Akomodasi Tiket Pesawat & Hotel Murah",
+                    "paragraph": "Kami menyediakan pembelian Tiket Pesawat & Hotel dengan harga murah dan terbaik.",
+                    "imgUrl": "/assets/web/home/layanan-4.webp"
                 }
             ]
         },
@@ -85,19 +92,19 @@
         },
         "vission": {
             "title": "Visi Kami",
-            "heading": "Pilihan utama perjalanan internasional yang profesional dan terpercaya",
-            "description": "Menjadi perusahaan biro perjalanan wisata terdepan yang menghadirkan layanan perjalanan luar negeri berkualitas internasional dengan standar profesional dan efisien",
-            "imgUrl": "/assets/web/about/visi.png"
+            "heading": "Andalan Perjalanan Internasional",
+            "description": "Menjadi perusahaan biro perjalanan wisata terdepan yang menghadirkan layanan perjalanan luar negeri berkualitas internasional dengan standar profesional dan efisien.",
+            "imgUrl": "/assets/web/about/visi.webp"
         },
         "mission": {
             "title": "Misi Kami",
-            "heading": "Menghadirkan layanan tour yang profesional, terpercaya, dan berorientasi pada kepuasan pelanggan.",
+            "heading": "Pelayanan Terpercaya dan Berkualitas",
             "description": [
-                "1. Menyelenggarakan perjalanan internasional yang aman, nyaman, dan profesional, dengan sistem yang terorganisir baik serta dapat dinikmati oleh semua kalangan usia.",
-                "2. Menghadirkan pengalaman wisata yang berkualitas dan bernilai tambah, tidak hanya bersifat rekreatif tetapi juga memperluas wawasan dan pengalaman global.",
-                "3. Membangun kepercayaan dan kepuasan pelanggan lintas generasi melalui pelayanan yang ramah, transparan, serta menciptakan momen perjalanan yang berkesan dan inspiratif."
+                "1. Menyelenggarakan perjalanan internasional yang profesional dengan layanan terorganisir.",
+                "2. Memberikan pengalaman wisata berkualitas yang dapat memperluas wawasan global.",
+                "3. Membangun kepercayaan dan kepuasan pelanggan melalui pelayanan ramah, transparan, dan momen perjalanan berkesan."
             ],
-            "imgUrl": "/assets/web/about/misi.png"
+            "imgUrl": "/assets/web/about/misi.webp"
         }
     }
 }

@@ -45,8 +45,8 @@ async function getTestimonials(): Promise<HomeTestimonial[]> {
     const cmsTestimonials = await TestimonialService.getPublished(10)
 
     return cmsTestimonials.map((item) => {
-      const imageUrl = item.image?.url ??
-        (item.image?.filename ? `/api/media/file/${item.image.filename}` : null)
+      const imageUrl =
+        item.image?.url ?? (item.image?.filename ? `/api/media/file/${item.image.filename}` : null)
       return {
         id: item.id,
         quotes: item.quotes,
@@ -101,6 +101,7 @@ function AboutSection({
     title: string
     description: string
     cta: string
+    imgUrl: string
   }
 }) {
   return (
@@ -118,9 +119,9 @@ function AboutSection({
           </Button>
         </div>
 
-        <div className="rounded-2xl relative overflow-hidden md:aspect-6/7 aspect-4/3">
+        <div className="rounded-2xl relative overflow-hidden aspect-3/4">
           <BaseImage
-            src="/assets/web/home/about.jpg"
+            src={text.imgUrl}
             alt="Foto Tim Wiatour"
             className="object-cover w-full h-full"
             fill
