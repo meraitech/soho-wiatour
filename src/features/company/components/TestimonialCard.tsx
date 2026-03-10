@@ -6,27 +6,28 @@ export const TestimonialCard = ({ item }: { item: Testimonial }) => {
   return (
     <div
       className={
-        'lg:w-100 md:w-80 w-70 flex flex-col justify-between gap-8 py-6 px-8 border border-border relative overflow-hidden ' +
+        'lg:w-100 md:w-80 w-70 flex flex-col gap-4 md:py-4 py-6 md:px-8 px-6 border border-border/50 relative overflow-hidden bg-surface ' +
         STYLE_ROUNDED_CARD
       }
     >
-      <blockquote className="flex lg:text-xl md:text-lg max-sm:text-sm z-1">
-        {'"' + item.quotes + '"'}
-      </blockquote>
-      <div className="flex items-end justify-between z-1">
-        <span className="font-medium lg:text-lg text-sm">{item.name}</span>
-      </div>
-      {item.imgUrl ? (
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-2/3 aspect-square z-0 translate-x-1/3">
+      <div className="flex items-center gap-3">
+        <div className="aspect-square relative w-12 h-12 shrink-0 rounded-full overflow-hidden border border-border bg-white">
           <BaseImage
-            src={item.imgUrl}
+            src={item.imgUrl!}
             alt={item.name + ' Profile'}
-            className="object-contain opacity-40"
+            className="object-cover w-full h-full"
             fill
             loading="lazy"
           />
         </div>
-      ) : null}
+        <div className="flex flex-col">
+          <span className="font-medium max-md:text-sm">{item.name}</span>
+          <span className="md:text-sm text-xs text-muted-foreground">
+            {item.imgUrl ? 'Perusahaan' : 'Pribadi'}
+          </span>
+        </div>
+      </div>
+      <blockquote className="flex max-md:text-sm">{item.quotes}</blockquote>
     </div>
   )
 }
