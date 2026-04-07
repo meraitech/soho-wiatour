@@ -1,11 +1,15 @@
-import { GlobalConfig } from "payload";
-import { checkRole } from "@/shared/lib/access";
+import { GlobalConfig } from 'payload'
+import { checkRole } from '@/shared/lib/access'
+import { globalCacheInvalidationHooks } from '@/shared/lib/cache-hooks'
 
 export const GlobalSettings: GlobalConfig = {
   slug: 'global-settings',
   access: {
     read: () => true,
     update: ({ req }) => checkRole(req.user, 'admin'),
+  },
+  hooks: {
+    afterChange: [globalCacheInvalidationHooks['global-settings']],
   },
   fields: [
     {
@@ -118,4 +122,4 @@ export const GlobalSettings: GlobalConfig = {
       ],
     },
   ],
-};
+}

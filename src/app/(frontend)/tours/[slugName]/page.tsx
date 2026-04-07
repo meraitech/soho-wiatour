@@ -7,7 +7,7 @@ import {
 } from '@/shared/constants/style/margin'
 import { STYLE_ROUNDED_CONTAINER } from '@/shared/constants/style/rounded'
 import { TypographyH2 } from '@/shared/components/ui/TypographyH2'
-import { TourService } from '@/features/tours/services'
+import { OptimizedTourService } from '@/features/tours/services'
 import ItinerarySection from '@/features/tours/components/ItinerarySection'
 import { notFound } from 'next/navigation'
 import FootageSection from '@/shared/components/FootageSection'
@@ -23,6 +23,13 @@ import { BaseImage } from '@/shared/components/ui/BaseImage'
 import { resolveMediaUrl } from '@/shared/utils/resolveMediaUrl'
 
 /* ======================================================
+   PAGE CONFIGURATION
+====================================================== */
+// Force dynamic rendering for real-time data updates
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+/* ======================================================
    METADATA
 ====================================================== */
 export async function generateMetadata({
@@ -31,7 +38,7 @@ export async function generateMetadata({
   params: Promise<{ slugName: string }>
 }): Promise<Metadata> {
   const { slugName } = await params
-  const tour = await TourService.getBySlug(slugName)
+  const tour = await OptimizedTourService.getBySlug(slugName)
   if (!tour) return {}
   return createTourMetadata(tour)
 }
@@ -47,7 +54,7 @@ type PageProps = {
 
 export default async function page({ params }: PageProps) {
   const { slugName } = await params
-  const tour = await TourService.getBySlug(slugName)
+  const tour = await OptimizedTourService.getBySlug(slugName)
   const href = whatsappApiLink({
     text: encodeURIComponent(
       `Halo, selamat siang.

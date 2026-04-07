@@ -6,7 +6,7 @@ import {
 } from '@/shared/constants/style/margin'
 import { Button } from '@/shared/components/ui/Button'
 import { TourCard } from '@/features/tours/components/ui/TourCard'
-import { TourService } from '@/features/tours/services'
+import { OptimizedTourService } from '@/features/tours/services'
 import { TourSummary } from '@/features/tours/types'
 import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
 
@@ -14,8 +14,12 @@ import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
    PAGE — Tours Page
 ====================================================== */
 
+// Force dynamic rendering for real-time data updates
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function Page() {
-  const tours = await TourService.getAll()
+  const tours = await OptimizedTourService.getAll()
   return (
     <div id="tour-highlight" className="overflow-hidden">
       {/* ======================================================

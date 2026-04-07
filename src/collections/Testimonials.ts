@@ -1,5 +1,6 @@
-import { CollectionConfig } from "payload";
-import { checkRole } from "@/shared/lib/access";
+import { CollectionConfig } from 'payload'
+import { checkRole } from '@/shared/lib/access'
+import { cacheInvalidationHooks } from '@/shared/lib/cache-hooks'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -16,6 +17,10 @@ export const Testimonials: CollectionConfig = {
     update: ({ req }) => checkRole(req.user, 'admin'),
     // Only admins can delete testimonials
     delete: ({ req }) => checkRole(req.user, 'admin'),
+  },
+  hooks: {
+    afterChange: [cacheInvalidationHooks.testimonials.afterChange],
+    afterDelete: [cacheInvalidationHooks.testimonials.afterDelete],
   },
   fields: [
     {
@@ -57,4 +62,4 @@ export const Testimonials: CollectionConfig = {
       label: 'Status',
     },
   ],
-};
+}

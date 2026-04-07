@@ -1,8 +1,8 @@
-import { TourService } from '../services'
+import { OptimizedTourService } from '../services'
 import { TourHighlightClient, TourHighlightItem } from './TourHighlight.client'
 
 export const TourHighlight = async ({ currentTourId }: { currentTourId: string }) => {
-  const tours = await TourService.getRelated(currentTourId, 6).catch(() => [])
+  const tours = await OptimizedTourService.getRelated(currentTourId, 6).catch(() => [])
 
   const mappedTours: TourHighlightItem[] = tours
     .map((item) => ({

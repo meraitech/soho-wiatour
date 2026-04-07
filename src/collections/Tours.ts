@@ -1,6 +1,7 @@
-import { formatSlug } from "@/shared/lib/utils";
-import { CollectionConfig } from "payload";
-import { checkRole } from "@/shared/lib/access";
+import { formatSlug } from '@/shared/lib/utils'
+import { CollectionConfig } from 'payload'
+import { checkRole } from '@/shared/lib/access'
+import { cacheInvalidationHooks } from '@/shared/lib/cache-hooks'
 
 export const Tours: CollectionConfig = {
   slug: 'tours',
@@ -17,6 +18,10 @@ export const Tours: CollectionConfig = {
     update: ({ req }) => checkRole(req.user, 'admin'),
     // Only admins can delete tours
     delete: ({ req }) => checkRole(req.user, 'admin'),
+  },
+  hooks: {
+    afterChange: [cacheInvalidationHooks.tours.afterChange],
+    afterDelete: [cacheInvalidationHooks.tours.afterDelete],
   },
   fields: [
     //-- List Toure Page Data
@@ -66,8 +71,8 @@ export const Tours: CollectionConfig = {
       maxLength: 300,
       label: 'Description',
       admin: {
-        description: 'Deskripsi untuk tours (max 300 karakter)'
-      }
+        description: 'Deskripsi untuk tours (max 300 karakter)',
+      },
     },
 
     // --- SECTION 1: HERO ---
@@ -203,6 +208,5 @@ export const Tours: CollectionConfig = {
       ],
       label: 'Status',
     },
-  ]
+  ],
 }
-

@@ -12,7 +12,7 @@ import id from '@/shared/assets/jsons/id.json'
 import { STYLE_MARGIN_CONTAINER_BOTTOM } from '@/shared/constants/style/margin'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
-import { SettingsService } from '@/features/settings/services/settings.service'
+import { OptimizedSettingsService } from '@/features/settings/services'
 import Image from 'next/image'
 import { whatsappApiLink } from '@/shared/utils/whatsappHandler'
 import { BaseImage } from '../ui/BaseImage'
@@ -22,7 +22,7 @@ export const Footer = async () => {
   const text = id.landing
 
   // Fetch settings from CMS
-  const settings = await SettingsService.getPublicSettings()
+  const settings = await OptimizedSettingsService.getPublicSettings()
 
   // Use logo from CMS or fallback to hardcoded path
   const logoPath = '/brand/logo/h-2.webp'

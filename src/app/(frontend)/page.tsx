@@ -13,10 +13,14 @@ import { VelocityScroller } from '@/shared/components/ScrollVelocity'
 import { TestimonialCard } from '@/features/company/components/TestimonialCard'
 import { OurServiceSection } from '@/features/company/components/OurServiceSection'
 import { HomeHeroVideo } from '@/features/company/components/HomeHeroVideo'
-import { TestimonialService } from '@/features/testimonials/services'
+import { OptimizedTestimonialService } from '@/features/testimonials/services'
 import id from '@/shared/assets/jsons/id.json'
 import { BaseImage } from '@/shared/components/ui/BaseImage'
 import { resolveMediaUrl } from '@/shared/utils/resolveMediaUrl'
+
+// Force dynamic rendering for real-time data updates
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 type HomeTestimonial = {
   id: string
@@ -42,9 +46,10 @@ export default async function Page() {
 
 async function getTestimonials(): Promise<HomeTestimonial[]> {
   try {
-    const cmsTestimonials = await TestimonialService.getPublished(10)
+    const cmsTestimonials = await OptimizedTestimonialService.getPublished(10)
 
-    return cmsTestimonials.map((item) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return cmsTestimonials.map((item: any) => {
       const imageUrl =
         item.image?.url ?? (item.image?.filename ? `/api/media/file/${item.image.filename}` : null)
       return {
