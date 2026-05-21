@@ -3,18 +3,10 @@ import { SmoothScrollProvider } from '@/shared/components/provider/SmoothScrollP
 import '@/shared/styles/global.css'
 import { Footer } from '@/shared/components/layout/Footer'
 import { Navbar } from '@/shared/components/layout/Navbar'
-import { Metadata } from 'next'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { buildRootMetadata } from '@/features/seo'
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s | Wiatour',
-    default: 'Tour Murah & Paket Wisata Hemat',
-  },
-  description:
-    'Cari tour murah? Wiatour menyediakan paket wisata murah, open trip hemat, dan private tour terjangkau ke destinasi favorit Indonesia.',
-  metadataBase: new URL('https://wiatour.com'),
-}
+export const metadata = buildRootMetadata()
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const { children } = props
