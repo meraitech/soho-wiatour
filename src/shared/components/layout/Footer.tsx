@@ -58,12 +58,12 @@ export const Footer = async () => {
           {
             icon: faFacebook,
             label: 'Facebook',
-            url: 'https://www.facebook.com/p/WIA-Tour-Travel-61563058003151/',
+            url: 'https://web.facebook.com/wiatour',
           },
           {
             icon: faInstagram,
             label: 'Instagram',
-            url: 'https://www.instagram.com/wiatourtravel.id/',
+            url: 'https://www.instagram.com/wiatour/',
           },
           {
             icon: faWhatsapp,

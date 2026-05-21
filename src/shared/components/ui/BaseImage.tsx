@@ -4,16 +4,13 @@ import Image, { ImageProps } from 'next/image'
 import { forwardRef, useRef, useImperativeHandle } from 'react'
 import clsx from 'clsx'
 
-export interface BaseImageProps extends Omit<ImageProps, 'placeholder'> {
+export interface BaseImageProps extends Omit<ImageProps, 'placeholder' | 'onLoad'> {
   blurDataURL?: string
   unoptimized?: boolean
   sizes?: string
+  onLoadingComplete?: (img: HTMLImageElement) => void
 }
 
-/**
-
-* Ref points directly to the underlying <img>
-  */
 export const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
   (
     {
@@ -47,7 +44,8 @@ export const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
         unoptimized={unoptimized}
         priority={priority}
         loading={resolvedLoading}
-        onLoadingComplete={(img) => {
+        onLoad={(e) => {
+          const img = e.currentTarget
           innerRef.current = img
           onLoadingComplete?.(img)
         }}

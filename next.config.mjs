@@ -24,6 +24,11 @@ const nextConfig = {
         pathname: '/**',
       },
       {
+        protocol: 'https',
+        hostname: 'www.wiatour.com',
+        pathname: '/**',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '3000',
@@ -109,14 +114,11 @@ const nextConfig = {
   },
 
   // Redirects configuration
+  // NOTE: Do NOT redirect /admin -> /admin/login here.
+  // Payload handles auth redirects internally; a static redirect would
+  // conflict and cause ERR_TOO_MANY_REDIRECTS.
   async redirects() {
-    return [
-      {
-        source: '/admin',
-        destination: '/admin/login',
-        permanent: true,
-      },
-    ]
+    return []
   },
 }
 

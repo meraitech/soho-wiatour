@@ -11,15 +11,17 @@ export const TestimonialCard = ({ item }: { item: Testimonial }) => {
       }
     >
       <div className="flex items-center gap-3">
-        <div className="aspect-square relative w-12 h-12 shrink-0 rounded-full overflow-hidden border border-border bg-white">
-          <BaseImage
-            src={item.imgUrl!}
-            alt={item.name + ' Profile'}
-            className="object-cover w-full h-full"
-            fill
-            loading="lazy"
-          />
-        </div>
+        {item.imgUrl && (
+          <div className="aspect-square relative w-12 h-12 shrink-0 rounded-full overflow-hidden border border-border bg-white">
+            <BaseImage
+              src={item.imgUrl}
+              alt={item.name + ' Profile'}
+              className="object-cover w-full h-full"
+              fill
+              loading="lazy"
+            />
+          </div>
+        )}
         <div className="flex flex-col">
           <span className="font-medium max-md:text-sm">{item.name}</span>
           <span className="md:text-sm text-xs text-muted-foreground">

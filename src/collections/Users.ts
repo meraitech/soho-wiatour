@@ -7,7 +7,14 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
     defaultColumns: ['email', 'roles'],
   },
-  auth: true,
+  auth: {
+    cookies: {
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Lax',
+      domain: process.env.COOKIE_DOMAIN || undefined,
+    },
+    tokenExpiration: 7200,
+  },
   access: {
     read: ({ req }) => checkRole(req.user, 'admin'),
     create: ({ req }) => checkRole(req.user, 'admin'),

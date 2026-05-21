@@ -20,7 +20,9 @@ export function OurServiceSection() {
 
   const [activeImageSrc, setActiveImageSrc] = useState(ourServices[0]?.imgUrl ?? '')
   const activeIndexRef = useRef(0)
+  const pendingIndexRef = useRef(-1)
   const serviceTriggersRef = useRef<ScrollTrigger[]>([])
+  const resizeTimerRef = useRef<ReturnType<typeof setTimeout>>()
 
   /* =========================
      UTILS
@@ -35,22 +37,26 @@ export function OurServiceSection() {
     (index: number) => {
       const nextImageSrc = ourServices[index]?.imgUrl
       if (!nextImageSrc) return
-
       if (activeIndexRef.current === index) return
-      activeIndexRef.current = index
 
       const img = serviceImageRef.current
       if (!img) {
+        activeIndexRef.current = index
         setActiveImageSrc(nextImageSrc)
         return
       }
 
+      activeIndexRef.current = index
+      pendingIndexRef.current = index
+
+      gsap.killTweensOf(img)
       gsap.to(img, {
         autoAlpha: 0,
-        duration: 0.2,
-        overwrite: true,
+        duration: 0.15,
         onComplete: () => {
-          setActiveImageSrc(nextImageSrc)
+          if (pendingIndexRef.current === index) {
+            setActiveImageSrc(nextImageSrc)
+          }
         },
       })
     },
@@ -68,7 +74,6 @@ export function OurServiceSection() {
     const first = steps[0]
     const last = steps[steps.length - 1]
 
-    // PIN IMAGE (LEFT)
     serviceTriggersRef.current.push(
       ScrollTrigger.create({
         trigger: first,
@@ -81,7 +86,6 @@ export function OurServiceSection() {
       }),
     )
 
-    // IMAGE SWAP PER STEP
     steps.forEach((step, i) => {
       serviceTriggersRef.current.push(
         ScrollTrigger.create({
@@ -104,16 +108,18 @@ export function OurServiceSection() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      requestAnimationFrame(initScroll)
+      initScroll()
     }, serviceWrapRef)
 
     const onResize = () => {
-      requestAnimationFrame(initScroll)
+      clearTimeout(resizeTimerRef.current)
+      resizeTimerRef.current = setTimeout(initScroll, 200)
     }
 
     window.addEventListener('resize', onResize)
 
     return () => {
+      clearTimeout(resizeTimerRef.current)
       window.removeEventListener('resize', onResize)
       killTriggers()
       ctx.revert()
@@ -135,25 +141,25 @@ export function OurServiceSection() {
         <div className={STYLE_MARGIN_CONTAINER_TOP} />
 
         <div ref={serviceWrapRef} className="w-full grid md:grid-cols-2 lg:gap-24 md:gap-16 gap-12">
-          {/* LEFT — IMAGE */}
           <div
             ref={serviceLeftRef}
-            className="w-full max-md:hidden md:aspect-square aspect-4/3 rounded-2xl overflow-hidden max-md:order-2"
+            className="w-full max-md:hidden md:aspect-square aspect-4/3 rounded-2xl overflow-hidden max-md:order-2 relative"
           >
             <BaseImage
               ref={serviceImageRef}
               src={activeImageSrc}
-              alt={'Gambar Service'}
-              className="w-full h-full object-cover"
+              alt="Gambar Service"
+              className="w-full h-full object-cover invisible"
               fill
+              priority
               onLoadingComplete={(img) => {
                 serviceImageRef.current = img
-                gsap.to(img, { autoAlpha: 1, duration: 0.001, overwrite: true })
+                gsap.killTweensOf(img)
+                gsap.set(img, { autoAlpha: 1 })
               }}
             />
           </div>
 
-          {/* RIGHT — STEPS */}
           <section className="flex flex-col items-center gap-12">
             {ourServices.map((item, i) => (
               <ServiceCard
