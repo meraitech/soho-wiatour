@@ -22,7 +22,7 @@ export function OurServiceSection() {
   const activeIndexRef = useRef(0)
   const pendingIndexRef = useRef(-1)
   const serviceTriggersRef = useRef<ScrollTrigger[]>([])
-  const resizeTimerRef = useRef<ReturnType<typeof setTimeout>>()
+  const resizeTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   /* =========================
      UTILS
